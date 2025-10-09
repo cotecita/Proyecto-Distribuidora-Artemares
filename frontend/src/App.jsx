@@ -8,16 +8,19 @@ import Recipes from "./pages/Recipes";
 export default function App() {
   return (
     <Router>
-      <Navbar />
-      <main style={{ padding: "2rem", marginTop: "85px" }}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/productos" element={<Products />} />
-          <Route path="/recetas" element={<Recipes />} />
-        </Routes>
-      </main>
-      <Footer />
+      <div className="app-container">
+        <Navbar />
+        <main className="main-content">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/productos" element={<Products />} />
+            <Route path="/recetas" element={<Recipes />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
     </Router>
   );
 }
+
 

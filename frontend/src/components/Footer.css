@@ -3,7 +3,7 @@
   width: 100%;
   background-color: #0A3D62; /* azul marino */
   color: #F8FAFC; /* texto blanco claro */
-  padding: 0.8rem 0; /* altura compacta */
+  padding: 1rem 0; /* altura compacta */
   display: flex;
   flex-direction: column;
   align-items: center;

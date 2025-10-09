@@ -1,0 +1,87 @@
+:root {
+  --primary1: #6586ea;
+  --primary2: #88b4e7;
+  --hover1: #2d4aa1;
+  --hover2: #4c7bb0;
+}
+
+/* Botón base */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  font-weight: 500;
+  font-size: 1.0rem;
+  color: white;
+  background: linear-gradient(135deg, var(--primary1), var(--primary2));
+  transition: all 0.35s ease;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  border-radius: 0px; 
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Efecto de luz/onda al pasar el mouse */
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.12); /* brillo más suave */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.btn:hover::before {
+  opacity: 1; /* aparece con fade, no desplazamiento */
+}
+
+/* Hover del botón */
+.btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+  background: linear-gradient(135deg, var(--hover1), var(--hover2));
+}
+
+
+/* Tamaños */
+.btn--medium {
+  padding: 14px 38px;
+}
+
+.btn--large {
+  padding: 18px 46px;
+  font-size: 1.2rem;
+}
+
+/* Variante contorno */
+.btn--outline {
+  background: transparent;
+  border: 2px solid var(--primary1);
+  color: var(--primary1);
+}
+
+.btn--outline:hover {
+  background: var(--primary1);
+  color: white;
+}
+
+/* Animación de entrada */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.btn {
+  animation: fadeUp 1s ease forwards;
+}

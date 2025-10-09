@@ -1,11 +1,19 @@
+/* 🌊 Paleta base de la Distribuidora de Mariscos */
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+  --color-bg: #F4FBFD;        /* Fondo general (celeste muy claro) */
+  --color-text: #2C3E50;      /* Texto principal gris azulado */
+  --color-primary: #0A3D62;   /* Azul marino */
+  --color-accent: #1E90FF;    /* Azul brillante */
+  --color-light: #E6F7FF;     /* Celeste claro */
+  --color-border: rgba(0, 0, 0, 0.1);
+
+  font-family: 'Poppins', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color-scheme: light;
+  color: var(--color-text);
+  background-color: var(--color-bg);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -13,56 +21,72 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* ✨ Enlaces */
 a {
   font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color 0.3s ease;
 }
 a:hover {
-  color: #535bf2;
+  color: var(--color-accent);
 }
 
-body {
+/* 🧍 Cuerpo y estructura general */
+html, body {
   margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+#root {
   display: flex;
-  place-items: center;
-  min-width: 320px;
+  flex-direction: column;
   min-height: 100vh;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* 📄 Contenido principal */
+main {
+  flex: 1;
+  padding: 2rem;
+  margin-top: 110px; /* espacio para navbar fija */
 }
 
+/* 🔠 Títulos */
+h1, h2, h3 {
+  color: var(--color-primary);
+  margin-top: 0;
+}
+
+p {
+  color: var(--color-text);
+  line-height: 1.7;
+}
+
+/* 🧿 Botones genéricos (si llegas a usar) */
 button {
   border-radius: 8px;
-  border: 1px solid transparent;
+  border: 1px solid var(--color-border);
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--color-light);
+  color: var(--color-primary);
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: background-color 0.3s, border-color 0.3s;
 }
 button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  background-color: var(--color-accent);
+  color: white;
+  border-color: var(--color-accent);
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
+/* 📱 Responsividad básica */
+@media (max-width: 768px) {
+  main {
+    padding: 1.2rem;
+    margin-top: 100px;
   }
 }

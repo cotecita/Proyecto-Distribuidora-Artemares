@@ -29,7 +29,7 @@ class AdministradorFixture extends TestFixture
                 'username' => 'Lorem ipsum dolor sit amet',
                 'password' => 'Lorem ipsum dolor sit amet',
                 'email' => 'Lorem ipsum dolor sit amet',
-                'created_at' => 1759972176,
+                'created_at' => 1759977950,
                 'nombre_completo' => 'Lorem ipsum dolor sit amet',
             ],
         ];

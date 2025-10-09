@@ -26,7 +26,7 @@ class PedidoFixture extends TestFixture
         $this->records = [
             [
                 'id_pedido' => 1,
-                'fecha' => 1759972251,
+                'fecha' => 1759978047,
                 'estado' => 'Lorem ipsum dolor sit amet',
             ],
         ];

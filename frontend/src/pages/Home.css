@@ -1,0 +1,96 @@
+.video-hero {
+  position: relative;
+  height: calc(100vh - 100px); /* resta el alto real de la navbar */
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.button-container {
+  position: relative;
+  z-index: 2;
+}
+
+
+/* ===== SECCIÓN QUIÉNES SOMOS ===== */
+.hero {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #2670b4; /* Fondo */
+  padding: 60px 0;
+  margin-top: -70px;
+}
+
+.overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  max-width: 1200px;
+  width: 90%;
+  margin: 0 auto;
+  background: none; /* Quitamos el fondo oscuro */
+  box-shadow: none;
+  padding: 0;
+}
+
+/* IMAGEN Y TEXTO */
+.hero-image img {
+  width: 600px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  object-fit: cover;
+}
+
+.hero-text {
+  flex: 1;
+  color: #ffffff;
+  text-align: left;
+}
+
+.hero-text h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #ffffff;
+}
+
+.hero-text p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+/* RESPONSIVO */
+@media (max-width: 900px) {
+  .overlay {
+    flex-direction: column;
+    text-align: center;
+    gap: 2rem;
+  }
+
+  .hero-image img {
+    width: 90%;
+  }
+
+  .hero-text {
+    text-align: center;
+  }
+}
+

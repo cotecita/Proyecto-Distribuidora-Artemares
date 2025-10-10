@@ -1,11 +1,11 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var iterable<\App\Model\Entity\Categorium> $categoria
+ * @var iterable<\App\Model\Entity\Categoria> $categoria
  */
 ?>
 <div class="categoria index content">
-    <?= $this->Html->link(__('New Categorium'), ['action' => 'add'], ['class' => 'button float-right']) ?>
+    <?= $this->Html->link(__('New Categoria'), ['action' => 'add'], ['class' => 'button float-right']) ?>
     <h3><?= __('Categoria') ?></h3>
     <div class="table-responsive">
         <table>
@@ -17,19 +17,19 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($categoria as $categorium): ?>
+                <?php foreach ($categoria as $categoria): ?>
                 <tr>
-                    <td><?= $this->Number->format($categorium->id_categoria) ?></td>
-                    <td><?= h($categorium->nombre) ?></td>
+                    <td><?= $this->Number->format($categoria->id_categoria) ?></td>
+                    <td><?= h($categoria->nombre) ?></td>
                     <td class="actions">
-                        <?= $this->Html->link(__('View'), ['action' => 'view', $categorium->id_categoria]) ?>
-                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $categorium->id_categoria]) ?>
+                        <?= $this->Html->link(__('View'), ['action' => 'view', $categoria->id_categoria]) ?>
+                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $categoria->id_categoria]) ?>
                         <?= $this->Form->postLink(
                             __('Delete'),
-                            ['action' => 'delete', $categorium->id_categoria],
+                            ['action' => 'delete', $categoria->id_categoria],
                             [
                                 'method' => 'delete',
-                                'confirm' => __('Are you sure you want to delete # {0}?', $categorium->id_categoria),
+                                'confirm' => __('Are you sure you want to delete # {0}?', $categoria->id_categoria),
                             ]
                         ) ?>
                     </td>

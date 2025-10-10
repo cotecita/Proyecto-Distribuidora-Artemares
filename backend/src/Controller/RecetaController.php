@@ -26,14 +26,14 @@ class RecetaController extends AppController
     /**
      * View method
      *
-     * @param string|null $id Recetum id.
+     * @param string|null $id Receta id.
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null)
     {
-        $recetum = $this->Receta->get($id, contain: ['Producto']);
-        $this->set(compact('recetum'));
+        $receta = $this->Receta->get($id, contain: ['Producto']);
+        $this->set(compact('receta'));
     }
 
     /**
@@ -43,58 +43,58 @@ class RecetaController extends AppController
      */
     public function add()
     {
-        $recetum = $this->Receta->newEmptyEntity();
+        $receta = $this->Receta->newEmptyEntity();
         if ($this->request->is('post')) {
-            $recetum = $this->Receta->patchEntity($recetum, $this->request->getData());
-            if ($this->Receta->save($recetum)) {
-                $this->Flash->success(__('The recetum has been saved.'));
+            $receta = $this->Receta->patchEntity($receta, $this->request->getData());
+            if ($this->Receta->save($receta)) {
+                $this->Flash->success(__('The receta has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The recetum could not be saved. Please, try again.'));
+            $this->Flash->error(__('The receta could not be saved. Please, try again.'));
         }
         $producto = $this->Receta->Producto->find('list', limit: 200)->all();
-        $this->set(compact('recetum', 'producto'));
+        $this->set(compact('receta', 'producto'));
     }
 
     /**
      * Edit method
      *
-     * @param string|null $id Recetum id.
+     * @param string|null $id Receta id.
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function edit($id = null)
     {
-        $recetum = $this->Receta->get($id, contain: ['Producto']);
+        $receta = $this->Receta->get($id, contain: ['Producto']);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $recetum = $this->Receta->patchEntity($recetum, $this->request->getData());
-            if ($this->Receta->save($recetum)) {
-                $this->Flash->success(__('The recetum has been saved.'));
+            $receta = $this->Receta->patchEntity($receta, $this->request->getData());
+            if ($this->Receta->save($receta)) {
+                $this->Flash->success(__('The receta has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The recetum could not be saved. Please, try again.'));
+            $this->Flash->error(__('The receta could not be saved. Please, try again.'));
         }
         $producto = $this->Receta->Producto->find('list', limit: 200)->all();
-        $this->set(compact('recetum', 'producto'));
+        $this->set(compact('receta', 'producto'));
     }
 
     /**
      * Delete method
      *
-     * @param string|null $id Recetum id.
+     * @param string|null $id Receta id.
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $recetum = $this->Receta->get($id);
-        if ($this->Receta->delete($recetum)) {
-            $this->Flash->success(__('The recetum has been deleted.'));
+        $receta = $this->Receta->get($id);
+        if ($this->Receta->delete($receta)) {
+            $this->Flash->success(__('The receta has been deleted.'));
         } else {
-            $this->Flash->error(__('The recetum could not be deleted. Please, try again.'));
+            $this->Flash->error(__('The receta could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);

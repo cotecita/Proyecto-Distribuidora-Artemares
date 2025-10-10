@@ -11,19 +11,19 @@ use Cake\Validation\Validator;
 /**
  * ImagenReceta Model
  *
- * @method \App\Model\Entity\ImagenRecetum newEmptyEntity()
- * @method \App\Model\Entity\ImagenRecetum newEntity(array $data, array $options = [])
- * @method array<\App\Model\Entity\ImagenRecetum> newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\ImagenRecetum get(mixed $primaryKey, array|string $finder = 'all', \Psr\SimpleCache\CacheInterface|string|null $cache = null, \Closure|string|null $cacheKey = null, mixed ...$args)
- * @method \App\Model\Entity\ImagenRecetum findOrCreate($search, ?callable $callback = null, array $options = [])
- * @method \App\Model\Entity\ImagenRecetum patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method array<\App\Model\Entity\ImagenRecetum> patchEntities(iterable $entities, array $data, array $options = [])
- * @method \App\Model\Entity\ImagenRecetum|false save(\Cake\Datasource\EntityInterface $entity, array $options = [])
- * @method \App\Model\Entity\ImagenRecetum saveOrFail(\Cake\Datasource\EntityInterface $entity, array $options = [])
- * @method iterable<\App\Model\Entity\ImagenRecetum>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\ImagenRecetum>|false saveMany(iterable $entities, array $options = [])
- * @method iterable<\App\Model\Entity\ImagenRecetum>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\ImagenRecetum> saveManyOrFail(iterable $entities, array $options = [])
- * @method iterable<\App\Model\Entity\ImagenRecetum>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\ImagenRecetum>|false deleteMany(iterable $entities, array $options = [])
- * @method iterable<\App\Model\Entity\ImagenRecetum>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\ImagenRecetum> deleteManyOrFail(iterable $entities, array $options = [])
+ * @method \App\Model\Entity\ImagenReceta newEmptyEntity()
+ * @method \App\Model\Entity\ImagenReceta newEntity(array $data, array $options = [])
+ * @method array<\App\Model\Entity\ImagenReceta> newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\ImagenReceta get(mixed $primaryKey, array|string $finder = 'all', \Psr\SimpleCache\CacheInterface|string|null $cache = null, \Closure|string|null $cacheKey = null, mixed ...$args)
+ * @method \App\Model\Entity\ImagenReceta findOrCreate($search, ?callable $callback = null, array $options = [])
+ * @method \App\Model\Entity\ImagenReceta patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method array<\App\Model\Entity\ImagenReceta> patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\ImagenReceta|false save(\Cake\Datasource\EntityInterface $entity, array $options = [])
+ * @method \App\Model\Entity\ImagenReceta saveOrFail(\Cake\Datasource\EntityInterface $entity, array $options = [])
+ * @method iterable<\App\Model\Entity\ImagenReceta>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\ImagenReceta>|false saveMany(iterable $entities, array $options = [])
+ * @method iterable<\App\Model\Entity\ImagenReceta>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\ImagenReceta> saveManyOrFail(iterable $entities, array $options = [])
+ * @method iterable<\App\Model\Entity\ImagenReceta>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\ImagenReceta>|false deleteMany(iterable $entities, array $options = [])
+ * @method iterable<\App\Model\Entity\ImagenReceta>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\ImagenReceta> deleteManyOrFail(iterable $entities, array $options = [])
  */
 class ImagenRecetaTable extends Table
 {
@@ -40,6 +40,8 @@ class ImagenRecetaTable extends Table
         $this->setTable('imagen_receta');
         $this->setDisplayField('url_small');
         $this->setPrimaryKey('id_imagen');
+        $this->setEntityClass('App\Model\Entity\ImagenReceta');
+
     }
 
     /**

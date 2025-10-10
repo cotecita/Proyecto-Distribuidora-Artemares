@@ -13,19 +13,19 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\ProductoTable&\Cake\ORM\Association\BelongsToMany $Producto
  *
- * @method \App\Model\Entity\Recetum newEmptyEntity()
- * @method \App\Model\Entity\Recetum newEntity(array $data, array $options = [])
- * @method array<\App\Model\Entity\Recetum> newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Recetum get(mixed $primaryKey, array|string $finder = 'all', \Psr\SimpleCache\CacheInterface|string|null $cache = null, \Closure|string|null $cacheKey = null, mixed ...$args)
- * @method \App\Model\Entity\Recetum findOrCreate($search, ?callable $callback = null, array $options = [])
- * @method \App\Model\Entity\Recetum patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method array<\App\Model\Entity\Recetum> patchEntities(iterable $entities, array $data, array $options = [])
- * @method \App\Model\Entity\Recetum|false save(\Cake\Datasource\EntityInterface $entity, array $options = [])
- * @method \App\Model\Entity\Recetum saveOrFail(\Cake\Datasource\EntityInterface $entity, array $options = [])
- * @method iterable<\App\Model\Entity\Recetum>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\Recetum>|false saveMany(iterable $entities, array $options = [])
- * @method iterable<\App\Model\Entity\Recetum>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\Recetum> saveManyOrFail(iterable $entities, array $options = [])
- * @method iterable<\App\Model\Entity\Recetum>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\Recetum>|false deleteMany(iterable $entities, array $options = [])
- * @method iterable<\App\Model\Entity\Recetum>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\Recetum> deleteManyOrFail(iterable $entities, array $options = [])
+ * @method \App\Model\Entity\Receta newEmptyEntity()
+ * @method \App\Model\Entity\Receta newEntity(array $data, array $options = [])
+ * @method array<\App\Model\Entity\Receta> newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Receta get(mixed $primaryKey, array|string $finder = 'all', \Psr\SimpleCache\CacheInterface|string|null $cache = null, \Closure|string|null $cacheKey = null, mixed ...$args)
+ * @method \App\Model\Entity\Receta findOrCreate($search, ?callable $callback = null, array $options = [])
+ * @method \App\Model\Entity\Receta patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method array<\App\Model\Entity\Receta> patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Receta|false save(\Cake\Datasource\EntityInterface $entity, array $options = [])
+ * @method \App\Model\Entity\Receta saveOrFail(\Cake\Datasource\EntityInterface $entity, array $options = [])
+ * @method iterable<\App\Model\Entity\Receta>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\Receta>|false saveMany(iterable $entities, array $options = [])
+ * @method iterable<\App\Model\Entity\Receta>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\Receta> saveManyOrFail(iterable $entities, array $options = [])
+ * @method iterable<\App\Model\Entity\Receta>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\Receta>|false deleteMany(iterable $entities, array $options = [])
+ * @method iterable<\App\Model\Entity\Receta>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\Receta> deleteManyOrFail(iterable $entities, array $options = [])
  */
 class RecetaTable extends Table
 {
@@ -42,10 +42,12 @@ class RecetaTable extends Table
         $this->setTable('receta');
         $this->setDisplayField('nombre');
         $this->setPrimaryKey('id_receta');
+        $this->setEntityClass('App\Model\Entity\Receta');
+
 
         $this->belongsToMany('Producto', [
-            'foreignKey' => 'recetum_id',
-            'targetForeignKey' => 'producto_id',
+            'foreignKey' => 'id_receta',
+            'targetForeignKey' => 'id_producto',
             'joinTable' => 'receta_producto',
         ]);
     }

@@ -26,14 +26,14 @@ class CategoriaController extends AppController
     /**
      * View method
      *
-     * @param string|null $id Categorium id.
+     * @param string|null $id Categoria id.
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null)
     {
-        $categorium = $this->Categoria->get($id, contain: []);
-        $this->set(compact('categorium'));
+        $categoria = $this->Categoria->get($id, contain: []);
+        $this->set(compact('categoria'));
     }
 
     /**
@@ -43,56 +43,56 @@ class CategoriaController extends AppController
      */
     public function add()
     {
-        $categorium = $this->Categoria->newEmptyEntity();
+        $categoria = $this->Categoria->newEmptyEntity();
         if ($this->request->is('post')) {
-            $categorium = $this->Categoria->patchEntity($categorium, $this->request->getData());
-            if ($this->Categoria->save($categorium)) {
-                $this->Flash->success(__('The categorium has been saved.'));
+            $categoria = $this->Categoria->patchEntity($categoria, $this->request->getData());
+            if ($this->Categoria->save($categoria)) {
+                $this->Flash->success(__('The categoria has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The categorium could not be saved. Please, try again.'));
+            $this->Flash->error(__('The categoria could not be saved. Please, try again.'));
         }
-        $this->set(compact('categorium'));
+        $this->set(compact('categoria'));
     }
 
     /**
      * Edit method
      *
-     * @param string|null $id Categorium id.
+     * @param string|null $id Categoria id.
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function edit($id = null)
     {
-        $categorium = $this->Categoria->get($id, contain: []);
+        $categoria = $this->Categoria->get($id, contain: []);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $categorium = $this->Categoria->patchEntity($categorium, $this->request->getData());
-            if ($this->Categoria->save($categorium)) {
-                $this->Flash->success(__('The categorium has been saved.'));
+            $categoria = $this->Categoria->patchEntity($categoria, $this->request->getData());
+            if ($this->Categoria->save($categoria)) {
+                $this->Flash->success(__('The categoria has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The categorium could not be saved. Please, try again.'));
+            $this->Flash->error(__('The categoria could not be saved. Please, try again.'));
         }
-        $this->set(compact('categorium'));
+        $this->set(compact('categoria'));
     }
 
     /**
      * Delete method
      *
-     * @param string|null $id Categorium id.
+     * @param string|null $id Categoria id.
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $categorium = $this->Categoria->get($id);
-        if ($this->Categoria->delete($categorium)) {
-            $this->Flash->success(__('The categorium has been deleted.'));
+        $categoria = $this->Categoria->get($id);
+        if ($this->Categoria->delete($categoria)) {
+            $this->Flash->success(__('The categoria has been deleted.'));
         } else {
-            $this->Flash->error(__('The categorium could not be deleted. Please, try again.'));
+            $this->Flash->error(__('The categoria could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);

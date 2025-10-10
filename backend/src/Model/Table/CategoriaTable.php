@@ -11,19 +11,19 @@ use Cake\Validation\Validator;
 /**
  * Categoria Model
  *
- * @method \App\Model\Entity\Categorium newEmptyEntity()
- * @method \App\Model\Entity\Categorium newEntity(array $data, array $options = [])
- * @method array<\App\Model\Entity\Categorium> newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Categorium get(mixed $primaryKey, array|string $finder = 'all', \Psr\SimpleCache\CacheInterface|string|null $cache = null, \Closure|string|null $cacheKey = null, mixed ...$args)
- * @method \App\Model\Entity\Categorium findOrCreate($search, ?callable $callback = null, array $options = [])
- * @method \App\Model\Entity\Categorium patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method array<\App\Model\Entity\Categorium> patchEntities(iterable $entities, array $data, array $options = [])
- * @method \App\Model\Entity\Categorium|false save(\Cake\Datasource\EntityInterface $entity, array $options = [])
- * @method \App\Model\Entity\Categorium saveOrFail(\Cake\Datasource\EntityInterface $entity, array $options = [])
- * @method iterable<\App\Model\Entity\Categorium>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\Categorium>|false saveMany(iterable $entities, array $options = [])
- * @method iterable<\App\Model\Entity\Categorium>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\Categorium> saveManyOrFail(iterable $entities, array $options = [])
- * @method iterable<\App\Model\Entity\Categorium>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\Categorium>|false deleteMany(iterable $entities, array $options = [])
- * @method iterable<\App\Model\Entity\Categorium>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\Categorium> deleteManyOrFail(iterable $entities, array $options = [])
+ * @method \App\Model\Entity\Categoria newEmptyEntity()
+ * @method \App\Model\Entity\Categoria newEntity(array $data, array $options = [])
+ * @method array<\App\Model\Entity\Categoria> newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Categoria get(mixed $primaryKey, array|string $finder = 'all', \Psr\SimpleCache\CacheInterface|string|null $cache = null, \Closure|string|null $cacheKey = null, mixed ...$args)
+ * @method \App\Model\Entity\Categoria findOrCreate($search, ?callable $callback = null, array $options = [])
+ * @method \App\Model\Entity\Categoria patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method array<\App\Model\Entity\Categoria> patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Categoria|false save(\Cake\Datasource\EntityInterface $entity, array $options = [])
+ * @method \App\Model\Entity\Categoria saveOrFail(\Cake\Datasource\EntityInterface $entity, array $options = [])
+ * @method iterable<\App\Model\Entity\Categoria>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\Categoria>|false saveMany(iterable $entities, array $options = [])
+ * @method iterable<\App\Model\Entity\Categoria>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\Categoria> saveManyOrFail(iterable $entities, array $options = [])
+ * @method iterable<\App\Model\Entity\Categoria>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\Categoria>|false deleteMany(iterable $entities, array $options = [])
+ * @method iterable<\App\Model\Entity\Categoria>|\Cake\Datasource\ResultSetInterface<\App\Model\Entity\Categoria> deleteManyOrFail(iterable $entities, array $options = [])
  */
 class CategoriaTable extends Table
 {
@@ -40,6 +40,7 @@ class CategoriaTable extends Table
         $this->setTable('categoria');
         $this->setDisplayField('nombre');
         $this->setPrimaryKey('id_categoria');
+        $this->setEntityClass('App\Model\Entity\Categoria');
     }
 
     /**

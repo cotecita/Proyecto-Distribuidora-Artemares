@@ -65,21 +65,21 @@
                             <th><?= __('Ingredientes') ?></th>
                             <th class="actions"><?= __('Actions') ?></th>
                         </tr>
-                        <?php foreach ($producto->receta as $recetum) : ?>
+                        <?php foreach ($producto->receta as $receta) : ?>
                         <tr>
-                            <td><?= h($recetum->id_receta) ?></td>
-                            <td><?= h($recetum->nombre) ?></td>
-                            <td><?= h($recetum->descripcion) ?></td>
-                            <td><?= h($recetum->ingredientes) ?></td>
+                            <td><?= h($receta->id_receta) ?></td>
+                            <td><?= h($receta->nombre) ?></td>
+                            <td><?= h($receta->descripcion) ?></td>
+                            <td><?= h($receta->ingredientes) ?></td>
                             <td class="actions">
-                                <?= $this->Html->link(__('View'), ['controller' => 'Receta', 'action' => 'view', $recetum->id_receta]) ?>
-                                <?= $this->Html->link(__('Edit'), ['controller' => 'Receta', 'action' => 'edit', $recetum->id_receta]) ?>
+                                <?= $this->Html->link(__('View'), ['controller' => 'Receta', 'action' => 'view', $receta->id_receta]) ?>
+                                <?= $this->Html->link(__('Edit'), ['controller' => 'Receta', 'action' => 'edit', $receta->id_receta]) ?>
                                 <?= $this->Form->postLink(
                                     __('Delete'),
-                                    ['controller' => 'Receta', 'action' => 'delete', $recetum->id_receta],
+                                    ['controller' => 'Receta', 'action' => 'delete', $receta->id_receta],
                                     [
                                         'method' => 'delete',
-                                        'confirm' => __('Are you sure you want to delete # {0}?', $recetum->id_receta),
+                                        'confirm' => __('Are you sure you want to delete # {0}?', $receta->id_receta),
                                     ]
                                 ) ?>
                             </td>

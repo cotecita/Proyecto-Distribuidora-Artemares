@@ -1,11 +1,11 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var iterable<\App\Model\Entity\Recetum> $receta
+ * @var iterable<\App\Model\Entity\Receta> $receta
  */
 ?>
 <div class="receta index content">
-    <?= $this->Html->link(__('New Recetum'), ['action' => 'add'], ['class' => 'button float-right']) ?>
+    <?= $this->Html->link(__('New Receta'), ['action' => 'add'], ['class' => 'button float-right']) ?>
     <h3><?= __('Receta') ?></h3>
     <div class="table-responsive">
         <table>
@@ -17,19 +17,19 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($receta as $recetum): ?>
+                <?php foreach ($receta as $receta): ?>
                 <tr>
-                    <td><?= $this->Number->format($recetum->id_receta) ?></td>
-                    <td><?= h($recetum->nombre) ?></td>
+                    <td><?= $this->Number->format($receta->id_receta) ?></td>
+                    <td><?= h($receta->nombre) ?></td>
                     <td class="actions">
-                        <?= $this->Html->link(__('View'), ['action' => 'view', $recetum->id_receta]) ?>
-                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $recetum->id_receta]) ?>
+                        <?= $this->Html->link(__('View'), ['action' => 'view', $receta->id_receta]) ?>
+                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $receta->id_receta]) ?>
                         <?= $this->Form->postLink(
                             __('Delete'),
-                            ['action' => 'delete', $recetum->id_receta],
+                            ['action' => 'delete', $receta->id_receta],
                             [
                                 'method' => 'delete',
-                                'confirm' => __('Are you sure you want to delete # {0}?', $recetum->id_receta),
+                                'confirm' => __('Are you sure you want to delete # {0}?', $receta->id_receta),
                             ]
                         ) ?>
                     </td>

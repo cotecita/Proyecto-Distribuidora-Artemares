@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Recetum $recetum
+ * @var \App\Model\Entity\Receta $receta
  * @var \Cake\Collection\CollectionInterface|string[] $producto
  */
 ?>
@@ -14,9 +14,9 @@
     </aside>
     <div class="column column-80">
         <div class="receta form content">
-            <?= $this->Form->create($recetum) ?>
+            <?= $this->Form->create($receta) ?>
             <fieldset>
-                <legend><?= __('Add Recetum') ?></legend>
+                <legend><?= __('Add Receta') ?></legend>
                 <?php
                     echo $this->Form->control('nombre');
                     echo $this->Form->control('descripcion');

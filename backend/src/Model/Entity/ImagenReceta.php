@@ -6,16 +6,15 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Recetum Entity
+ * ImagenReceta Entity
  *
+ * @property int $id_imagen
  * @property int $id_receta
- * @property string $nombre
- * @property string|null $descripcion
- * @property string|null $ingredientes
- *
- * @property \App\Model\Entity\Producto[] $producto
+ * @property string $url_small
+ * @property string $url_medium
+ * @property string $url_grande
  */
-class Recetum extends Entity
+class ImagenReceta extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -27,9 +26,9 @@ class Recetum extends Entity
      * @var array<string, bool>
      */
     protected array $_accessible = [
-        'nombre' => true,
-        'descripcion' => true,
-        'ingredientes' => true,
-        'producto' => true,
+        'id_receta' => true,
+        'url_small' => true,
+        'url_medium' => true,
+        'url_grande' => true,
     ];
 }

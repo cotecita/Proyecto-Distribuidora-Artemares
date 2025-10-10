@@ -17,7 +17,7 @@ use Cake\ORM\Entity;
  * @property string $formato
  * @property int $id_categoria
  *
- * @property \App\Model\Entity\Recetum[] $receta
+ * @property \App\Model\Entity\Receta[] $receta
  */
 class Producto extends Entity
 {

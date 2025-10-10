@@ -1,47 +1,47 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Recetum $recetum
+ * @var \App\Model\Entity\Receta $receta
  */
 ?>
 <div class="row">
     <aside class="column">
         <div class="side-nav">
             <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('Edit Recetum'), ['action' => 'edit', $recetum->id_receta], ['class' => 'side-nav-item']) ?>
-            <?= $this->Form->postLink(__('Delete Recetum'), ['action' => 'delete', $recetum->id_receta], ['confirm' => __('Are you sure you want to delete # {0}?', $recetum->id_receta), 'class' => 'side-nav-item']) ?>
+            <?= $this->Html->link(__('Edit Receta'), ['action' => 'edit', $receta->id_receta], ['class' => 'side-nav-item']) ?>
+            <?= $this->Form->postLink(__('Delete Receta'), ['action' => 'delete', $receta->id_receta], ['confirm' => __('Are you sure you want to delete # {0}?', $receta->id_receta), 'class' => 'side-nav-item']) ?>
             <?= $this->Html->link(__('List Receta'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('New Recetum'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
+            <?= $this->Html->link(__('New Receta'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
         </div>
     </aside>
     <div class="column column-80">
         <div class="receta view content">
-            <h3><?= h($recetum->nombre) ?></h3>
+            <h3><?= h($receta->nombre) ?></h3>
             <table>
                 <tr>
                     <th><?= __('Nombre') ?></th>
-                    <td><?= h($recetum->nombre) ?></td>
+                    <td><?= h($receta->nombre) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Id Receta') ?></th>
-                    <td><?= $this->Number->format($recetum->id_receta) ?></td>
+                    <td><?= $this->Number->format($receta->id_receta) ?></td>
                 </tr>
             </table>
             <div class="text">
                 <strong><?= __('Descripcion') ?></strong>
                 <blockquote>
-                    <?= $this->Text->autoParagraph(h($recetum->descripcion)); ?>
+                    <?= $this->Text->autoParagraph(h($receta->descripcion)); ?>
                 </blockquote>
             </div>
             <div class="text">
                 <strong><?= __('Ingredientes') ?></strong>
                 <blockquote>
-                    <?= $this->Text->autoParagraph(h($recetum->ingredientes)); ?>
+                    <?= $this->Text->autoParagraph(h($receta->ingredientes)); ?>
                 </blockquote>
             </div>
             <div class="related">
                 <h4><?= __('Related Producto') ?></h4>
-                <?php if (!empty($recetum->producto)) : ?>
+                <?php if (!empty($receta->producto)) : ?>
                 <div class="table-responsive">
                     <table>
                         <tr>
@@ -55,7 +55,7 @@
                             <th><?= __('Id Categoria') ?></th>
                             <th class="actions"><?= __('Actions') ?></th>
                         </tr>
-                        <?php foreach ($recetum->producto as $producto) : ?>
+                        <?php foreach ($receta->producto as $producto) : ?>
                         <tr>
                             <td><?= h($producto->id_producto) ?></td>
                             <td><?= h($producto->nombre) ?></td>

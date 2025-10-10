@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Categorium $categorium
+ * @var \App\Model\Entity\Categoria $categoria
  */
 ?>
 <div class="row">
@@ -13,9 +13,9 @@
     </aside>
     <div class="column column-80">
         <div class="categoria form content">
-            <?= $this->Form->create($categorium) ?>
+            <?= $this->Form->create($categoria) ?>
             <fieldset>
-                <legend><?= __('Add Categorium') ?></legend>
+                <legend><?= __('Add Categoria') ?></legend>
                 <?php
                     echo $this->Form->control('nombre');
                 ?>

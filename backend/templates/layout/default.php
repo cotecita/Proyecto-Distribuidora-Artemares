@@ -32,15 +32,57 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
+    <style>
+        /* Menú superior fijo */
+        nav.top-nav {
+            background-color: #1e293b;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav.top-nav a {
+            color: #f8fafc;
+            text-decoration: none;
+            margin-right: 20px;
+            font-weight: bold;
+        }
+
+        nav.top-nav a:hover {
+            color: #38bdf8;
+        }
+
+        nav.top-nav .brand {
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        main.main {
+            margin-top: 80px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body>
     <nav class="top-nav">
-        <div class="top-nav-title">
-            <a href="<?= $this->Url->build('/') ?>"><span>Cake</span>PHP</a>
+        <div class="brand">
+            <a href="<?= $this->Url->build(['controller' => 'Dashboard', 'action' => 'index']) ?>">Artemares</a>
         </div>
-        <div class="top-nav-links">
-            <a target="_blank" rel="noopener" href="https://book.cakephp.org/5/">Documentation</a>
-            <a target="_blank" rel="noopener" href="https://api.cakephp.org/">API</a>
+        <div class="links">
+            <a href="<?= $this->Url->build(['controller' => 'Dashboard', 'action' => 'index']) ?>">Inicio</a>
+            <a href="<?= $this->Url->build(['controller' => 'Producto', 'action' => 'index']) ?>">Productos</a>
+            <a href="<?= $this->Url->build(['controller' => 'Receta', 'action' => 'index']) ?>">Recetas</a>
+            <a href="<?= $this->Url->build(['controller' => 'Pedido', 'action' => 'index']) ?>">Pedidos</a>
         </div>
     </nav>
     <main class="main">

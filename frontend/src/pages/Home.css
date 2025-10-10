@@ -44,7 +44,7 @@
   max-width: 1200px;
   width: 90%;
   margin: 0 auto;
-  background: none; /* Quitamos el fondo oscuro */
+  background: none; 
   box-shadow: none;
   padding: 0;
 }
@@ -87,6 +87,7 @@
 
   .hero-image img {
     width: 90%;
+    margin-top: 40px;
   }
 
   .hero-text {

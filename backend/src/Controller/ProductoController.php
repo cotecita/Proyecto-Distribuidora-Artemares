@@ -53,6 +53,15 @@ class ProductoController extends AppController
             }
             $this->Flash->error(__('The producto could not be saved. Please, try again.'));
         }
+
+        // Aquí obtenemos las categorías como 'id => nombre'
+        $categoria = $this->Producto->Categoria->find('list', [
+            'keyField' => 'id_categoria',
+            'valueField' => 'nombre'
+        ])->order(['nombre' => 'ASC']);
+        
+        $this->set(compact('producto', 'categoria'));
+
         $receta = $this->Producto->Receta->find('list', limit: 200)->all();
         $this->set(compact('producto', 'receta'));
     }
@@ -76,6 +85,14 @@ class ProductoController extends AppController
             }
             $this->Flash->error(__('The producto could not be saved. Please, try again.'));
         }
+
+        $categoria = $this->Producto->Categoria->find('list', [
+            'keyField' => 'id_categoria',
+            'valueField' => 'nombre'
+        ])->order(['nombre' => 'ASC']);
+        
+        $this->set(compact('producto', 'categoria'));
+
         $receta = $this->Producto->Receta->find('list', limit: 200)->all();
         $this->set(compact('producto', 'receta'));
     }

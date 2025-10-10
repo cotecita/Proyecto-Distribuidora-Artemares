@@ -43,6 +43,11 @@ class ProductoTable extends Table
         $this->setDisplayField('nombre');
         $this->setPrimaryKey('id_producto');
 
+        $this->belongsTo('Categoria', [
+            'foreignKey' => 'id_categoria',
+            'joinType' => 'INNER',
+        ]);
+
         $this->belongsToMany('Receta', [
             'foreignKey' => 'id_producto',
             'targetForeignKey' => 'id_receta',

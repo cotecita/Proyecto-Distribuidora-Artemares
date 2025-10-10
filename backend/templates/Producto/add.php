@@ -24,7 +24,12 @@
                     echo $this->Form->control('stock');
                     echo $this->Form->control('cantidad_formato');
                     echo $this->Form->control('formato');
-                    echo $this->Form->control('id_categoria');
+                    //echo $this->Form->control('id_categoria');
+                    echo $this->Form->control('id_categoria', [
+                        'type' => 'select',
+                        'options' => $categoria,
+                        'empty' => 'Selecciona una categoría'
+                    ]);
                     //echo $this->Form->control('receta._ids', ['options' => $receta]);
                 ?>
             </fieldset>

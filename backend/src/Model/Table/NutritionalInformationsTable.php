@@ -112,4 +112,5 @@ class NutritionalInformationsTable extends Table
 
         return $rules;
     }
+
 }

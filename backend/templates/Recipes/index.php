@@ -5,17 +5,17 @@
  */
 ?>
 <div class="recipes index content">
-    <?= $this->Html->link(__('New Recipe'), ['action' => 'add'], ['class' => 'button float-right']) ?>
-    <h3><?= __('Recipes') ?></h3>
+    <?= $this->Html->link(__('Añadir Receta'), ['action' => 'add'], ['class' => 'button float-right']) ?>
+    <h3><?= __('Recetas') ?></h3>
     <div class="table-responsive">
         <table>
             <thead>
                 <tr>
                     <th><?= $this->Paginator->sort('id') ?></th>
-                    <th><?= $this->Paginator->sort('name') ?></th>
-                    <th><?= $this->Paginator->sort('created') ?></th>
-                    <th><?= $this->Paginator->sort('modified') ?></th>
-                    <th class="actions"><?= __('Actions') ?></th>
+                    <th><?= $this->Paginator->sort('name', ['label' => 'Nombre']) ?></th>
+                    <th><?= $this->Paginator->sort('created', ['label' => 'Creada']) ?></th>
+                    <th><?= $this->Paginator->sort('modified', ['label' => 'Modificada']) ?></th>
+                    <th class="actions"><?= __('Acciones') ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -26,10 +26,10 @@
                     <td><?= h($recipe->created) ?></td>
                     <td><?= h($recipe->modified) ?></td>
                     <td class="actions">
-                        <?= $this->Html->link(__('View'), ['action' => 'view', $recipe->id]) ?>
-                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $recipe->id]) ?>
+                        <?= $this->Html->link(__('Ver'), ['action' => 'view', $recipe->id]) ?>
+                        <?= $this->Html->link(__('Editar'), ['action' => 'edit', $recipe->id]) ?>
                         <?= $this->Form->postLink(
-                            __('Delete'),
+                            __('Eliminar'),
                             ['action' => 'delete', $recipe->id],
                             [
                                 'method' => 'delete',

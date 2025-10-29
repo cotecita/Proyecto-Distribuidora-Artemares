@@ -5,19 +5,19 @@
  */
 ?>
 <div class="administrators index content">
-    <?= $this->Html->link(__('New Administrator'), ['action' => 'add'], ['class' => 'button float-right']) ?>
-    <h3><?= __('Administrators') ?></h3>
+    <?= $this->Html->link(__('Añadir Administrador'), ['action' => 'add'], ['class' => 'button float-right']) ?>
+    <h3><?= __('Administradores') ?></h3>
     <div class="table-responsive">
         <table>
             <thead>
                 <tr>
                     <th><?= $this->Paginator->sort('id') ?></th>
-                    <th><?= $this->Paginator->sort('username') ?></th>
-                    <th><?= $this->Paginator->sort('email') ?></th>
-                    <th><?= $this->Paginator->sort('full_name') ?></th>
-                    <th><?= $this->Paginator->sort('created') ?></th>
-                    <th><?= $this->Paginator->sort('modified') ?></th>
-                    <th class="actions"><?= __('Actions') ?></th>
+                    <th><?= $this->Paginator->sort('username', ['label' => 'Usuario']) ?></th>
+                    <th><?= $this->Paginator->sort('email', ['label' => 'Correo']) ?></th>
+                    <th><?= $this->Paginator->sort('full_name', ['label' => 'Nombre']) ?></th>
+                    <th><?= $this->Paginator->sort('created', ['label' => 'Creado']) ?></th>
+                    <th><?= $this->Paginator->sort('modified', ['label' => 'Modificado']) ?></th>
+                    <th class="actions"><?= __('Acciones') ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -30,10 +30,10 @@
                     <td><?= h($administrator->created) ?></td>
                     <td><?= h($administrator->modified) ?></td>
                     <td class="actions">
-                        <?= $this->Html->link(__('View'), ['action' => 'view', $administrator->id]) ?>
-                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $administrator->id]) ?>
+                        <?= $this->Html->link(__('Ver'), ['action' => 'view', $administrator->id]) ?>
+                        <?= $this->Html->link(__('Editar'), ['action' => 'edit', $administrator->id]) ?>
                         <?= $this->Form->postLink(
-                            __('Delete'),
+                            __('Eliminar'),
                             ['action' => 'delete', $administrator->id],
                             [
                                 'method' => 'delete',

@@ -5,22 +5,22 @@
  */
 ?>
 <div class="products index content">
-    <?= $this->Html->link(__('New Product'), ['action' => 'add'], ['class' => 'button float-right']) ?>
-    <h3><?= __('Products') ?></h3>
+    <?= $this->Html->link(__('Añadir Producto'), ['action' => 'add'], ['class' => 'button float-right']) ?>
+    <h3><?= __('Productos') ?></h3>
     <div class="table-responsive">
         <table>
             <thead>
                 <tr>
                     <th><?= $this->Paginator->sort('id') ?></th>
-                    <th><?= $this->Paginator->sort('name') ?></th>
-                    <th><?= $this->Paginator->sort('price') ?></th>
-                    <th><?= $this->Paginator->sort('stock') ?></th>
-                    <th><?= $this->Paginator->sort('unit_quantity') ?></th>
-                    <th><?= $this->Paginator->sort('unit') ?></th>
-                    <th><?= $this->Paginator->sort('category_id') ?></th>
-                    <th><?= $this->Paginator->sort('created') ?></th>
-                    <th><?= $this->Paginator->sort('modified') ?></th>
-                    <th class="actions"><?= __('Actions') ?></th>
+                    <th><?= $this->Paginator->sort('name', ['label' => 'Nombre']) ?></th>
+                    <th><?= $this->Paginator->sort('price', ['label' => 'Precio']) ?></th>
+                    <th><?= $this->Paginator->sort('stock', ['label' => 'Stock']) ?></th>
+                    <th><?= $this->Paginator->sort('unit_quantity', ['label' => 'Formato']) ?></th>
+                    <th><?= $this->Paginator->sort('unit', ['label' => 'Unidad']) ?></th>
+                    <th><?= $this->Paginator->sort('category_id', ['label' => 'Categoría']) ?></th>
+                    <th><?= $this->Paginator->sort('created', ['label' => 'Creado']) ?></th>
+                    <th><?= $this->Paginator->sort('modified', ['label' => 'Modificado']) ?></th>
+                    <th class="actions"><?= __('Acciones') ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -36,10 +36,10 @@
                     <td><?= h($product->created) ?></td>
                     <td><?= h($product->modified) ?></td>
                     <td class="actions">
-                        <?= $this->Html->link(__('View'), ['action' => 'view', $product->id]) ?>
-                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $product->id]) ?>
+                        <?= $this->Html->link(__('Ver'), ['action' => 'view', $product->id]) ?>
+                        <?= $this->Html->link(__('Editar'), ['action' => 'edit', $product->id]) ?>
                         <?= $this->Form->postLink(
-                            __('Delete'),
+                            __('Eliminar'),
                             ['action' => 'delete', $product->id],
                             [
                                 'method' => 'delete',

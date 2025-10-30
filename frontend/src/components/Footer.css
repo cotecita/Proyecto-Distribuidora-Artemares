@@ -1,0 +1,61 @@
+/* Estilos generales del footer */
+.footer {
+  width: 100%;
+  background-color: #0A3D62; /* azul marino */
+  color: #F8FAFC; /* texto blanco claro */
+  padding: 1rem 0; /* altura compacta */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
+  font-size: 0.9rem;
+}
+
+/* Contenedor principal del contenido del footer */
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 0.6rem;
+}
+
+/* Estilo de cada línea de contacto */
+.footer-content p {
+  margin: 0;
+  color: #E6F7FF;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+}
+
+/* Destacar las etiquetas (Dirección, Teléfono, Correo) */
+.footer-content p strong {
+  color: #FFFFFF;
+}
+
+/* Línea inferior del footer */
+.footer-bottom {
+  width: 100%;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #E6F7FF; /* color más claro y visible */
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  padding-top: 0.5rem;
+}
+
+.footer-bottom p {
+  color: #FFFFFF !important;
+}
+/* Ajuste para pantallas pequeñas */
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+}

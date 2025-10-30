@@ -1,0 +1,22 @@
+2025-10-30 04:03:21 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 04:03:22 error: [Cake\Database\Exception\MissingExtensionException] Database driver `Cake\Database\Driver\Mysql` cannot be used due to a missing PHP extension or unmet dependency. Requested by connection `test` in C:\Users\Franco\Documents\GitHub\Proyecto-Distribuidora-Artemares\backend\vendor\cakephp\cakephp\src\Database\Connection.php on line 177
+Exception Attributes: array (
+  'driver' => 'Cake\\Database\\Driver\\Mysql',
+  'name' => 'test',
+)
+Stack Trace:
+- CORE\src\Database\Connection.php:127
+- CORE\src\Datasource\ConnectionRegistry.php:82
+- CORE\src\Core\ObjectRegistry.php:115
+- CORE\src\Datasource\ConnectionManager.php:212
+- ROOT\vendor\cakephp\debug_kit\src\Panel\SqlLogPanel.php:66
+- ROOT\vendor\cakephp\debug_kit\src\Panel\SqlLogPanel.php:52
+- ROOT\vendor\cakephp\debug_kit\src\ToolbarService.php:232
+- ROOT\vendor\cakephp\debug_kit\src\Middleware\DebugKitMiddleware.php:58
+- CORE\src\Http\Runner.php:82
+- CORE\src\Http\Runner.php:60
+- CORE\src\Http\Server.php:104
+- ROOT\webroot\index.php:37
+- [main]:
+
+Request URL: /

@@ -288,7 +288,7 @@ return [
             /*
              * For MariaDB/MySQL the internal default changed from utf8 to utf8mb4, aka full utf-8 support
              */
-            'encoding' => 'utf8mb4',
+            'encoding' => 'UTF8',
 
             /*
              * If your MySQL server is configured with `skip-character-set-client-handshake`

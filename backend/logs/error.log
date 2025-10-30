@@ -265,3 +265,150 @@ Stack Trace:
 Request URL: /
 2025-10-30 05:36:22 warning: Unable to save request. Check your debug_kit datasource connection or ensure that PDO SQLite extension is enabled.
 2025-10-30 05:36:22 warning: The datasource configuration `debug_kit` was not found.
+2025-10-30 05:39:34 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:39:36 error: [PDOException] SQLSTATE[22023]: Invalid parameter value: 7 ERROR:  valor no válido para el parámetro «client_encoding»: «utf8mb4» in C:\Users\Franco\Documents\GitHub\Proyecto-Distribuidora-Artemares\backend\vendor\cakephp\cakephp\src\Database\Driver\Postgres.php on line 164
+Stack Trace:
+- CORE\src\Database\Driver\Postgres.php:164
+- CORE\src\Database\Driver\Postgres.php:120
+- CORE\src\Database\Schema\SchemaDialect.php:60
+- CORE\src\Database\Driver\Postgres.php:152
+- CORE\src\Database\Schema\Collection.php:97
+- CORE\src\Database\Schema\Collection.php:87
+- CORE\src\Database\Schema\CachedCollection.php:107
+- CORE\src\ORM\Table.php:526
+- CORE\src\ORM\Query\CommonQueryTrait.php:48
+- CORE\src\ORM\Query\SelectQuery.php:202
+- CORE\src\ORM\Query\QueryFactory.php:34
+- CORE\src\ORM\Table.php:1748
+- CORE\src\ORM\Table.php:1279
+- APP/Controller\ProductsController.php:20
+- CORE\src\Controller\Controller.php:505
+- CORE\src\Controller\ControllerFactory.php:166
+- CORE\src\Controller\ControllerFactory.php:141
+- CORE\src\Http\BaseApplication.php:362
+- CORE\src\Http\Runner.php:86
+- CORE\src\Http\Middleware\CsrfProtectionMiddleware.php:159
+- CORE\src\Http\Runner.php:82
+- CORE\src\Http\Middleware\BodyParserMiddleware.php:157
+- CORE\src\Http\Runner.php:82
+- CORE\src\Routing\Middleware\RoutingMiddleware.php:117
+- CORE\src\Http\Runner.php:82
+- CORE\src\Routing\Middleware\AssetMiddleware.php:70
+- CORE\src\Http\Runner.php:82
+- CORE\src\Error\Middleware\ErrorHandlerMiddleware.php:115
+- CORE\src\Http\Runner.php:82
+- ROOT\vendor\cakephp\debug_kit\src\Middleware\DebugKitMiddleware.php:60
+- CORE\src\Http\Runner.php:82
+- CORE\src\Http\Runner.php:60
+- CORE\src\Http\Server.php:104
+- ROOT\webroot\index.php:37
+- [main]:
+
+Request URL: /
+2025-10-30 05:39:38 warning: Unable to save request. Check your debug_kit datasource connection or ensure that PDO SQLite extension is enabled.
+2025-10-30 05:39:38 warning: The datasource configuration `debug_kit` was not found.
+2025-10-30 05:40:40 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:40:40 error: [PDOException] SQLSTATE[22023]: Invalid parameter value: 7 ERROR:  valor no válido para el parámetro «client_encoding»: «utf8mb4» in C:\Users\Franco\Documents\GitHub\Proyecto-Distribuidora-Artemares\backend\vendor\cakephp\cakephp\src\Database\Driver\Postgres.php on line 164
+Stack Trace:
+- CORE\src\Database\Driver\Postgres.php:164
+- CORE\src\Database\Driver\Postgres.php:120
+- CORE\src\Database\Schema\SchemaDialect.php:60
+- CORE\src\Database\Driver\Postgres.php:152
+- CORE\src\Database\Schema\Collection.php:97
+- CORE\src\Database\Schema\Collection.php:87
+- CORE\src\Database\Schema\CachedCollection.php:107
+- CORE\src\ORM\Table.php:526
+- CORE\src\ORM\Query\CommonQueryTrait.php:48
+- CORE\src\ORM\Query\SelectQuery.php:202
+- CORE\src\ORM\Query\QueryFactory.php:34
+- CORE\src\ORM\Table.php:1748
+- CORE\src\ORM\Table.php:1279
+- APP/Controller\ProductsController.php:20
+- CORE\src\Controller\Controller.php:505
+- CORE\src\Controller\ControllerFactory.php:166
+- CORE\src\Controller\ControllerFactory.php:141
+- CORE\src\Http\BaseApplication.php:362
+- CORE\src\Http\Runner.php:86
+- CORE\src\Http\Middleware\CsrfProtectionMiddleware.php:159
+- CORE\src\Http\Runner.php:82
+- CORE\src\Http\Middleware\BodyParserMiddleware.php:157
+- CORE\src\Http\Runner.php:82
+- CORE\src\Routing\Middleware\RoutingMiddleware.php:117
+- CORE\src\Http\Runner.php:82
+- CORE\src\Routing\Middleware\AssetMiddleware.php:70
+- CORE\src\Http\Runner.php:82
+- CORE\src\Error\Middleware\ErrorHandlerMiddleware.php:115
+- CORE\src\Http\Runner.php:82
+- ROOT\vendor\cakephp\debug_kit\src\Middleware\DebugKitMiddleware.php:60
+- CORE\src\Http\Runner.php:82
+- CORE\src\Http\Runner.php:60
+- CORE\src\Http\Server.php:104
+- ROOT\webroot\index.php:37
+- [main]:
+
+Request URL: /
+2025-10-30 05:40:40 warning: Unable to save request. Check your debug_kit datasource connection or ensure that PDO SQLite extension is enabled.
+2025-10-30 05:40:40 warning: The datasource configuration `debug_kit` was not found.
+2025-10-30 05:40:57 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:40:57 error: [PDOException] SQLSTATE[22023]: Invalid parameter value: 7 ERROR:  valor no válido para el parámetro «client_encoding»: «utf8mb4» in C:\Users\Franco\Documents\GitHub\Proyecto-Distribuidora-Artemares\backend\vendor\cakephp\cakephp\src\Database\Driver\Postgres.php on line 164
+Stack Trace:
+- CORE\src\Database\Driver\Postgres.php:164
+- CORE\src\Database\Driver\Postgres.php:120
+- CORE\src\Database\Schema\SchemaDialect.php:60
+- CORE\src\Database\Driver\Postgres.php:152
+- CORE\src\Database\Schema\Collection.php:97
+- CORE\src\Database\Schema\Collection.php:87
+- CORE\src\Database\Schema\CachedCollection.php:107
+- CORE\src\ORM\Table.php:526
+- CORE\src\ORM\Query\CommonQueryTrait.php:48
+- CORE\src\ORM\Query\SelectQuery.php:202
+- CORE\src\ORM\Query\QueryFactory.php:34
+- CORE\src\ORM\Table.php:1748
+- CORE\src\ORM\Table.php:1279
+- APP/Controller\ProductsController.php:20
+- CORE\src\Controller\Controller.php:505
+- CORE\src\Controller\ControllerFactory.php:166
+- CORE\src\Controller\ControllerFactory.php:141
+- CORE\src\Http\BaseApplication.php:362
+- CORE\src\Http\Runner.php:86
+- CORE\src\Http\Middleware\CsrfProtectionMiddleware.php:159
+- CORE\src\Http\Runner.php:82
+- CORE\src\Http\Middleware\BodyParserMiddleware.php:157
+- CORE\src\Http\Runner.php:82
+- CORE\src\Routing\Middleware\RoutingMiddleware.php:117
+- CORE\src\Http\Runner.php:82
+- CORE\src\Routing\Middleware\AssetMiddleware.php:70
+- CORE\src\Http\Runner.php:82
+- CORE\src\Error\Middleware\ErrorHandlerMiddleware.php:115
+- CORE\src\Http\Runner.php:82
+- ROOT\vendor\cakephp\debug_kit\src\Middleware\DebugKitMiddleware.php:60
+- CORE\src\Http\Runner.php:82
+- CORE\src\Http\Runner.php:60
+- CORE\src\Http\Server.php:104
+- ROOT\webroot\index.php:37
+- [main]:
+
+Request URL: /
+2025-10-30 05:40:57 warning: Unable to save request. Check your debug_kit datasource connection or ensure that PDO SQLite extension is enabled.
+2025-10-30 05:40:57 warning: The datasource configuration `debug_kit` was not found.
+2025-10-30 05:41:37 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:41:40 warning: Unable to save request. Check your debug_kit datasource connection or ensure that PDO SQLite extension is enabled.
+2025-10-30 05:41:40 warning: The datasource configuration `debug_kit` was not found.
+2025-10-30 05:41:43 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:41:43 warning: Unable to save request. Check your debug_kit datasource connection or ensure that PDO SQLite extension is enabled.
+2025-10-30 05:41:43 warning: The datasource configuration `debug_kit` was not found.
+2025-10-30 05:41:44 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:41:44 warning: Unable to save request. Check your debug_kit datasource connection or ensure that PDO SQLite extension is enabled.
+2025-10-30 05:41:44 warning: The datasource configuration `debug_kit` was not found.
+2025-10-30 05:41:45 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:41:45 warning: Unable to save request. Check your debug_kit datasource connection or ensure that PDO SQLite extension is enabled.
+2025-10-30 05:41:45 warning: The datasource configuration `debug_kit` was not found.
+2025-10-30 05:41:46 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:41:46 warning: Unable to save request. Check your debug_kit datasource connection or ensure that PDO SQLite extension is enabled.
+2025-10-30 05:41:46 warning: The datasource configuration `debug_kit` was not found.
+2025-10-30 05:41:46 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:41:46 warning: Unable to save request. Check your debug_kit datasource connection or ensure that PDO SQLite extension is enabled.
+2025-10-30 05:41:46 warning: The datasource configuration `debug_kit` was not found.
+2025-10-30 05:41:47 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:41:47 warning: Unable to save request. Check your debug_kit datasource connection or ensure that PDO SQLite extension is enabled.
+2025-10-30 05:41:47 warning: The datasource configuration `debug_kit` was not found.

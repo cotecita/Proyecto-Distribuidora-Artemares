@@ -46,7 +46,7 @@ return [
             'username' => 'postgres',
             'password' => '03061892',
             'database' => 'artemares_db',
-            'encoding' => 'utf8mb4',
+            'encoding' => 'UTF8',
             'timezone' => 'UTC',
             'flags' => [],
         ],

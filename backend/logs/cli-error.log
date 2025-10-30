@@ -1,0 +1,21 @@
+2025-10-30 05:13:49 error: [TypeError] Cake\Utility\Security::setSalt(): Argument #1 ($salt) must be of type string, null given, called in C:\Users\Franco\Documents\GitHub\Proyecto-Distribuidora-Artemares\backend\config\bootstrap.php on line 188 in C:\Users\Franco\Documents\GitHub\Proyecto-Distribuidora-Artemares\backend\vendor\cakephp\cakephp\src\Utility\Security.php on line 303
+Stack Trace:
+- ROOT\config\bootstrap.php:188
+- CORE\src\Http\BaseApplication.php:186
+- APP/Application.php:49
+- CORE\src\Console\CommandRunner.php:190
+- CORE\src\Console\CommandRunner.php:137
+- ROOT\bin\cake.php:10
+- [main]:
+
+2025-10-30 05:15:01 error: [TypeError] Cake\Utility\Security::setSalt(): Argument #1 ($salt) must be of type string, null given, called in C:\Users\Franco\Documents\GitHub\Proyecto-Distribuidora-Artemares\backend\config\bootstrap.php on line 188 in C:\Users\Franco\Documents\GitHub\Proyecto-Distribuidora-Artemares\backend\vendor\cakephp\cakephp\src\Utility\Security.php on line 303
+Stack Trace:
+- ROOT\config\bootstrap.php:188
+- CORE\src\Http\BaseApplication.php:186
+- APP/Application.php:49
+- CORE\src\Console\CommandRunner.php:190
+- CORE\src\Console\CommandRunner.php:137
+- ROOT\bin\cake.php:10
+- [main]:
+
+2025-10-30 05:18:33 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.

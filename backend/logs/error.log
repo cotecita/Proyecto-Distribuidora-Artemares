@@ -1,0 +1,37 @@
+2025-10-30 05:18:38 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:18:38 error: [Cake\Database\Exception\MissingExtensionException] Database driver `Cake\Database\Driver\Mysql` cannot be used due to a missing PHP extension or unmet dependency. Requested by connection `default` in C:\Users\Franco\Documents\GitHub\Proyecto-Distribuidora-Artemares\backend\vendor\cakephp\cakephp\src\Database\Connection.php on line 177
+Exception Attributes: array (
+  'driver' => 'Cake\\Database\\Driver\\Mysql',
+  'name' => 'default',
+)
+Stack Trace:
+- CORE\src\Database\Connection.php:127
+- CORE\src\Datasource\ConnectionRegistry.php:82
+- CORE\src\Core\ObjectRegistry.php:115
+- CORE\src\Datasource\ConnectionManager.php:212
+- ROOT\vendor\cakephp\debug_kit\src\Panel\SqlLogPanel.php:66
+- ROOT\vendor\cakephp\debug_kit\src\Panel\SqlLogPanel.php:52
+- ROOT\vendor\cakephp\debug_kit\src\ToolbarService.php:232
+- ROOT\vendor\cakephp\debug_kit\src\Middleware\DebugKitMiddleware.php:58
+- CORE\src\Http\Runner.php:82
+- CORE\src\Http\Runner.php:60
+- CORE\src\Http\Server.php:104
+- ROOT\webroot\index.php:37
+- [main]:
+
+Request URL: /
+2025-10-30 05:18:38 warning: [Cake\View\Exception\MissingTemplateException] Template file `Error\error500.php` could not be found.
+
+The following paths were searched:
+
+- `C:\Users\Franco\Documents\GitHub\Proyecto-Distribuidora-Artemares\backend\templates\Error\error500.php`
+- `C:\Users\Franco\Documents\GitHub\Proyecto-Distribuidora-Artemares\backend\vendor\cakephp\cakephp\templates\Error\error500.php`
+ (C:\Users\Franco\Documents\GitHub\Proyecto-Distribuidora-Artemares\backend\vendor\cakephp\cakephp\src\View\View.php:1376) in C:\Users\Franco\Documents\GitHub\Proyecto-Distribuidora-Artemares\backend\vendor\cakephp\cakephp\src\Error\ExceptionTrap.php on line 378
+Trace:
+Cake\Error\ErrorTrap->handleError() [internal], line ??
+C:\Users\Franco\Documents\GitHub\Proyecto-Distribuidora-Artemares\backend\vendor\cakephp\cakephp\src\Error\ExceptionTrap.php C:\Users\Franco\Documents\GitHub\Proyecto-Distribuidora-Artemares\backend\vendor\cakephp\cakephp\src\Error\ExceptionTrap.php, line 378
+Cake\Error\ExceptionTrap->logInternalError() C:\Users\Franco\Documents\GitHub\Proyecto-Distribuidora-Artemares\backend\vendor\cakephp\cakephp\src\Error\ExceptionTrap.php, line 242
+Cake\Error\ExceptionTrap->handleException() [internal], line ??
+[main]
+
+Request URL: /

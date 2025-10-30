@@ -1,8 +1,8 @@
 :root {
-  --primary1: #6586ea;
-  --primary2: #88b4e7;
-  --hover1: #2d4aa1;
-  --hover2: #4c7bb0;
+  --primary1: #ffffff;
+  --primary2: #ffffff;
+  --hover1: #d0d1d2;
+  --hover2: #a6a4a4;
 }
 
 /* Botón base */
@@ -15,11 +15,11 @@
   outline: none;
   font-weight: 500;
   font-size: 1.0rem;
-  color: white;
+  color: #4ba7f3;
   background: linear-gradient(135deg, var(--primary1), var(--primary2));
   transition: all 0.35s ease;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-  border-radius: 0px; 
+  border-radius: 5px; 
   position: relative;
   overflow: hidden;
   text-transform: uppercase;

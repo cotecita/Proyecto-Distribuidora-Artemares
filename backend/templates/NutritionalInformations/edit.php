@@ -1,0 +1,40 @@
+<?php
+/**
+ * @var \App\View\AppView $this
+ * @var \App\Model\Entity\NutritionalInformation $nutritionalInformation
+ * @var string[]|\Cake\Collection\CollectionInterface $products
+ */
+?>
+<div class="row">
+    <aside class="column">
+        <div class="side-nav">
+            <h4 class="heading"><?= __('Actions') ?></h4>
+            <?= $this->Form->postLink(
+                __('Delete'),
+                ['action' => 'delete', $nutritionalInformation->id],
+                ['confirm' => __('Are you sure you want to delete # {0}?', $nutritionalInformation->id), 'class' => 'side-nav-item']
+            ) ?>
+            <?= $this->Html->link(__('List Nutritional Informations'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
+        </div>
+    </aside>
+    <div class="column column-80">
+        <div class="nutritionalInformations form content">
+            <?= $this->Form->create($nutritionalInformation) ?>
+            <fieldset>
+                <legend><?= __('Edit Nutritional Information') ?></legend>
+                <?php
+                    echo $this->Form->control('product_id', ['options' => $products]);
+                    echo $this->Form->control('measurement');
+                    echo $this->Form->control('calories');
+                    echo $this->Form->control('protein');
+                    echo $this->Form->control('total_fat');
+                    echo $this->Form->control('carbohydrates');
+                    echo $this->Form->control('sodium');
+                    echo $this->Form->control('cholesterol');
+                ?>
+            </fieldset>
+            <?= $this->Form->button(__('Submit')) ?>
+            <?= $this->Form->end() ?>
+        </div>
+    </div>
+</div>

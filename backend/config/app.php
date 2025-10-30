@@ -2,7 +2,7 @@
 
 use Cake\Cache\Engine\FileEngine;
 use Cake\Database\Connection;
-use Cake\Database\Driver\Mysql;
+use Cake\Database\Driver\Postgres;
 use Cake\Log\Engine\FileLog;
 use Cake\Mailer\Transport\MailTransport;
 use function Cake\Core\env;
@@ -323,17 +323,19 @@ return [
          * The test connection is used during the test suite.
          */
         'test' => [
-            'className' => Connection::class,
-            'driver' => Mysql::class,
+            'className' => 'Cake\Database\Connection',
+            'driver' => 'Cake\Database\Driver\Postgres',
             'persistent' => false,
+            'host' => 'localhost',
+            'port' => '5432',
+            'username' => 'postgres',
+            'password' => '03061892',
+            'database' => 'artemares_test',
+            'encoding' => 'utf8',
             'timezone' => 'UTC',
-            'encoding' => 'utf8mb4',
             'flags' => [],
-            'cacheMetadata' => true,
-            'quoteIdentifiers' => false,
-            'log' => false,
-            //'init' => ['SET GLOBAL innodb_stats_on_metadata = 0'],
         ],
+
     ],
 
     /*

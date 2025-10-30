@@ -35,3 +35,233 @@ Cake\Error\ExceptionTrap->handleException() [internal], line ??
 [main]
 
 Request URL: /
+2025-10-30 05:21:45 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:21:46 error: [Cake\Database\Exception\MissingExtensionException] Database driver `Cake\Database\Driver\Mysql` cannot be used due to a missing PHP extension or unmet dependency. Requested by connection `default` in C:\Users\Franco\Documents\GitHub\Proyecto-Distribuidora-Artemares\backend\vendor\cakephp\cakephp\src\Database\Connection.php on line 177
+Exception Attributes: array (
+  'driver' => 'Cake\\Database\\Driver\\Mysql',
+  'name' => 'default',
+)
+Stack Trace:
+- CORE\src\Database\Connection.php:127
+- CORE\src\Datasource\ConnectionRegistry.php:82
+- CORE\src\Core\ObjectRegistry.php:115
+- CORE\src\Datasource\ConnectionManager.php:212
+- ROOT\vendor\cakephp\debug_kit\src\Panel\SqlLogPanel.php:66
+- ROOT\vendor\cakephp\debug_kit\src\Panel\SqlLogPanel.php:52
+- ROOT\vendor\cakephp\debug_kit\src\ToolbarService.php:232
+- ROOT\vendor\cakephp\debug_kit\src\Middleware\DebugKitMiddleware.php:58
+- CORE\src\Http\Runner.php:82
+- CORE\src\Http\Runner.php:60
+- CORE\src\Http\Server.php:104
+- ROOT\webroot\index.php:37
+- [main]:
+
+Request URL: /
+2025-10-30 05:22:00 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:22:00 error: [Cake\Database\Exception\MissingExtensionException] Database driver `Cake\Database\Driver\Mysql` cannot be used due to a missing PHP extension or unmet dependency. Requested by connection `default` in C:\Users\Franco\Documents\GitHub\Proyecto-Distribuidora-Artemares\backend\vendor\cakephp\cakephp\src\Database\Connection.php on line 177
+Exception Attributes: array (
+  'driver' => 'Cake\\Database\\Driver\\Mysql',
+  'name' => 'default',
+)
+Stack Trace:
+- CORE\src\Database\Connection.php:127
+- CORE\src\Datasource\ConnectionRegistry.php:82
+- CORE\src\Core\ObjectRegistry.php:115
+- CORE\src\Datasource\ConnectionManager.php:212
+- ROOT\vendor\cakephp\debug_kit\src\Panel\SqlLogPanel.php:66
+- ROOT\vendor\cakephp\debug_kit\src\Panel\SqlLogPanel.php:52
+- ROOT\vendor\cakephp\debug_kit\src\ToolbarService.php:232
+- ROOT\vendor\cakephp\debug_kit\src\Middleware\DebugKitMiddleware.php:58
+- CORE\src\Http\Runner.php:82
+- CORE\src\Http\Runner.php:60
+- CORE\src\Http\Server.php:104
+- ROOT\webroot\index.php:37
+- [main]:
+
+Request URL: /.well-known/appspecific/com.chrome.devtools.json
+2025-10-30 05:24:36 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:24:36 error: [Cake\Database\Exception\MissingExtensionException] Database driver `Cake\Database\Driver\Mysql` cannot be used due to a missing PHP extension or unmet dependency. Requested by connection `test` in C:\Users\Franco\Documents\GitHub\Proyecto-Distribuidora-Artemares\backend\vendor\cakephp\cakephp\src\Database\Connection.php on line 177
+Exception Attributes: array (
+  'driver' => 'Cake\\Database\\Driver\\Mysql',
+  'name' => 'test',
+)
+Stack Trace:
+- CORE\src\Database\Connection.php:127
+- CORE\src\Datasource\ConnectionRegistry.php:82
+- CORE\src\Core\ObjectRegistry.php:115
+- CORE\src\Datasource\ConnectionManager.php:212
+- ROOT\vendor\cakephp\debug_kit\src\Panel\SqlLogPanel.php:66
+- ROOT\vendor\cakephp\debug_kit\src\Panel\SqlLogPanel.php:52
+- ROOT\vendor\cakephp\debug_kit\src\ToolbarService.php:232
+- ROOT\vendor\cakephp\debug_kit\src\Middleware\DebugKitMiddleware.php:58
+- CORE\src\Http\Runner.php:82
+- CORE\src\Http\Runner.php:60
+- CORE\src\Http\Server.php:104
+- ROOT\webroot\index.php:37
+- [main]:
+
+Request URL: /
+2025-10-30 05:25:15 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:25:15 error: [Cake\Database\Exception\MissingExtensionException] Database driver `Cake\Database\Driver\Mysql` cannot be used due to a missing PHP extension or unmet dependency. Requested by connection `test` in C:\Users\Franco\Documents\GitHub\Proyecto-Distribuidora-Artemares\backend\vendor\cakephp\cakephp\src\Database\Connection.php on line 177
+Exception Attributes: array (
+  'driver' => 'Cake\\Database\\Driver\\Mysql',
+  'name' => 'test',
+)
+Stack Trace:
+- CORE\src\Database\Connection.php:127
+- CORE\src\Datasource\ConnectionRegistry.php:82
+- CORE\src\Core\ObjectRegistry.php:115
+- CORE\src\Datasource\ConnectionManager.php:212
+- ROOT\vendor\cakephp\debug_kit\src\Panel\SqlLogPanel.php:66
+- ROOT\vendor\cakephp\debug_kit\src\Panel\SqlLogPanel.php:52
+- ROOT\vendor\cakephp\debug_kit\src\ToolbarService.php:232
+- ROOT\vendor\cakephp\debug_kit\src\Middleware\DebugKitMiddleware.php:58
+- CORE\src\Http\Runner.php:82
+- CORE\src\Http\Runner.php:60
+- CORE\src\Http\Server.php:104
+- ROOT\webroot\index.php:37
+- [main]:
+
+Request URL: /
+2025-10-30 05:26:26 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:26:26 error: [Cake\Database\Exception\MissingExtensionException] Database driver `Cake\Database\Driver\Mysql` cannot be used due to a missing PHP extension or unmet dependency. Requested by connection `test` in C:\Users\Franco\Documents\GitHub\Proyecto-Distribuidora-Artemares\backend\vendor\cakephp\cakephp\src\Database\Connection.php on line 177
+Exception Attributes: array (
+  'driver' => 'Cake\\Database\\Driver\\Mysql',
+  'name' => 'test',
+)
+Stack Trace:
+- CORE\src\Database\Connection.php:127
+- CORE\src\Datasource\ConnectionRegistry.php:82
+- CORE\src\Core\ObjectRegistry.php:115
+- CORE\src\Datasource\ConnectionManager.php:212
+- ROOT\vendor\cakephp\debug_kit\src\Panel\SqlLogPanel.php:66
+- ROOT\vendor\cakephp\debug_kit\src\Panel\SqlLogPanel.php:52
+- ROOT\vendor\cakephp\debug_kit\src\ToolbarService.php:232
+- ROOT\vendor\cakephp\debug_kit\src\Middleware\DebugKitMiddleware.php:58
+- CORE\src\Http\Runner.php:82
+- CORE\src\Http\Runner.php:60
+- CORE\src\Http\Server.php:104
+- ROOT\webroot\index.php:37
+- [main]:
+
+Request URL: /
+2025-10-30 05:29:23 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:29:23 error: [Cake\Database\Exception\MissingExtensionException] Database driver `Cake\Database\Driver\Mysql` cannot be used due to a missing PHP extension or unmet dependency. Requested by connection `test` in C:\Users\Franco\Documents\GitHub\Proyecto-Distribuidora-Artemares\backend\vendor\cakephp\cakephp\src\Database\Connection.php on line 177
+Exception Attributes: array (
+  'driver' => 'Cake\\Database\\Driver\\Mysql',
+  'name' => 'test',
+)
+Stack Trace:
+- CORE\src\Database\Connection.php:127
+- CORE\src\Datasource\ConnectionRegistry.php:82
+- CORE\src\Core\ObjectRegistry.php:115
+- CORE\src\Datasource\ConnectionManager.php:212
+- ROOT\vendor\cakephp\debug_kit\src\Panel\SqlLogPanel.php:66
+- ROOT\vendor\cakephp\debug_kit\src\Panel\SqlLogPanel.php:52
+- ROOT\vendor\cakephp\debug_kit\src\ToolbarService.php:232
+- ROOT\vendor\cakephp\debug_kit\src\Middleware\DebugKitMiddleware.php:58
+- CORE\src\Http\Runner.php:82
+- CORE\src\Http\Runner.php:60
+- CORE\src\Http\Server.php:104
+- ROOT\webroot\index.php:37
+- [main]:
+
+Request URL: /
+2025-10-30 05:30:01 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:30:01 error: [Cake\Database\Exception\MissingExtensionException] Database driver `Cake\Database\Driver\Mysql` cannot be used due to a missing PHP extension or unmet dependency. Requested by connection `test` in C:\Users\Franco\Documents\GitHub\Proyecto-Distribuidora-Artemares\backend\vendor\cakephp\cakephp\src\Database\Connection.php on line 177
+Exception Attributes: array (
+  'driver' => 'Cake\\Database\\Driver\\Mysql',
+  'name' => 'test',
+)
+Stack Trace:
+- CORE\src\Database\Connection.php:127
+- CORE\src\Datasource\ConnectionRegistry.php:82
+- CORE\src\Core\ObjectRegistry.php:115
+- CORE\src\Datasource\ConnectionManager.php:212
+- ROOT\vendor\cakephp\debug_kit\src\Panel\SqlLogPanel.php:66
+- ROOT\vendor\cakephp\debug_kit\src\Panel\SqlLogPanel.php:52
+- ROOT\vendor\cakephp\debug_kit\src\ToolbarService.php:232
+- ROOT\vendor\cakephp\debug_kit\src\Middleware\DebugKitMiddleware.php:58
+- CORE\src\Http\Runner.php:82
+- CORE\src\Http\Runner.php:60
+- CORE\src\Http\Server.php:104
+- ROOT\webroot\index.php:37
+- [main]:
+
+Request URL: /
+2025-10-30 05:30:40 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:30:40 error: [Cake\Database\Exception\MissingExtensionException] Database driver `Cake\Database\Driver\Mysql` cannot be used due to a missing PHP extension or unmet dependency. Requested by connection `test` in C:\Users\Franco\Documents\GitHub\Proyecto-Distribuidora-Artemares\backend\vendor\cakephp\cakephp\src\Database\Connection.php on line 177
+Exception Attributes: array (
+  'driver' => 'Cake\\Database\\Driver\\Mysql',
+  'name' => 'test',
+)
+Stack Trace:
+- CORE\src\Database\Connection.php:127
+- CORE\src\Datasource\ConnectionRegistry.php:82
+- CORE\src\Core\ObjectRegistry.php:115
+- CORE\src\Datasource\ConnectionManager.php:212
+- ROOT\vendor\cakephp\debug_kit\src\Panel\SqlLogPanel.php:66
+- ROOT\vendor\cakephp\debug_kit\src\Panel\SqlLogPanel.php:52
+- ROOT\vendor\cakephp\debug_kit\src\ToolbarService.php:232
+- ROOT\vendor\cakephp\debug_kit\src\Middleware\DebugKitMiddleware.php:58
+- CORE\src\Http\Runner.php:82
+- CORE\src\Http\Runner.php:60
+- CORE\src\Http\Server.php:104
+- ROOT\webroot\index.php:37
+- [main]:
+
+Request URL: /
+2025-10-30 05:33:12 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:33:12 error: [Cake\Database\Exception\MissingExtensionException] Database driver `Cake\Database\Driver\Mysql` cannot be used due to a missing PHP extension or unmet dependency. Requested by connection `test` in C:\Users\Franco\Documents\GitHub\Proyecto-Distribuidora-Artemares\backend\vendor\cakephp\cakephp\src\Database\Connection.php on line 177
+Exception Attributes: array (
+  'driver' => 'Cake\\Database\\Driver\\Mysql',
+  'name' => 'test',
+)
+Stack Trace:
+- CORE\src\Database\Connection.php:127
+- CORE\src\Datasource\ConnectionRegistry.php:82
+- CORE\src\Core\ObjectRegistry.php:115
+- CORE\src\Datasource\ConnectionManager.php:212
+- ROOT\vendor\cakephp\debug_kit\src\Panel\SqlLogPanel.php:66
+- ROOT\vendor\cakephp\debug_kit\src\Panel\SqlLogPanel.php:52
+- ROOT\vendor\cakephp\debug_kit\src\ToolbarService.php:232
+- ROOT\vendor\cakephp\debug_kit\src\Middleware\DebugKitMiddleware.php:58
+- CORE\src\Http\Runner.php:82
+- CORE\src\Http\Runner.php:60
+- CORE\src\Http\Server.php:104
+- ROOT\webroot\index.php:37
+- [main]:
+
+Request URL: /
+2025-10-30 05:36:21 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:36:22 error: [Error] Class "App\Controller\AppController" not found in C:\Users\Franco\Documents\GitHub\Proyecto-Distribuidora-Artemares\backend\src\Controller\ProductsController.php on line 11
+Stack Trace:
+- ROOT\vendor\composer\ClassLoader.php:576
+- ROOT\vendor\composer\ClassLoader.php:427
+- [internal]:??
+- CORE\src\Core\App.php:162
+- CORE\src\Core\App.php:69
+- CORE\src\Controller\ControllerFactory.php:324
+- CORE\src\Controller\ControllerFactory.php:75
+- CORE\src\Http\BaseApplication.php:360
+- CORE\src\Http\Runner.php:86
+- CORE\src\Http\Middleware\CsrfProtectionMiddleware.php:159
+- CORE\src\Http\Runner.php:82
+- CORE\src\Http\Middleware\BodyParserMiddleware.php:157
+- CORE\src\Http\Runner.php:82
+- CORE\src\Routing\Middleware\RoutingMiddleware.php:117
+- CORE\src\Http\Runner.php:82
+- CORE\src\Routing\Middleware\AssetMiddleware.php:70
+- CORE\src\Http\Runner.php:82
+- CORE\src\Error\Middleware\ErrorHandlerMiddleware.php:115
+- CORE\src\Http\Runner.php:82
+- ROOT\vendor\cakephp\debug_kit\src\Middleware\DebugKitMiddleware.php:60
+- CORE\src\Http\Runner.php:82
+- CORE\src\Http\Runner.php:60
+- CORE\src\Http\Server.php:104
+- ROOT\webroot\index.php:37
+- [main]:
+
+Request URL: /
+2025-10-30 05:36:22 warning: Unable to save request. Check your debug_kit datasource connection or ensure that PDO SQLite extension is enabled.
+2025-10-30 05:36:22 warning: The datasource configuration `debug_kit` was not found.

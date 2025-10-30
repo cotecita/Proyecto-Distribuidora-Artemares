@@ -43,7 +43,7 @@
                             ['action' => 'delete', $product->id],
                             [
                                 'method' => 'delete',
-                                'confirm' => __('Are you sure you want to delete # {0}?', $product->id),
+                                'confirm' => __('¿Estás seguro de eliminar # {0}?', $product->id),
                             ]
                         ) ?>
                     </td>

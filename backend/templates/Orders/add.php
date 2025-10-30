@@ -8,21 +8,21 @@
 <div class="row">
     <aside class="column">
         <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('List Orders'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
+            <!--<h4 class="heading"><?= __('Actions') ?></h4>-->
+            <!--<?= $this->Html->link(__('List Orders'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>-->
         </div>
     </aside>
     <div class="column column-80">
         <div class="orders form content">
             <?= $this->Form->create($order) ?>
             <fieldset>
-                <legend><?= __('Add Order') ?></legend>
+                <legend><?= __('Añadir Pedido') ?></legend>
                 <?php
-                    echo $this->Form->control('status');
-                    echo $this->Form->control('products._ids', ['options' => $products]);
+                    echo $this->Form->control('Estado');
+                    echo $this->Form->control('products._ids', ['label' => 'Productos', 'options' => $products]);
                 ?>
             </fieldset>
-            <?= $this->Form->button(__('Submit')) ?>
+            <?= $this->Form->button(__('Guardar')) ?>
             <?= $this->Form->end() ?>
         </div>
     </div>

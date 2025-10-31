@@ -7,60 +7,38 @@
  * @var \Cake\Collection\CollectionInterface|string[] $recipes
  */
 ?>
-
-<div class="row justify-content-center">
-    <div class="col-md-8">
-        <div class="card shadow-sm">
-            <div class="card-header bg-primary text-white">
-                <h4 class="mb-0"><?= __('Añadir Producto') ?></h4>
-            </div>
-            <div class="card-body">
-                <?= $this->Form->create($product, ['class' => 'needs-validation', 'novalidate' => true]) ?>
-                
-                <div class="mb-3">
-                    <?= $this->Form->control('name', ['label' => 'Nombre', 'class' => 'form-control']) ?>
-                </div>
-                
-                <div class="mb-3">
-                    <?= $this->Form->control('description', ['label' => 'Descripción', 'class' => 'form-control', 'type' => 'textarea']) ?>
-                </div>
-                
-                <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <?= $this->Form->control('price', ['label' => 'Precio', 'class' => 'form-control']) ?>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <?= $this->Form->control('stock', ['label' => 'Stock', 'class' => 'form-control']) ?>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <?= $this->Form->control('unit_quantity', ['label' => 'Formato', 'class' => 'form-control']) ?>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <?= $this->Form->control('unit', ['label' => 'Unidad', 'class' => 'form-select']) ?>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <?= $this->Form->control('category_id', ['label' => 'Categoría', 'options' => $categories, 'class' => 'form-select']) ?>
-                    </div>
-                </div>
-
-                <!-- Relaciones Many-to-Many -->
-                 <!--
-                <div class="mb-3">
-                    <?= $this->Form->control('orders._ids', ['label' => 'Pedidos', 'options' => $orders, 'class' => 'form-select', 'multiple' => true]) ?>
-                </div>
-                <div class="mb-3">
-                    <?= $this->Form->control('recipes._ids', ['label' => 'Recetas', 'options' => $recipes, 'class' => 'form-select', 'multiple' => true]) ?>
-                </div> -->
-
-                <div class="d-grid">
-                    <?= $this->Form->button(__('Guardar'), ['class' => 'btn btn-success']) ?>
-                </div>
-
-                <?= $this->Form->end() ?>
-            </div>
+<div class="row">
+    <aside class="column">
+        <div class="side-nav">
+            <!--<h4 class="heading"><?= __('Actions') ?></h4> -->
+           <!-- <?= $this->Html->link(__('List Products'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>  -->
+        </div>
+    </aside>
+    <div class="column column-80">
+        <div class="products form content">
+            <?= $this->Form->create($product, ['type' => 'file']) ?>
+            <fieldset>
+                <legend><?= __('Añadir Producto') ?></legend>
+                <?php
+                    echo $this->Form->control('name', ['label' => 'Nombre']);
+                    echo $this->Form->control('description', ['label' => 'Descripción']);
+                    echo $this->Form->control('price', ['label' => 'Precio']);
+                    echo $this->Form->control('stock', ['label' => 'Stock']);
+                    echo $this->Form->control('unit_quantity', ['label' => 'Formato']);
+                    echo $this->Form->control('unit', ['label' => 'Unidad']);
+                    echo $this->Form->control('category_id', ['label' => 'Categoría', 'options' => $categories]);
+                    #echo $this->Form->control('orders._ids', ['options' => $orders]);
+                    #echo $this->Form->control('recipes._ids', ['options' => $recipes]);
+                    // campo para la imagen
+                    echo $this->Form->control('image_file', [
+                        'type' => 'file',
+                        'label' => 'Imagen del producto',
+                    ]);
+                ?>
+            </fieldset>
+            <?= $this->Form->button(__('Guardar')) ?>
+            <?= $this->Form->end() ?>
         </div>
     </div>
 </div>
+

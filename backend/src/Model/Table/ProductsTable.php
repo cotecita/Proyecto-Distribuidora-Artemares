@@ -60,6 +60,7 @@ class ProductsTable extends Table
         ]);
         $this->hasOne('ProductImages', [
             'foreignKey' => 'product_id',
+            'dependent' => true, #si se elimina un producto igual su imagen
         ]);
         $this->belongsToMany('Orders', [
             'foreignKey' => 'product_id',

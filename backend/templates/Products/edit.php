@@ -21,7 +21,7 @@
     </aside>
     <div class="column column-80">
         <div class="products form content">
-            <?= $this->Form->create($product) ?>
+            <?= $this->Form->create($product, ['type' => 'file']) ?>
             <fieldset>
                 <legend><?= __('Editar Producto') ?></legend>
                 <?php
@@ -32,8 +32,33 @@
                     echo $this->Form->control('unit_quantity', ['label' => 'Formato']);
                     echo $this->Form->control('unit', ['label' => 'Unidad']);
                     echo $this->Form->control('category_id', ['label' => 'Categoría','options' => $categories]);
-                    echo $this->Form->control('orders._ids', ['label' => 'Pedidos','options' => $orders]);
-                    echo $this->Form->control('recipes._ids', ['label' => 'Recetas','options' => $recipes]);
+                    #echo $this->Form->control('orders._ids', ['label' => 'Pedidos','options' => $orders]);
+                    #echo $this->Form->control('recipes._ids', ['label' => 'Recetas','options' => $recipes]);
+                 ?>
+
+                <!--para agregar/Actualizar imagen-->
+                <?php    
+                    if (!empty($product->product_image)): ?>
+                        <div style="margin-bottom:10px;">
+                            <strong>Imagen actual:</strong><br>
+                            <img src="data:<?= h($product->product_image->mime_type_medium) ?>;base64,<?= base64_encode(stream_get_contents($product->product_image->image_medium)) ?>" 
+                                alt="Imagen del producto" style="max-width:200px; border-radius:10px;">
+                        </div>
+                    <?php endif; 
+                ?>
+                <?php
+                    echo $this->Form->control('image_file', [
+                        'type' => 'file',
+                        'label' => 'Cambiar imagen del producto',
+                    ]);
+
+                    // Checkbox para quitar imagen existente
+                    if (!empty($product->product_image)) {
+                        echo $this->Form->control('remove_image', [
+                            'type' => 'checkbox',
+                            'label' => 'Quitar imagen actual',
+                        ]);
+                    }
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Guardar')) ?>

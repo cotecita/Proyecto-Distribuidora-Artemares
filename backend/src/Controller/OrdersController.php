@@ -45,15 +45,30 @@ class OrdersController extends AppController
     {
         $order = $this->Orders->newEmptyEntity();
         if ($this->request->is('post')) {
-            $order = $this->Orders->patchEntity($order, $this->request->getData());
-            if ($this->Orders->save($order)) {
-                $this->Flash->success(__('The order has been saved.'));
+            $data = $this->request->getData();
 
+            // Limpiar productos sin cantidad o sin selección
+            if (!empty($data['products'])) {
+                foreach ($data['products'] as $id => $prod) {
+                    if (empty($prod['_joinData']['quantity']) || $prod['_joinData']['quantity'] <= 0) {
+                        unset($data['products'][$id]);
+                    }
+                }
+            }
+
+            $order = $this->Orders->patchEntity($order, $data, [
+                'associated' => ['Products._joinData']
+            ]);
+
+            if ($this->Orders->save($order)) {
+                $this->Flash->success(__('El pedido se ha creado correctamente.'));
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The order could not be saved. Please, try again.'));
+
+            $this->Flash->error(__('No se pudo guardar el pedido. Intenta nuevamente.'));
         }
-        $products = $this->Orders->Products->find('list', limit: 200)->all();
+
+        $products = $this->Orders->Products->find('all')->toArray();
         $this->set(compact('order', 'products'));
     }
 

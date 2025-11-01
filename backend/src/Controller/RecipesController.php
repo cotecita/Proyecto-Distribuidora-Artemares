@@ -46,8 +46,10 @@ class RecipesController extends AppController
         $recipe = $this->Recipes->newEmptyEntity();
         if ($this->request->is('post')) {
             $data = $this->request->getData();
-            $recipe = $this->Recipes->patchEntity($recipe, $data);
-
+            #$recipe = $this->Recipes->patchEntity($recipe, $data);
+            $recipe = $this->Recipes->patchEntity($recipe, $data, [
+                'associated' => ['Products', 'RecipeImages']
+            ]);
             // Procesar imagen
             $imageFile = $data['image_file'] ?? null;
 
@@ -94,8 +96,10 @@ class RecipesController extends AppController
         $recipe = $this->Recipes->get($id, contain: ['Products']);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $data = $this->request->getData();
-            $recipe = $this->Recipes->patchEntity($recipe, $data);
-
+            #$recipe = $this->Recipes->patchEntity($recipe, $data);
+             $recipe = $this->Recipes->patchEntity($recipe, $data, [
+                'associated' => ['Products', 'RecipeImages']
+            ]);
             $imageFile = $data['image_file'] ?? null;
 
             if ($imageFile && $imageFile->getError() === UPLOAD_ERR_OK) {

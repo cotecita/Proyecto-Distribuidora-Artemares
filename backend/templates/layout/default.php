@@ -16,7 +16,8 @@ $cakeDescription = 'Distribuidora Artemares';
 
     <!-- Bootstrap CSS desde CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
+     <!--  Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
 </head>
@@ -55,5 +56,20 @@ $cakeDescription = 'Distribuidora Artemares';
 
     <!-- Bootstrap JS desde CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+     <!--  jQuery (requerido por Select2) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!--Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <!-- Activación global de Select2 -->
+    <script>
+    $(document).ready(function() {
+        $('.select2').select2({
+            placeholder: 'Selecciona uno o más elementos',
+            allowClear: true
+        });
+    });
+    </script>
 </body>
 </html>

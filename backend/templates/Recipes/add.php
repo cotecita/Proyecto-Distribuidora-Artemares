@@ -22,10 +22,12 @@
                     echo $this->Form->control('description');
                     echo $this->Form->control('ingredients');
                     #echo $this->Form->control('products._ids', ['options' => $products]);
+                    // Campo para seleccionar varios productos
                     echo $this->Form->control('products._ids', [
-                        'multiple' => 'checkbox',
+                        'label' => 'Productos asociados',
                         'options' => $products,
-                        'label' => 'Productos relacionados',
+                        'multiple' => true,
+                        'class' => 'select2', 
                     ]);
 
                     // campo para la imagen

@@ -1,75 +1,167 @@
-<?php
-/**
- * Plantilla base para Distribuidora Artemares
- * Incluye menú principal y contenedor de contenido
- */
-
-$cakeDescription = 'Distribuidora Artemares';
-?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= $cakeDescription ?>: <?= $this->fetch('title') ?></title>
-    <?= $this->Html->meta('icon') ?>
 
-    <!-- Bootstrap CSS desde CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-     <!--  Select2 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <title>
+        <?= $this->fetch('title') ?> | Panel Administrador - Artemares
+    </title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Estilos personalizados opcionales -->
+    <style>
+        body {
+            background-color: #F7FAFC;
+            font-family: "Segoe UI", sans-serif;
+            color: #212529;
+        }
+
+        /* === SIDEBAR === */
+        .sidebar {
+            min-height: 100vh;
+            background-color: #0E1B2B; /* azul marino oscuro */
+        }
+
+        .navbar-brand img {
+            filter: drop-shadow(0 0 6px rgba(0, 159, 227, 0.5));
+        }
+
+        .sidebar a {
+            color: #E9EEF2;
+            text-decoration: none;
+            display: block;
+            padding: 12px 18px;
+            border-radius: 6px;
+            margin: 4px 0;
+            transition: 0.25s;
+        }
+
+        .sidebar a:not(.navbar-brand):hover,
+        .sidebar a:not(.navbar-brand).active {
+            background: linear-gradient(90deg, #009FE3 0%, #4CC3FF 100%);
+            color: #fff;
+            box-shadow: 0 0 10px rgba(0, 159, 227, 0.4);
+        }
+
+        /* === NAVBAR SUPERIOR === */
+        .navbar {
+            background-color: #ffffff;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .navbar-text {
+            color: #4a5568;
+        }
+
+        /* === BOTONES === */
+        .btn-primary {
+            background: linear-gradient(90deg, #009FE3 0%, #4CC3FF 100%);
+            border: none;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(90deg, #0088c7 0%, #36b2f9 100%);
+        }
+
+        /* === TABLAS === */
+        .table thead {
+            background: linear-gradient(90deg, #009FE3 0%, #4CC3FF 100%);
+            color: white;
+        }
+
+        main {
+            padding: 2rem;
+        }
+    </style>
+
+
+
+    <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
 </head>
+
 <body>
-    <!-- Navbar principal -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="<?= $this->Url->build('/products') ?>">Artemares</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="<?= $this->Url->build('/products') ?>">Productos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?= $this->Url->build('/categories') ?>">Categorías</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?= $this->Url->build('/recipes') ?>">Recetas</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?= $this->Url->build('/orders') ?>">Pedidos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?= $this->Url->build('/nutritional-informations') ?>">Info Nutricional</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?= $this->Url->build('/administrators') ?>">Administrador</a></li>
-                </ul>
+    <div class="d-flex">
+        <!-- Sidebar lateral -->
+        <nav class="sidebar d-flex flex-column p-3">
+            <div class="navbar-brand d-flex justify-content-center mb-5 mt-3 user-select-none" style="cursor: default;">
+                <?= $this->Html->image('Logosinfondo.png', [
+                    'alt' => 'Artemares',
+                    'style' => '
+                        max-height: 40px;
+                        width: auto;
+                        object-fit: contain;
+                        pointer-events: none;
+                        user-select: none;
+                    '
+                ]) ?>
             </div>
+
+            <a href="<?= $this->Url->build(['controller' => 'Products', 'action' => 'index']) ?>" 
+               class="<?= $this->request->getParam('controller') === 'Products' ? 'active' : '' ?>">
+               <i class="bi bi-box-seam me-2"></i>Productos
+            </a>
+
+            <a href="<?= $this->Url->build(['controller' => 'Categories', 'action' => 'index']) ?>" 
+               class="<?= $this->request->getParam('controller') === 'Categories' ? 'active' : '' ?>">
+               <i class="bi bi-tags me-2"></i>Categorías
+            </a>
+
+            <a href="<?= $this->Url->build(['controller' => 'Recipes', 'action' => 'index']) ?>" 
+               class="<?= $this->request->getParam('controller') === 'Recipes' ? 'active' : '' ?>">
+               <i class="bi bi-journal-text me-2"></i>Recetas
+            </a>
+
+            <a href="<?= $this->Url->build(['controller' => 'Orders', 'action' => 'index']) ?>" 
+               class="<?= $this->request->getParam('controller') === 'Orders' ? 'active' : '' ?>">
+               <i class="bi bi-cart-check me-2"></i>Pedidos
+            </a>
+
+            <a href="<?= $this->Url->build(['controller' => 'NutritionalInformation', 'action' => 'index']) ?>" 
+               class="<?= $this->request->getParam('controller') === 'NutritionalInformation' ? 'active' : '' ?>">
+               <i class="bi bi-info-circle me-2"></i>Info Nutricional
+            </a>
+
+            <a href="<?= $this->Url->build(['controller' => 'Administrators', 'action' => 'index']) ?>" 
+               class="<?= $this->request->getParam('controller') === 'Administrators' ? 'active' : '' ?>">
+               <i class="bi bi-person-gear me-2"></i>Administrador
+            </a>
+        </nav>
+
+        <!-- Contenido principal -->
+        <div class="flex-grow-1">
+            <!-- Navbar superior -->
+            <nav class="navbar navbar-expand-lg bg-white shadow-sm px-4">
+                <div class="container-fluid">
+                    <span class="navbar-text text-muted">
+                        <i class="bi bi-speedometer2 me-2"></i>Panel de Administración
+                    </span>
+                    <div class="d-flex align-items-center">
+                        <span class="text-secondary me-3">
+                            <i class="bi bi-person-circle me-1"></i>Admin
+                        </span>
+                        <a href="#" class="btn btn-outline-danger btn-sm">
+                            <i class="bi bi-box-arrow-right"></i> Salir
+                        </a>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Contenedor del contenido renderizado -->
+            <main>
+                <?= $this->Flash->render() ?>
+                <?= $this->fetch('content') ?>
+            </main>
         </div>
-    </nav>
-
-    <!-- Contenedor principal -->
-    <main class="container mt-4">
-        <?= $this->Flash->render() ?> <!-- Mensajes de éxito/error -->
-        <?= $this->fetch('content') ?> <!-- Aquí se renderizan las vistas específicas -->
-    </main>
-
-    <!-- Footer simple -->
-    <footer class="bg-light text-center py-3 mt-4">
-        &copy; <?= date('Y') ?> Distribuidora Artemares. Todos los derechos reservados.
-    </footer>
-
-    <!-- Bootstrap JS desde CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-     <!--  jQuery (requerido por Select2) -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <!--Select2 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
-    <!-- Activación global de Select2 -->
-    <script>
-    $(document).ready(function() {
-        $('.select2').select2({
-            placeholder: 'Selecciona uno o más elementos',
-            allowClear: true
-        });
-    });
-    </script>
+    </div>
 </body>
 </html>

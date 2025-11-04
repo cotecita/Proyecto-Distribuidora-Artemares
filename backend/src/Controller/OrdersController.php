@@ -41,61 +41,58 @@ class OrdersController extends AppController
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
+    
+
     public function add()
     {
         $order = $this->Orders->newEmptyEntity();
 
         if ($this->request->is('post')) {
             $data = $this->request->getData();
-            $errors = [];
 
-            // Solo procesamos los productos seleccionados por el usuario
+            // --- Filtrar solo productos seleccionados ---
+            $selectedProducts = [];
             if (!empty($data['products'])) {
-                foreach ($data['products'] as $id => $prod) {
-                    if (empty($prod['id'])) {
-                        continue;
-                    }
-                    $quantity = $prod['_joinData']['quantity'] ?? null;
-
-                    if (empty($quantity) || !is_numeric($quantity) || $quantity <= 0) {
-                        $errors[] = "La cantidad para el producto seleccionado no es válida.";
-                        continue;
-                    }
-
-                    $product = $this->Orders->Products->get($id);
-
-                    // Validamos stock
-                    if ($quantity > $product->stock) {
-                        $errors[] = "El producto '{$product->name}' no tiene suficiente stock (disponible: {$product->stock}).";
+                foreach ($data['products'] as $prod) {
+                    if (!empty($prod['id'])) { // checkbox marcado
+                        $selectedProducts[] = [
+                            'id' => $prod['id'],
+                            '_joinData' => [
+                                'quantity' => $prod['_joinData']['quantity'] ?? 1
+                            ]
+                        ];
                     }
                 }
-            } else {
-                $errors[] = "No se seleccionó ningún producto.";
             }
 
-            // Si hay errores, mostramos mensajes y no guardamos
-            if (!empty($errors)) {
-                foreach ($errors as $err) {
-                    $this->Flash->error($err);
-                }
-            } else {
-                // No hay errores, guardamos el pedido tal como el usuario lo seleccionó
-                $order = $this->Orders->patchEntity($order, $data, [
-                    'associated' => ['Products._joinData']
-                ]);
+            // Reemplazamos los productos en el request con solo los seleccionados
+            $data['products'] = $selectedProducts;
 
-                if ($this->Orders->save($order)) {
-                    $this->Flash->success(__('El pedido se ha creado correctamente.'));
-                    return $this->redirect(['action' => 'index']);
-                }
+            // --- Creamos el pedido ---
+            $order = $this->Orders->patchEntity($order, $data, [
+                'associated' => ['Products._joinData']
+            ]);
 
-                $this->Flash->error(__('No se pudo guardar el pedido. Intenta nuevamente.'));
+            if ($this->Orders->save($order)) {
+                $this->Flash->success(__('Pedido creado correctamente.'));
+                return $this->redirect(['action' => 'index']);
             }
+
+            debug($order->getErrors()); // para ver si hay validación fallando
+            $this->Flash->error(__('No se pudo crear el pedido. Por favor, intenta nuevamente.'));
         }
 
+        // --- Datos para la vista ---
         $products = $this->Orders->Products->find('all')->toArray();
-        $this->set(compact('order', 'products'));
+        $statuses = [
+            'in_process' => 'En proceso',
+            'closed' => 'Cerrado',
+            'cancelled' => 'Cancelado'
+        ];
+
+        $this->set(compact('order', 'products', 'statuses'));
     }
+
 
 
 

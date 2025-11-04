@@ -5,30 +5,76 @@
  * @var string[]|\Cake\Collection\CollectionInterface $products
  */
 ?>
-<div class="row">
-    <aside class="column">
-        <div class="side-nav">
-            <!--<h4 class="heading"><?= __('Actions') ?></h4>-->
-            <?= $this->Form->postLink(
-                __('Eliminar'),
-                ['action' => 'delete', $order->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $order->id), 'class' => 'side-nav-item']
-            ) ?>
-            <!--<?= $this->Html->link(__('List Orders'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>-->
-        </div>
-    </aside>
-    <div class="column column-80">
-        <div class="orders form content">
-            <?= $this->Form->create($order) ?>
-            <fieldset>
-                <legend><?= __('Editar pedido') ?></legend>
+<?php
+/**
+ * @var \App\View\AppView $this
+ * @var \App\Model\Entity\Order $order
+ * @var array $products
+ * @var array $statuses
+ */
+?>
+
+<div class="orders form content">
+    <?= $this->Form->create($order) ?>
+    <fieldset>
+        <legend><?= __('Editar Pedido') ?></legend>
+
+        <!-- Estado del pedido -->
+        <?= $this->Form->control('status', [
+            'label' => 'Estado del pedido',
+            'options' => $statuses,
+            'empty' => false
+        ]) ?>
+
+        <h4><?= __('Selecciona los productos para este pedido') ?></h4>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Seleccionar</th>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($products as $i => $product): ?>
                 <?php
-                    echo $this->Form->control('status', ['label' => 'Estado']);
-                    echo $this->Form->control('products._ids', ['label' => 'Productos','options' => $products]);
+                    // Revisar si el producto ya está en el pedido
+                    $selected = false;
+                    $quantity = 1;
+                    foreach ($order->products as $p) {
+                        if ($p->id == $product->id) {
+                            $selected = true;
+                            $quantity = $p->_joinData->quantity ?? 1;
+                            break;
+                        }
+                    }
                 ?>
-            </fieldset>
-            <?= $this->Form->button(__('Guardar')) ?>
-            <?= $this->Form->end() ?>
-        </div>
-    </div>
+                <tr>
+                    <td>
+                        <?= $this->Form->checkbox("products.$i.id", [
+                            'value' => $product->id,
+                            'hiddenField' => false,
+                            'checked' => $selected
+                        ]) ?>
+                    </td>
+                    <td><?= h($product->name) ?></td>
+                    <td>$<?= $this->Number->format($product->price) ?></td>
+                    <td>
+                        <?= $this->Form->number("products.$i._joinData.quantity", [
+                            'value' => $quantity,
+                            'min' => 1,
+                            'label' => false,
+                            'style' => 'width: 70px; text-align: center;'
+                        ]) ?>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </fieldset>
+
+    <?= $this->Form->button(__('Guardar Pedido')) ?>
+    <?= $this->Form->end() ?>
 </div>

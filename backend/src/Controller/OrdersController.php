@@ -103,6 +103,7 @@ class OrdersController extends AppController
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
+    /*
     public function edit($id = null)
     {
         $order = $this->Orders->get($id, contain: ['Products']);
@@ -117,7 +118,57 @@ class OrdersController extends AppController
         }
         $products = $this->Orders->Products->find('list', limit: 200)->all();
         $this->set(compact('order', 'products'));
+    }*/
+    public function edit($id = null)
+    {
+        $order = $this->Orders->get($id, [
+            'contain' => ['Products']
+        ]);
+
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $data = $this->request->getData();
+
+            // Filtrar solo productos seleccionados y preparar _joinData
+            $selectedProducts = [];
+            if (!empty($data['products'])) {
+                foreach ($data['products'] as $prod) {
+                    if (!empty($prod['id'])) { // checkbox marcado
+                        $selectedProducts[] = [
+                            'id' => $prod['id'],
+                            '_joinData' => [
+                                'quantity' => $prod['_joinData']['quantity'] ?? 1
+                            ]
+                        ];
+                    }
+                }
+            }
+
+            $data['products'] = $selectedProducts;
+
+            $order = $this->Orders->patchEntity($order, $data, [
+                'associated' => ['Products._joinData']
+            ]);
+
+            if ($this->Orders->save($order)) {
+                $this->Flash->success(__('Pedido actualizado correctamente.'));
+                return $this->redirect(['action' => 'index']);
+            }
+
+            debug($order->getErrors());
+            $this->Flash->error(__('No se pudo actualizar el pedido. Por favor, intenta nuevamente.'));
+        }
+
+        $products = $this->Orders->Products->find('all')->toArray();
+
+        $statuses = [
+            'in_process' => 'En proceso',
+            'closed' => 'Cerrado',
+            'cancelled' => 'Cancelado'
+        ];
+
+        $this->set(compact('order', 'products', 'statuses'));
     }
+
 
     /**
      * Delete method

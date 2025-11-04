@@ -28,7 +28,7 @@ return [
      *   You should treat it as extremely sensitive data.
      */
     'Security' => [
-        'salt' => env('SECURITY_SALT', '6b32e3e3324d94821d28bc4e3d4183b49359762f37c60f397366070c9a2c9989'),
+        'salt' => env('SECURITY_SALT', '414236df8c1701038d3f87a120904e04357742487c0642e6020bd1581d8d1164'),
     ],
 
     /*
@@ -40,15 +40,41 @@ return [
     'Datasources' => [
         'default' => [
             'className' => 'Cake\Database\Connection',
-            'driver' => 'Cake\Database\Driver\postgres',
+            'driver' => 'Cake\Database\Driver\Postgres', 
+            'persistent' => false,
+            'host' => 'localhost',
+            
+            'username' => 'postgres',
+            'password' => '850221B',
+
+            'database' => 'BBDD_Artemares',
+            'schema' => 'public',
+            'port' => '5432',
+            'encoding' => 'utf8',
+            'timezone' => 'UTC',
+            'cacheMetadata' => true,
+            'quoteIdentifiers' => false,
+            'url' => env('DATABASE_URL', null),
+        ],
+
+        /*
+         * The test connection is used during the test suite.
+         */
+        'test' => [
+            'className' => 'Cake\Database\Connection',
+            'driver' => 'Cake\Database\Driver\Postgres',
             'persistent' => false,
             'host' => 'localhost',
             'username' => 'postgres',
-            'password' => '03061892',
-            'database' => 'artemares_db',
-            'encoding' => 'UTF8',
+            'password' => '850221B',
+            'database' => 'BBDD_Artemares_Test',
+            'schema' => 'public',
+            'port' => '5432',
+            'encoding' => 'utf8',
             'timezone' => 'UTC',
-            'flags' => [],
+            'cacheMetadata' => true,
+            'quoteIdentifiers' => false,
+            'url' => env('DATABASE_TEST_URL', null),
         ],
     ],
 

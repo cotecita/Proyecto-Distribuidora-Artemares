@@ -1425,3 +1425,83 @@ Referer URL: http://localhost:8765/
 2025-10-30 21:40:55 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
 2025-10-30 21:40:55 warning: Unable to save request. Check your debug_kit datasource connection or ensure that PDO SQLite extension is enabled.
 2025-10-30 21:40:55 warning: The datasource configuration `debug_kit` was not found.
+2025-11-04 20:28:57 error: [Cake\Database\Exception\MissingConnectionException] Connection to Postgres could not be established: SQLSTATE[08006] [7] connection to server at "localhost" (::1), port 5432 failed: FATAL:  la autentificación password falló para el usuario «postgres» in C:\Users\maria\Proyecto-Distribuidora-Artemares\backend\vendor\cakephp\cakephp\src\Database\Driver.php on line 203
+Exception Attributes: array (
+  'driver' => 'Postgres',
+  'reason' => 'SQLSTATE[08006] [7] connection to server at "localhost" (::1), port 5432 failed: FATAL:  la autentificación password falló para el usuario «postgres»',
+)
+Stack Trace:
+- CORE\src\Database\Driver\Postgres.php:118
+- CORE\src\Database\Schema\SchemaDialect.php:60
+- CORE\src\Database\Driver\Postgres.php:152
+- CORE\src\Database\Schema\Collection.php:97
+- CORE\src\Database\Schema\Collection.php:87
+- CORE\src\ORM\Table.php:526
+- CORE\src\ORM\Query\CommonQueryTrait.php:48
+- CORE\src\ORM\Query\SelectQuery.php:202
+- CORE\src\ORM\Query\QueryFactory.php:34
+- CORE\src\ORM\Table.php:1748
+- CORE\src\ORM\Table.php:1279
+- APP/Controller\ProductsController.php:20
+- CORE\src\Controller\Controller.php:505
+- CORE\src\Controller\ControllerFactory.php:166
+- CORE\src\Controller\ControllerFactory.php:141
+- CORE\src\Http\BaseApplication.php:362
+- CORE\src\Http\Runner.php:86
+- CORE\src\Http\Middleware\CsrfProtectionMiddleware.php:159
+- CORE\src\Http\Runner.php:82
+- CORE\src\Http\Middleware\BodyParserMiddleware.php:157
+- CORE\src\Http\Runner.php:82
+- CORE\src\Routing\Middleware\RoutingMiddleware.php:117
+- CORE\src\Http\Runner.php:82
+- CORE\src\Routing\Middleware\AssetMiddleware.php:70
+- CORE\src\Http\Runner.php:82
+- CORE\src\Error\Middleware\ErrorHandlerMiddleware.php:115
+- CORE\src\Http\Runner.php:82
+- ROOT\vendor\cakephp\debug_kit\src\Middleware\DebugKitMiddleware.php:60
+- CORE\src\Http\Runner.php:82
+- CORE\src\Http\Runner.php:60
+- CORE\src\Http\Server.php:104
+- ROOT\webroot\index.php:37
+- [main]:
+
+Caused by: [PDOException] SQLSTATE[08006] [7] connection to server at "localhost" (::1), port 5432 failed: FATAL:  la autentificación password falló para el usuario «postgres» in C:\Users\maria\Proyecto-Distribuidora-Artemares\backend\vendor\cakephp\cakephp\src\Database\Driver.php on line 192
+Stack Trace:
+- CORE\src\Database\Driver.php:192
+- CORE\src\Core\Retry\CommandRetry.php:71
+- CORE\src\Database\Driver.php:201
+- CORE\src\Database\Driver\Postgres.php:118
+- CORE\src\Database\Schema\SchemaDialect.php:60
+- CORE\src\Database\Driver\Postgres.php:152
+- CORE\src\Database\Schema\Collection.php:97
+- CORE\src\Database\Schema\Collection.php:87
+- CORE\src\ORM\Table.php:526
+- CORE\src\ORM\Query\CommonQueryTrait.php:48
+- CORE\src\ORM\Query\SelectQuery.php:202
+- CORE\src\ORM\Query\QueryFactory.php:34
+- CORE\src\ORM\Table.php:1748
+- CORE\src\ORM\Table.php:1279
+- APP/Controller\ProductsController.php:20
+- CORE\src\Controller\Controller.php:505
+- CORE\src\Controller\ControllerFactory.php:166
+- CORE\src\Controller\ControllerFactory.php:141
+- CORE\src\Http\BaseApplication.php:362
+- CORE\src\Http\Runner.php:86
+- CORE\src\Http\Middleware\CsrfProtectionMiddleware.php:159
+- CORE\src\Http\Runner.php:82
+- CORE\src\Http\Middleware\BodyParserMiddleware.php:157
+- CORE\src\Http\Runner.php:82
+- CORE\src\Routing\Middleware\RoutingMiddleware.php:117
+- CORE\src\Http\Runner.php:82
+- CORE\src\Routing\Middleware\AssetMiddleware.php:70
+- CORE\src\Http\Runner.php:82
+- CORE\src\Error\Middleware\ErrorHandlerMiddleware.php:115
+- CORE\src\Http\Runner.php:82
+- ROOT\vendor\cakephp\debug_kit\src\Middleware\DebugKitMiddleware.php:60
+- CORE\src\Http\Runner.php:82
+- CORE\src\Http\Runner.php:60
+- CORE\src\Http\Server.php:104
+- ROOT\webroot\index.php:37
+- [main]:
+
+Request URL: /

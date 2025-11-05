@@ -126,8 +126,8 @@
                <i class="bi bi-cart-check me-2"></i>Pedidos
             </a>
 
-            <a href="<?= $this->Url->build(['controller' => 'NutritionalInformation', 'action' => 'index']) ?>" 
-               class="<?= $this->request->getParam('controller') === 'NutritionalInformation' ? 'active' : '' ?>">
+            <a href="<?= $this->Url->build(['controller' => 'NutritionalInformations', 'action' => 'index']) ?>" 
+               class="<?= $this->request->getParam('controller') === 'NutritionalInformations' ? 'active' : '' ?>">
                <i class="bi bi-info-circle me-2"></i>Info Nutricional
             </a>
 
@@ -149,9 +149,16 @@
                         <span class="text-secondary me-3">
                             <i class="bi bi-person-circle me-1"></i>Admin
                         </span>
-                        <a href="#" class="btn btn-outline-danger btn-sm">
-                            <i class="bi bi-box-arrow-right"></i> Salir
-                        </a>
+                        <?= $this->Form->postLink(
+                            '<i class="bi bi-box-arrow-right"></i> Salir',
+                            ['controller' => 'Administrators', 'action' => 'logout'],
+                            [
+                                'class' => 'btn btn-outline-danger btn-sm',
+                                'escape' => false, // para que el ícono se renderice como HTML
+                                'confirm' => '¿Seguro que quieres cerrar sesión?'
+                            ]
+                        ) ?>
+
                     </div>
                 </div>
             </nav>

@@ -23,7 +23,7 @@
                             <th><?= $this->Paginator->sort('id', 'ID') ?></th>
                             <th><?= $this->Paginator->sort('name', 'Nombre') ?></th>
                             <th><?= $this->Paginator->sort('price', 'Precio') ?></th>
-                            <th><?= $this->Paginator->sort('stock', 'Stock') ?></th>
+                            <!--<th><?= $this->Paginator->sort('stock', 'Stock') ?></th>-->
                             <th><?= $this->Paginator->sort('category_id', 'Categoría') ?></th>
                             <th class="text-center">Acciones</th>
                         </tr>
@@ -34,6 +34,7 @@
                                 <td><?= h($product->id) ?></td>
                                 <td><?= h($product->name) ?></td>
                                 <td>$<?= number_format($product->price, 0, ',', '.') ?></td>
+                                <!--
                                 <td>
                                     <?php if ($product->stock < 10): ?>
                                         <span class="badge bg-danger"><?= h($product->stock) ?> bajo</span>
@@ -42,7 +43,7 @@
                                     <?php else: ?>
                                         <span class="badge bg-success"><?= h($product->stock) ?></span>
                                     <?php endif; ?>
-                                </td>
+                                </td>-->
                                 <td><?= h($product->category->name ?? 'Sin categoría') ?></td>
                                 <td class="text-center">
                                     <div class="btn-group">

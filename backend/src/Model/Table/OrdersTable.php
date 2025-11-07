@@ -51,6 +51,8 @@ class OrdersTable extends Table
             'foreignKey' => 'order_id',
             'targetForeignKey' => 'product_id',
             'joinTable' => 'orders_products',
+            'through' => 'OrdersProducts', // hace que use la clase OrdersProductsTable
+            'saveStrategy' => 'replace',   // reemplaza productos del pedido al editar
         ]);
     }
 

@@ -14,14 +14,27 @@
     </aside>
     <div class="column column-80">
         <div class="recipes form content">
-            <?= $this->Form->create($recipe) ?>
+            <?= $this->Form->create($recipe, ['type' => 'file']) ?>
             <fieldset>
                 <legend><?= __('Add Recipe') ?></legend>
                 <?php
                     echo $this->Form->control('name');
                     echo $this->Form->control('description');
                     echo $this->Form->control('ingredients');
-                    echo $this->Form->control('products._ids', ['options' => $products]);
+                    #echo $this->Form->control('products._ids', ['options' => $products]);
+                    // Campo para seleccionar varios productos
+                    echo $this->Form->control('products._ids', [
+                        'label' => 'Productos asociados',
+                        'options' => $products,
+                        'multiple' => true,
+                        'class' => 'select2', 
+                    ]);
+
+                    // campo para la imagen
+                    echo $this->Form->control('image_file', [
+                        'type' => 'file',
+                        'label' => 'Imagen del producto',
+                    ]);
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

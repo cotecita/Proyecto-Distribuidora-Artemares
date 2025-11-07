@@ -50,6 +50,7 @@ class RecipesTable extends Table
 
         $this->hasOne('RecipeImages', [
             'foreignKey' => 'recipe_id',
+            'dependent' => true, #si se elimina una receta igual su imagen
         ]);
         $this->belongsToMany('Products', [
             'foreignKey' => 'recipe_id',

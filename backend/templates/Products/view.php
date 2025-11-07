@@ -35,8 +35,18 @@
                     <td><?= $product->hasValue('nutritional_information') ? $this->Html->link($product->nutritional_information->id, ['controller' => 'NutritionalInformations', 'action' => 'view', $product->nutritional_information->id]) : '' ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Imagen') ?></th>
+                    <!--<th><?= __('Imagen') ?></th>
                     <td><?= $product->hasValue('product_image') ? $this->Html->link($product->product_image->mime_type_small, ['controller' => 'ProductImages', 'action' => 'view', $product->product_image->id]) : '' ?></td>
+                        -->
+                    <th><?= __('Imagen') ?></th>
+                    <td>
+                        <?php if (!empty($product->product_image)): ?>
+                            <img src="data:<?= h($product->product_image->mime_type_medium) ?>;base64,<?= base64_encode(stream_get_contents($product->product_image->image_medium)) ?>" 
+                                alt="Imagen del producto" style="max-width:200px; border-radius:10px;">
+                        <?php else: ?>
+                            <em>Sin imagen</em>
+                        <?php endif; ?>
+                    </td>
                 </tr>
                 <tr>
                     <th><?= __('Id') ?></th>
@@ -69,6 +79,7 @@
                     <?= $this->Text->autoParagraph(h($product->description)); ?>
                 </blockquote>
             </div>
+            <!--
             <div class="related">
                 <h4><?= __('Pedidos relacionados') ?></h4>
                 <?php if (!empty($product->orders)) : ?>
@@ -145,6 +156,7 @@
                 </div>
                 <?php endif; ?>
             </div>
+            -->
         </div>
     </div>
 </div>

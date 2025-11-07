@@ -44,18 +44,60 @@ class OrdersController extends AppController
     public function add()
     {
         $order = $this->Orders->newEmptyEntity();
-        if ($this->request->is('post')) {
-            $order = $this->Orders->patchEntity($order, $this->request->getData());
-            if ($this->Orders->save($order)) {
-                $this->Flash->success(__('The order has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+        if ($this->request->is('post')) {
+            $data = $this->request->getData();
+            $errors = [];
+
+            // Solo procesamos los productos seleccionados por el usuario
+            if (!empty($data['products'])) {
+                foreach ($data['products'] as $id => $prod) {
+                    if (empty($prod['id'])) {
+                        continue;
+                    }
+                    $quantity = $prod['_joinData']['quantity'] ?? null;
+
+                    if (empty($quantity) || !is_numeric($quantity) || $quantity <= 0) {
+                        $errors[] = "La cantidad para el producto seleccionado no es válida.";
+                        continue;
+                    }
+
+                    $product = $this->Orders->Products->get($id);
+
+                    // Validamos stock
+                    if ($quantity > $product->stock) {
+                        $errors[] = "El producto '{$product->name}' no tiene suficiente stock (disponible: {$product->stock}).";
+                    }
+                }
+            } else {
+                $errors[] = "No se seleccionó ningún producto.";
             }
-            $this->Flash->error(__('The order could not be saved. Please, try again.'));
+
+            // Si hay errores, mostramos mensajes y no guardamos
+            if (!empty($errors)) {
+                foreach ($errors as $err) {
+                    $this->Flash->error($err);
+                }
+            } else {
+                // No hay errores, guardamos el pedido tal como el usuario lo seleccionó
+                $order = $this->Orders->patchEntity($order, $data, [
+                    'associated' => ['Products._joinData']
+                ]);
+
+                if ($this->Orders->save($order)) {
+                    $this->Flash->success(__('El pedido se ha creado correctamente.'));
+                    return $this->redirect(['action' => 'index']);
+                }
+
+                $this->Flash->error(__('No se pudo guardar el pedido. Intenta nuevamente.'));
+            }
         }
-        $products = $this->Orders->Products->find('list', limit: 200)->all();
+
+        $products = $this->Orders->Products->find('all')->toArray();
         $this->set(compact('order', 'products'));
     }
+
+
 
     /**
      * Edit method

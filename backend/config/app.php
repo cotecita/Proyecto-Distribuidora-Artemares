@@ -269,9 +269,21 @@ return [
      *   other RDBMS.
      */
     'Datasources' => [
+        /*
+         * These configurations should contain permanent settings used
+         * by all environments.
+         *
+         * The values in app_local.php will override any values set here
+         * and should be used for local and per-environment configurations.
+         *
+         * Environment variable-based configurations can be loaded here or
+         * in app_local.php depending on the application's needs.
+         */
         'default' => [
             'className' => 'Cake\Database\Connection',
             'driver' => 'Cake\Database\Driver\Postgres',
+            'className' => Connection::class,
+            'driver' => Mysql::class,
             'persistent' => false,
             'host' => 'localhost',
             'port' => '5432',
@@ -283,18 +295,10 @@ return [
             'flags' => [],
         ],
 
-        'test' => [
-            'className' => 'Cake\Database\Connection',
-            'driver' => 'Cake\Database\Driver\Postgres',
-            'persistent' => false,
-            'host' => 'localhost',
-            'username' => 'root',
-            'password' => '',
-            'database' => 'test_myapp',
-            'encoding' => 'utf8mb4',
-        ],
+        /*
+         * The test connection is used during the test suite.
+         */
     ],
-
 
     /*
      * Configures logging options

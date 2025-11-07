@@ -23,8 +23,20 @@
                     <td><?= h($recipe->name) ?></td>
                 </tr>
                 <tr>
+                    <!--
                     <th><?= __('Recipe Image') ?></th>
                     <td><?= $recipe->hasValue('recipe_image') ? $this->Html->link($recipe->recipe_image->mime_type_small, ['controller' => 'RecipeImages', 'action' => 'view', $recipe->recipe_image->id]) : '' ?></td>
+                        -->
+                    <th><?= __('Imagen') ?></th>
+                    <td>
+                        <?php if (!empty($recipe->recipe_image)): ?>
+                            <img src="data:<?= h($recipe->recipe_image->mime_type_medium) ?>;base64,<?= base64_encode(stream_get_contents($recipe->recipe_image->image_medium)) ?>" 
+                                alt="Imagen del producto" style="max-width:200px; border-radius:10px;">
+                        <?php else: ?>
+                            <em>Sin imagen</em>
+                        <?php endif; ?>
+                    </td>
+                
                 </tr>
                 <tr>
                     <th><?= __('Id') ?></th>

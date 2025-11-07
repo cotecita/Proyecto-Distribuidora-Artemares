@@ -19,14 +19,44 @@
     </aside>
     <div class="column column-80">
         <div class="recipes form content">
-            <?= $this->Form->create($recipe) ?>
+            <?= $this->Form->create($recipe, ['type' => 'file']) ?>
             <fieldset>
                 <legend><?= __('Edit Recipe') ?></legend>
                 <?php
                     echo $this->Form->control('name');
                     echo $this->Form->control('description');
                     echo $this->Form->control('ingredients');
-                    echo $this->Form->control('products._ids', ['options' => $products]);
+                    #echo $this->Form->control('products._ids', ['options' => $products]);
+                    echo $this->Form->control('products._ids', [
+                        'multiple' => 'checkbox',
+                        'options' => $products,
+                        'label' => 'Productos relacionados',
+                    ]);
+                ?>
+                
+                <!--para agregar/Actualizar imagen-->
+                <?php    
+                    if (!empty($recipe->recipe_image)): ?>
+                        <div style="margin-bottom:10px;">
+                            <strong>Imagen actual:</strong><br>
+                            <img src="data:<?= h($recipe->recipe_image->mime_type_medium) ?>;base64,<?= base64_encode(stream_get_contents($recipe->recipe_image->image_medium)) ?>" 
+                                alt="Imagen del producto" style="max-width:200px; border-radius:10px;">
+                        </div>
+                    <?php endif; 
+                ?>
+                <?php
+                    echo $this->Form->control('image_file', [
+                        'type' => 'file',
+                        'label' => 'Cambiar imagen del producto',
+                    ]);
+
+                    // Checkbox para quitar imagen existente
+                    if (!empty($recipe->recipe_image)) {
+                        echo $this->Form->control('remove_image', [
+                            'type' => 'checkbox',
+                            'label' => 'Quitar imagen actual',
+                        ]);
+                    }
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

@@ -1,0 +1,41 @@
+2025-10-30 05:13:49 error: [TypeError] Cake\Utility\Security::setSalt(): Argument #1 ($salt) must be of type string, null given, called in C:\Users\Franco\Documents\GitHub\Proyecto-Distribuidora-Artemares\backend\config\bootstrap.php on line 188 in C:\Users\Franco\Documents\GitHub\Proyecto-Distribuidora-Artemares\backend\vendor\cakephp\cakephp\src\Utility\Security.php on line 303
+Stack Trace:
+- ROOT\config\bootstrap.php:188
+- CORE\src\Http\BaseApplication.php:186
+- APP/Application.php:49
+- CORE\src\Console\CommandRunner.php:190
+- CORE\src\Console\CommandRunner.php:137
+- ROOT\bin\cake.php:10
+- [main]:
+
+2025-10-30 05:15:01 error: [TypeError] Cake\Utility\Security::setSalt(): Argument #1 ($salt) must be of type string, null given, called in C:\Users\Franco\Documents\GitHub\Proyecto-Distribuidora-Artemares\backend\config\bootstrap.php on line 188 in C:\Users\Franco\Documents\GitHub\Proyecto-Distribuidora-Artemares\backend\vendor\cakephp\cakephp\src\Utility\Security.php on line 303
+Stack Trace:
+- ROOT\config\bootstrap.php:188
+- CORE\src\Http\BaseApplication.php:186
+- APP/Application.php:49
+- CORE\src\Console\CommandRunner.php:190
+- CORE\src\Console\CommandRunner.php:137
+- ROOT\bin\cake.php:10
+- [main]:
+
+2025-10-30 05:18:33 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:21:39 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:24:34 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:25:13 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:26:24 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:29:21 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:29:59 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:30:39 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:33:10 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:36:14 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:36:20 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:39:29 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:39:32 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:40:38 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:40:53 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:40:54 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:41:33 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 05:41:36 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 20:32:38 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 20:34:50 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.
+2025-10-30 20:35:09 warning: DebugKit not enabled. You need to either install pdo_sqlite, or define the "debug_kit" connection name.

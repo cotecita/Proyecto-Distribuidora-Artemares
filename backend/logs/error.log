@@ -2351,3 +2351,163 @@ Stack Trace:
 
 Request URL: /debug-kit/toolbar/ea58b6b2-4687-4a7a-be45-8f40f31c1ada
 Referer URL: http://localhost:8765/administrators/login?redirect=%2F
+2025-11-08 23:45:18 error: [Cake\ORM\Exception\MissingTableClassException] Table class for alias `Users` could not be found. in C:\Users\maria\Proyecto-Distribuidora-Artemares\backend\vendor\cakephp\cakephp\src\ORM\Locator\TableLocator.php on line 249
+Exception Attributes: array (
+  0 => 'for alias `Users`',
+)
+Stack Trace:
+- CORE\src\Datasource\Locator\AbstractLocator.php:68
+- CORE\src\ORM\Locator\TableLocator.php:211
+- ROOT\vendor\cakephp\authentication\src\Identifier\Resolver\OrmResolver.php:58
+- ROOT\vendor\cakephp\authentication\src\Identifier\PasswordIdentifier.php:158
+- ROOT\vendor\cakephp\authentication\src\Identifier\PasswordIdentifier.php:100
+- ROOT\vendor\cakephp\authentication\src\Identifier\IdentifierCollection.php:53
+- ROOT\vendor\cakephp\authentication\src\Authenticator\FormAuthenticator.php:164
+- ROOT\vendor\cakephp\authentication\src\AuthenticationService.php:193
+- ROOT\vendor\cakephp\authentication\src\Middleware\AuthenticationMiddleware.php:87
+- CORE\src\Http\Runner.php:82
+- CORE\src\Http\Middleware\BodyParserMiddleware.php:162
+- CORE\src\Http\Runner.php:82
+- CORE\src\Routing\Middleware\RoutingMiddleware.php:117
+- CORE\src\Http\Runner.php:82
+- CORE\src\Routing\Middleware\AssetMiddleware.php:70
+- CORE\src\Http\Runner.php:82
+- CORE\src\Error\Middleware\ErrorHandlerMiddleware.php:115
+- CORE\src\Http\Runner.php:82
+- ROOT\vendor\cakephp\debug_kit\src\Middleware\DebugKitMiddleware.php:60
+- CORE\src\Http\Runner.php:82
+- CORE\src\Http\Runner.php:60
+- CORE\src\Http\Server.php:104
+- ROOT\webroot\index.php:37
+- [main]:
+
+Request URL: /administrators/login?redirect=%2F
+Referer URL: http://localhost:8765/administrators/login?redirect=%2F
+2025-11-08 23:46:34 error: [Cake\ORM\Exception\MissingTableClassException] Table class for alias `Users` could not be found. in C:\Users\maria\Proyecto-Distribuidora-Artemares\backend\vendor\cakephp\cakephp\src\ORM\Locator\TableLocator.php on line 249
+Exception Attributes: array (
+  0 => 'for alias `Users`',
+)
+Stack Trace:
+- CORE\src\Datasource\Locator\AbstractLocator.php:68
+- CORE\src\ORM\Locator\TableLocator.php:211
+- ROOT\vendor\cakephp\authentication\src\Identifier\Resolver\OrmResolver.php:58
+- ROOT\vendor\cakephp\authentication\src\Identifier\PasswordIdentifier.php:158
+- ROOT\vendor\cakephp\authentication\src\Identifier\PasswordIdentifier.php:100
+- ROOT\vendor\cakephp\authentication\src\Identifier\IdentifierCollection.php:53
+- ROOT\vendor\cakephp\authentication\src\Authenticator\FormAuthenticator.php:164
+- ROOT\vendor\cakephp\authentication\src\AuthenticationService.php:193
+- ROOT\vendor\cakephp\authentication\src\Middleware\AuthenticationMiddleware.php:87
+- CORE\src\Http\Runner.php:82
+- CORE\src\Http\Middleware\BodyParserMiddleware.php:162
+- CORE\src\Http\Runner.php:82
+- CORE\src\Routing\Middleware\RoutingMiddleware.php:117
+- CORE\src\Http\Runner.php:82
+- CORE\src\Routing\Middleware\AssetMiddleware.php:70
+- CORE\src\Http\Runner.php:82
+- CORE\src\Error\Middleware\ErrorHandlerMiddleware.php:115
+- CORE\src\Http\Runner.php:82
+- ROOT\vendor\cakephp\debug_kit\src\Middleware\DebugKitMiddleware.php:60
+- CORE\src\Http\Runner.php:82
+- CORE\src\Http\Runner.php:60
+- CORE\src\Http\Server.php:104
+- ROOT\webroot\index.php:37
+- [main]:
+
+Request URL: /administrators/login?redirect=%2F
+Referer URL: http://localhost:8765/administrators/login?redirect=%2F
+2025-11-08 23:48:17 error: [Cake\ORM\Exception\MissingTableClassException] Table class for alias `Users` could not be found. in C:\Users\maria\Proyecto-Distribuidora-Artemares\backend\vendor\cakephp\cakephp\src\ORM\Locator\TableLocator.php on line 249
+Exception Attributes: array (
+  0 => 'for alias `Users`',
+)
+Stack Trace:
+- CORE\src\Datasource\Locator\AbstractLocator.php:68
+- CORE\src\ORM\Locator\TableLocator.php:211
+- ROOT\vendor\cakephp\authentication\src\Identifier\Resolver\OrmResolver.php:58
+- ROOT\vendor\cakephp\authentication\src\Identifier\PasswordIdentifier.php:158
+- ROOT\vendor\cakephp\authentication\src\Identifier\PasswordIdentifier.php:100
+- ROOT\vendor\cakephp\authentication\src\Identifier\IdentifierCollection.php:53
+- ROOT\vendor\cakephp\authentication\src\Authenticator\FormAuthenticator.php:164
+- ROOT\vendor\cakephp\authentication\src\AuthenticationService.php:193
+- ROOT\vendor\cakephp\authentication\src\Middleware\AuthenticationMiddleware.php:87
+- CORE\src\Http\Runner.php:82
+- CORE\src\Http\Middleware\BodyParserMiddleware.php:162
+- CORE\src\Http\Runner.php:82
+- CORE\src\Routing\Middleware\RoutingMiddleware.php:117
+- CORE\src\Http\Runner.php:82
+- CORE\src\Routing\Middleware\AssetMiddleware.php:70
+- CORE\src\Http\Runner.php:82
+- CORE\src\Error\Middleware\ErrorHandlerMiddleware.php:115
+- CORE\src\Http\Runner.php:82
+- ROOT\vendor\cakephp\debug_kit\src\Middleware\DebugKitMiddleware.php:60
+- CORE\src\Http\Runner.php:82
+- CORE\src\Http\Runner.php:60
+- CORE\src\Http\Server.php:104
+- ROOT\webroot\index.php:37
+- [main]:
+
+Request URL: /administrators/login?redirect=%2F
+Referer URL: http://localhost:8765/administrators/login?redirect=%2F
+2025-11-08 23:52:22 error: [Cake\ORM\Exception\MissingTableClassException] Table class for alias `Users` could not be found. in C:\Users\maria\Proyecto-Distribuidora-Artemares\backend\vendor\cakephp\cakephp\src\ORM\Locator\TableLocator.php on line 249
+Exception Attributes: array (
+  0 => 'for alias `Users`',
+)
+Stack Trace:
+- CORE\src\Datasource\Locator\AbstractLocator.php:68
+- CORE\src\ORM\Locator\TableLocator.php:211
+- ROOT\vendor\cakephp\authentication\src\Identifier\Resolver\OrmResolver.php:58
+- ROOT\vendor\cakephp\authentication\src\Identifier\PasswordIdentifier.php:158
+- ROOT\vendor\cakephp\authentication\src\Identifier\PasswordIdentifier.php:100
+- ROOT\vendor\cakephp\authentication\src\Identifier\IdentifierCollection.php:53
+- ROOT\vendor\cakephp\authentication\src\Authenticator\FormAuthenticator.php:164
+- ROOT\vendor\cakephp\authentication\src\AuthenticationService.php:193
+- ROOT\vendor\cakephp\authentication\src\Middleware\AuthenticationMiddleware.php:87
+- CORE\src\Http\Runner.php:82
+- CORE\src\Http\Middleware\BodyParserMiddleware.php:162
+- CORE\src\Http\Runner.php:82
+- CORE\src\Routing\Middleware\RoutingMiddleware.php:117
+- CORE\src\Http\Runner.php:82
+- CORE\src\Routing\Middleware\AssetMiddleware.php:70
+- CORE\src\Http\Runner.php:82
+- CORE\src\Error\Middleware\ErrorHandlerMiddleware.php:115
+- CORE\src\Http\Runner.php:82
+- ROOT\vendor\cakephp\debug_kit\src\Middleware\DebugKitMiddleware.php:60
+- CORE\src\Http\Runner.php:82
+- CORE\src\Http\Runner.php:60
+- CORE\src\Http\Server.php:104
+- ROOT\webroot\index.php:37
+- [main]:
+
+Request URL: /administrators/login?redirect=%2F
+Referer URL: http://localhost:8765/administrators/login?redirect=%2F
+2025-11-08 23:53:54 error: [Cake\ORM\Exception\MissingTableClassException] Table class for alias `Users` could not be found. in C:\Users\maria\Proyecto-Distribuidora-Artemares\backend\vendor\cakephp\cakephp\src\ORM\Locator\TableLocator.php on line 249
+Exception Attributes: array (
+  0 => 'for alias `Users`',
+)
+Stack Trace:
+- CORE\src\Datasource\Locator\AbstractLocator.php:68
+- CORE\src\ORM\Locator\TableLocator.php:211
+- ROOT\vendor\cakephp\authentication\src\Identifier\Resolver\OrmResolver.php:58
+- ROOT\vendor\cakephp\authentication\src\Identifier\PasswordIdentifier.php:158
+- ROOT\vendor\cakephp\authentication\src\Identifier\PasswordIdentifier.php:100
+- ROOT\vendor\cakephp\authentication\src\Identifier\IdentifierCollection.php:53
+- ROOT\vendor\cakephp\authentication\src\Authenticator\FormAuthenticator.php:164
+- ROOT\vendor\cakephp\authentication\src\AuthenticationService.php:193
+- ROOT\vendor\cakephp\authentication\src\Middleware\AuthenticationMiddleware.php:87
+- CORE\src\Http\Runner.php:82
+- CORE\src\Http\Middleware\BodyParserMiddleware.php:162
+- CORE\src\Http\Runner.php:82
+- CORE\src\Routing\Middleware\RoutingMiddleware.php:117
+- CORE\src\Http\Runner.php:82
+- CORE\src\Routing\Middleware\AssetMiddleware.php:70
+- CORE\src\Http\Runner.php:82
+- CORE\src\Error\Middleware\ErrorHandlerMiddleware.php:115
+- CORE\src\Http\Runner.php:82
+- ROOT\vendor\cakephp\debug_kit\src\Middleware\DebugKitMiddleware.php:60
+- CORE\src\Http\Runner.php:82
+- CORE\src\Http\Runner.php:60
+- CORE\src\Http\Server.php:104
+- ROOT\webroot\index.php:37
+- [main]:
+
+Request URL: /administrators/login?redirect=%2F
+Referer URL: http://localhost:8765/administrators/login?redirect=%2F

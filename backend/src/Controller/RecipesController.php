@@ -73,7 +73,7 @@ class RecipesController extends AppController
                 $recipe->recipe_image = $recipeImage;
             }
 
-            if ($this->Recipes->save($recipe, ['associated' => ['RecipeImages']])) {
+            if ($this->Recipes->save($recipe, ['associated' => ['RecipeImages', 'Products']])) {
                 $this->Flash->success(__('La receta ha sido guardada con éxito.'));
                 return $this->redirect(['action' => 'index']);
             }
@@ -135,7 +135,7 @@ class RecipesController extends AppController
                 $recipe->recipe_image = null;
             }
 
-            if ($this->Recipes->save($recipe, ['associated' => ['RecipeImages']])) {
+            if ($this->Recipes->save($recipe, ['associated' => ['RecipeImages', 'Products']])) {
                 $this->Flash->success(__('La receta ha sido actualizada con éxito.'));
                 return $this->redirect(['action' => 'index']);
             }

@@ -1,29 +1,26 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Product $product
- * @var \Cake\Collection\CollectionInterface|string[] $categories
+ * Vista: Agregar Producto
+ * Usa el element form_card, adaptado al controlador actual (campo image_file)
  */
 ?>
 
-<?php
-echo $this->element('form_card', [
-    'title' => 'Añadir Producto',
-    'icon' => 'bi-plus-lg',
+<?= $this->element('form_card', [
     'form' => $this->Form,
     'entity' => $product,
+    'title' => 'Agregar Producto',
+    'icon' => 'bi-plus-circle',
     'fields' => [
-        'name', 
-        'price', 
-        'stock', 
-        'format', 
-        'unit', 
-        'category_id', 
-        'description', 
-        'image_medium'
+        'name',
+        'description',
+        'price',
+        'stock',
+        'unit_quantity',
+        'unit',
+        'category_id',
+        'image_file'
     ],
-    'actionLabel' => 'Crear producto',
+    'actionLabel' => 'Guardar',
     'showDelete' => false,
     'categories' => $categories ?? []
-]);
-?>
+]) ?>

@@ -1,88 +1,99 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Product $product
+ * Vista: Detalle de Producto
+ * Estilo Artemares — coherente con index y forms
  */
 ?>
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h3 class="fw-semibold text-dark mb-0">
-        <i class="bi bi-eye me-2 text-primary"></i> Detalle del Producto
-    </h3>
+<!-- Encabezado -->
+<div class="mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <h3 class="fw-semibold mb-1" style="color: #009FE3;">
+            <i class="bi bi-eye me-2"></i> Detalle del Producto
+        </h3>
+        <?= $this->Html->link(
+            '<i class="bi bi-arrow-left"></i> Volver',
+            ['action' => 'index'],
+            ['escape' => false, 'class' => 'btn btn-outline-secondary btn-sm shadow-sm']
+        ) ?>
+    </div>
 
-    <?= $this->Html->link(
-        '<i class="bi bi-arrow-left"></i> Volver',
-        ['action' => 'index'],
-        ['escape' => false, 'class' => 'btn btn-outline-secondary btn-sm']
-    ) ?>
+    <div style="
+        height: 3px;
+        margin-top: 6px;
+        border-radius: 2px;
+        background: linear-gradient(90deg, #009FE3 0%, #4CC3FF 100%);
+        width: 100%;
+    "></div>
 </div>
 
+<!-- Card principal con datos del producto -->
 <div class="card border-0 shadow-sm">
-    <div class="row g-0">
-        <!-- Columna de imagen -->
-        <div class="col-md-5 text-center p-4 bg-light border-end">
-            <?php if (!empty($product->product_image) && !empty($product->product_image->image_large)): ?>
-                <img
-                    src="data:<?= h($product->product_image->mime_type_large ?? 'image/jpeg') ?>;base64,<?= base64_encode(stream_get_contents($product->product_image->image_large)) ?>"
-                    alt="<?= h($product->name) ?>"
-                    class="img-fluid rounded shadow-sm"
-                    style="max-height: 400px; object-fit: contain;"
-                />
-            <?php else: ?>
-                <div class="d-flex align-items-center justify-content-center text-muted bg-white border rounded" style="height: 300px;">
-                    <i class="bi bi-image" style="font-size: 3rem;"></i>
-                </div>
-            <?php endif; ?>
-        </div>
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-4 text-muted">ID</dt>
+            <dd class="col-sm-8"><?= h($product->id) ?></dd>
 
-        <!-- Columna de datos -->
-        <div class="col-md-7">
-            <div class="card-body p-4">
-                <h4 class="fw-bold mb-3"><?= h($product->name) ?></h4>
+            <dt class="col-sm-4 text-muted">Nombre</dt>
+            <dd class="col-sm-8"><?= h($product->name) ?></dd>
 
-                <p class="text-muted mb-1">
-                    <strong>Precio:</strong> 
-                    <span class="text-dark">$<?= number_format($product->price, 0, ',', '.') ?></span>
-                </p>
-                <p class="text-muted mb-1">
-                    <strong>Stock:</strong> <?= h($product->stock) ?> unidades
-                </p>
-                <p class="text-muted mb-1">
-                    <strong>Formato:</strong> <?= h($product->format) ?>
-                </p>
-                <p class="text-muted mb-1">
-                    <strong>Unidad:</strong> <?= h($product->unit) ?>
-                </p>
-                <p class="text-muted mb-1">
-                    <strong>Categoría:</strong>
-                    <?= $this->Html->link(
-                        $product->category->name ?? '—',
-                        ['controller' => 'Categories', 'action' => 'view', $product->category_id],
-                        ['class' => 'text-decoration-none text-primary fw-semibold']
-                    ) ?>
-                </p>
+            <dt class="col-sm-4 text-muted">Descripción</dt>
+            <dd class="col-sm-8"><?= h($product->description) ?></dd>
 
-                <?php if (!empty($product->description)): ?>
-                    <hr>
-                    <p class="text-muted small mb-1"><strong>Descripción:</strong></p>
-                    <p class="text-dark"><?= nl2br(h($product->description)) ?></p>
+            <dt class="col-sm-4 text-muted">Precio</dt>
+            <dd class="col-sm-8">$<?= number_format($product->price, 0, ',', '.') ?></dd>
+
+            <dt class="col-sm-4 text-muted">Stock</dt>
+            <dd class="col-sm-8">
+                <?php if ($product->stock < 10): ?>
+                    <span class="badge bg-danger"><?= h($product->stock) ?> bajo</span>
+                <?php elseif ($product->stock < 30): ?>
+                    <span class="badge bg-warning text-dark"><?= h($product->stock) ?></span>
+                <?php else: ?>
+                    <span class="badge bg-success"><?= h($product->stock) ?></span>
                 <?php endif; ?>
+            </dd>
 
-                <hr>
+            <dt class="col-sm-4 text-muted">Cantidad por unidad</dt>
+            <dd class="col-sm-8"><?= h($product->unit_quantity) ?></dd>
 
-                <div class="d-flex justify-content-end mt-3 gap-2">
-                    <?= $this->Html->link(
-                        '<i class="bi bi-pencil-square"></i> Editar',
-                        ['action' => 'edit', $product->id],
-                        ['escape' => false, 'class' => 'btn btn-outline-primary']
-                    ) ?>
-                    <?= $this->Form->postLink(
-                        '<i class="bi bi-trash"></i> Eliminar',
-                        ['action' => 'delete', $product->id],
-                        ['escape' => false, 'class' => 'btn btn-outline-danger', 'confirm' => '¿Seguro que deseas eliminar este producto?']
-                    ) ?>
-                </div>
+            <dt class="col-sm-4 text-muted">Unidad</dt>
+            <dd class="col-sm-8"><?= h($product->unit) ?></dd>
+
+            <dt class="col-sm-4 text-muted">Categoría</dt>
+            <dd class="col-sm-8"><?= h($product->category->name ?? 'Sin categoría') ?></dd>
+        </dl>
+    </div>
+</div>
+
+<!-- Imagen del producto -->
+<div class="card border-0 shadow-sm mt-4">
+    <div class="card-header bg-white border-0 pb-2">
+        <h5 class="fw-semibold text-dark mb-0">
+            <i class="bi bi-image me-2 text-primary"></i> Imagen del producto
+        </h5>
+        <div style="
+            height: 2px;
+            margin-top: 6px;
+            width: 100%;
+            background: linear-gradient(90deg, #009FE3 0%, #4CC3FF 100%);
+            border-radius: 1px;
+        "></div>
+    </div>
+
+    <div class="card-body text-center">
+        <?php if (!empty($product->product_image) && !empty($product->product_image->image_large)): ?>
+            <img
+                src="data:<?= h($product->product_image->mime_type_large ?? 'image/jpeg') ?>;base64,<?= base64_encode(stream_get_contents($product->product_image->image_large)) ?>"
+                alt="Imagen del producto"
+                class="img-fluid rounded shadow-sm"
+                style="max-height: 320px;"
+            />
+        <?php else: ?>
+            <div class="p-4 text-muted">
+                <i class="bi bi-card-image display-6 d-block mb-2 text-secondary"></i>
+                <span>Sin imagen disponible</span>
             </div>
-        </div>
+        <?php endif; ?>
     </div>
 </div>

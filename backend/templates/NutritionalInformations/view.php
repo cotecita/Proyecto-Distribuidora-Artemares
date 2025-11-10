@@ -1,68 +1,64 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\NutritionalInformation $nutritionalInformation
+ * Vista: Detalle de Información Nutricional
+ * Estilo Artemares — coherente con el resto del panel
  */
 ?>
-<div class="row">
-    <aside class="column">
-        <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('Edit Nutritional Information'), ['action' => 'edit', $nutritionalInformation->id], ['class' => 'side-nav-item']) ?>
-            <?= $this->Form->postLink(__('Delete Nutritional Information'), ['action' => 'delete', $nutritionalInformation->id], ['confirm' => __('Are you sure you want to delete # {0}?', $nutritionalInformation->id), 'class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('List Nutritional Informations'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('New Nutritional Information'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
-        </div>
-    </aside>
-    <div class="column column-80">
-        <div class="nutritionalInformations view content">
-            <h3><?= h($nutritionalInformation->id) ?></h3>
-            <table>
-                <tr>
-                    <th><?= __('Product') ?></th>
-                    <td><?= $nutritionalInformation->hasValue('product') ? $this->Html->link($nutritionalInformation->product->name, ['controller' => 'Products', 'action' => 'view', $nutritionalInformation->product->id]) : '' ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Measurement') ?></th>
-                    <td><?= h($nutritionalInformation->measurement) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Id') ?></th>
-                    <td><?= $this->Number->format($nutritionalInformation->id) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Calories') ?></th>
-                    <td><?= $nutritionalInformation->calories === null ? '' : $this->Number->format($nutritionalInformation->calories) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Protein') ?></th>
-                    <td><?= $nutritionalInformation->protein === null ? '' : $this->Number->format($nutritionalInformation->protein) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Total Fat') ?></th>
-                    <td><?= $nutritionalInformation->total_fat === null ? '' : $this->Number->format($nutritionalInformation->total_fat) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Carbohydrates') ?></th>
-                    <td><?= $nutritionalInformation->carbohydrates === null ? '' : $this->Number->format($nutritionalInformation->carbohydrates) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Sodium') ?></th>
-                    <td><?= $nutritionalInformation->sodium === null ? '' : $this->Number->format($nutritionalInformation->sodium) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Cholesterol') ?></th>
-                    <td><?= $nutritionalInformation->cholesterol === null ? '' : $this->Number->format($nutritionalInformation->cholesterol) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Created') ?></th>
-                    <td><?= h($nutritionalInformation->created) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Modified') ?></th>
-                    <td><?= h($nutritionalInformation->modified) ?></td>
-                </tr>
-            </table>
-        </div>
+
+<!-- Encabezado -->
+<div class="mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <h3 class="fw-semibold mb-1" style="color: #009FE3;">
+            <i class="bi bi-eye me-2"></i> Detalle de Información Nutricional
+        </h3>
+        <?= $this->Html->link(
+            '<i class="bi bi-arrow-left"></i> Volver',
+            ['action' => 'index'],
+            ['escape' => false, 'class' => 'btn btn-outline-secondary btn-sm shadow-sm']
+        ) ?>
+    </div>
+
+    <!-- Línea degradada azul -->
+    <div style="
+        height: 3px;
+        margin-top: 6px;
+        border-radius: 2px;
+        background: linear-gradient(90deg, #009FE3 0%, #4CC3FF 100%);
+        width: 100%;
+    "></div>
+</div>
+
+<!-- Card principal -->
+<div class="card border-0 shadow-sm">
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-4 text-muted">ID</dt>
+            <dd class="col-sm-8"><?= h($nutritionalInformation->id) ?></dd>
+
+            <dt class="col-sm-4 text-muted">Producto</dt>
+            <dd class="col-sm-8"><?= h($nutritionalInformation->product->name ?? 'Sin producto asociado') ?></dd>
+
+            <dt class="col-sm-4 text-muted">Medición</dt>
+            <dd class="col-sm-8"><?= h($nutritionalInformation->measurement) ?></dd>
+
+            <dt class="col-sm-4 text-muted">Calorías</dt>
+            <dd class="col-sm-8"><?= h($nutritionalInformation->calories) ?> kcal</dd>
+
+            <dt class="col-sm-4 text-muted">Proteína</dt>
+            <dd class="col-sm-8"><?= h($nutritionalInformation->protein) ?> g</dd>
+
+            <dt class="col-sm-4 text-muted">Grasas Totales</dt>
+            <dd class="col-sm-8"><?= h($nutritionalInformation->total_fat) ?> g</dd>
+
+            <dt class="col-sm-4 text-muted">Carbohidratos</dt>
+            <dd class="col-sm-8"><?= h($nutritionalInformation->carbohydrates) ?> g</dd>
+
+            <dt class="col-sm-4 text-muted">Sodio</dt>
+            <dd class="col-sm-8"><?= h($nutritionalInformation->sodium) ?> mg</dd>
+
+            <dt class="col-sm-4 text-muted">Colesterol</dt>
+            <dd class="col-sm-8"><?= h($nutritionalInformation->cholesterol) ?> mg</dd>
+        </dl>
     </div>
 </div>
+

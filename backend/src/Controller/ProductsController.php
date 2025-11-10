@@ -15,6 +15,7 @@ class ProductsController extends AppController
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
+    /*
     public function index()
     {
         $query = $this->Products->find()
@@ -22,6 +23,23 @@ class ProductsController extends AppController
         $products = $this->paginate($query);
 
         $this->set(compact('products'));
+    }*/
+
+    public function index()
+    {
+        $query = $this->Products->find()
+            ->contain(['Categories']); 
+
+        // búsqueda por nombre
+        $search = $this->request->getQuery('search');
+        if (!empty($search)) {
+            //  ILIKE si BBDD es PostgreSQL
+            $query->where(['Products.name ILIKE' => "%$search%"]);
+        }
+
+        $products = $this->paginate($query);
+
+        $this->set(compact('products', 'search'));
     }
 
     /**

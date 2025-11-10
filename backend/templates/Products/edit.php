@@ -1,29 +1,26 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Product $product
- * @var \Cake\Collection\CollectionInterface|string[] $categories
+ * Vista: Editar Producto
+ * Usa el element form_card, adaptado al controlador actual (campo image_file)
  */
 ?>
 
-<?php
-echo $this->element('form_card', [
-    'title' => 'Editar Producto',
-    'icon' => 'bi-pencil-square',
+<?= $this->element('form_card', [
     'form' => $this->Form,
     'entity' => $product,
+    'title' => 'Editar Producto',
+    'icon' => 'bi-pencil-square',
     'fields' => [
-        'name', 
-        'price', 
-        'stock', 
-        'format', 
-        'unit', 
-        'category_id', 
-        'description', 
-        'image_medium'
+        'name',
+        'description',
+        'price',
+        'stock',
+        'unit_quantity',
+        'unit',
+        'category_id',
+        'image_file'
     ],
-    'actionLabel' => 'Guardar cambios',
+    'actionLabel' => 'Actualizar',
     'showDelete' => true,
     'categories' => $categories ?? []
-]);
-?>
+]) ?>

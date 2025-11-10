@@ -47,7 +47,7 @@ class OrdersProductsTable extends Table
         $this->setPrimaryKey(['order_id', 'product_id']);
 
         $this->addBehavior('Timestamp');
-
+        
         $this->belongsTo('Orders', [
             'foreignKey' => 'order_id',
             'joinType' => 'INNER',

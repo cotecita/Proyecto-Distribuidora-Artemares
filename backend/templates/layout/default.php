@@ -1,116 +1,120 @@
-<?php
-/**
- * Plantilla base para Distribuidora Artemares
- * Incluye menú principal y contenedor de contenido
- */
-
-$cakeDescription = 'Distribuidora Artemares';
-?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= $this->fetch('title') ?> | Artemares</title>
+    <title><?= $this->fetch('title') ?> | Panel Administrador - Artemares</title>
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
 
     <!-- Iconos -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/fonts/bootstrap-icons.woff2"
+          as="font" type="font/woff2" crossorigin>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
-    <?= $this->Html->meta('icon') ?>
-    <?= $this->Html->meta('csrfToken', $this->request->getAttribute('csrfToken')) ?>
+    <!-- Preload del logo para evitar “salto” durante render -->
+    <link rel="preload" as="image" href="<?= $this->Url->image('Logosinfondo.png') ?>">
 
     <style>
-        body {
-            display: flex;
-            min-height: 100vh;
-            background-color: #f6f9fc;
-            overflow-x: hidden;
-            font-family: "Inter", sans-serif;
+        /* ===============================================================
+           ESTILOS BASE (mismo diseño original, solo con correcciones)
+           =============================================================== */
+
+        html, body {
+            background-color: #F7FAFC;
+            font-family: "Segoe UI", sans-serif;
+            color: #212529;
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
         }
 
-        /* Fija el scrollbar para que no desaparezca con modales */
-        body.modal-open {
-            overflow-y: scroll !important;
-            padding-right: 0 !important;
+        /* Oculta transiciones globales hasta carga completa */
+        body:not(.body-loaded) * {
+            transition: none !important;
         }
 
+        /* Sidebar */
         .sidebar {
-            width: 250px;
-            background-color: #07152b;
-            color: #fff;
-            position: fixed;
-            top: 0;
-            bottom: 0;
+            min-height: 100vh;
+            background-color: #0E1B2B;
+        }
+
+        /* Contenedor del logo: espacio fijo evita contracción */
+        .sidebar .navbar-brand {
+            width: 100%;
+            height: 60px;
             display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            padding: 1.5rem 0.9rem;
-        }
-
-        .sidebar .logo {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .sidebar .logo img {
-            width: 85%;
-            max-height: 75px;
-            filter: drop-shadow(0 0 8px rgba(0, 174, 255, 0.4));
-        }
-
-        .sidebar .nav-link {
-            color: #d0d8e6;
-            border-radius: 10px;
-            padding: 0.7rem 0.9rem;
-            display: flex;
+            justify-content: center;
             align-items: center;
-            gap: 10px;
-            transition: all 0.2s ease-in-out;
+            margin-bottom: 2rem;
+            margin-top: 1rem;
+        }
+
+        /* Dimensiones fijas del logo evitan el "salto" inicial */
+        .sidebar .navbar-brand img {
+            display: block;
+            max-height: 40px;
+            width: auto;
+            object-fit: contain;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .sidebar a {
+            color: #E9EEF2;
+            text-decoration: none;
+            display: block;
+            padding: 12px 18px;
+            border-radius: 4px;
+            margin: 4px 0;
             font-weight: 500;
         }
 
-        .sidebar .nav-link:hover {
-            background-color: rgba(0, 174, 255, 0.1);
+        .sidebar a.active {
+            background-color: #009FE3;
             color: #fff;
         }
 
-        .sidebar .nav-link.active {
-            background: linear-gradient(90deg, #009dff, #36b5ff);
+        .sidebar a:hover {
+            background-color: #007ab3;
             color: #fff;
-            box-shadow: inset 2px 0 0 #00aaff, 0 0 8px rgba(0, 170, 255, 0.3);
         }
 
-        .topbar {
-            height: 65px;
-            background: #fff;
+        /* Navbar superior: altura fija y sin reflow */
+        .navbar {
+            background-color: #ffffff;
             border-bottom: 1px solid #dee2e6;
+            min-height: 64px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 0 2rem;
-            position: fixed;
-            left: 250px;
-            right: 0;
-            top: 0;
-            z-index: 100;
         }
 
-        .main-content {
-            margin-left: 250px;
-            padding: 90px 2rem 2rem;
-            width: calc(100% - 250px);
+        .navbar-text {
+            color: #4a5568;
+            font-size: 1rem;
         }
 
-        footer {
-            text-align: center;
-            padding: 1.5rem;
-            color: #7b8ba3;
-            font-size: 0.9rem;
-            margin-top: 4rem;
+        /* Botones */
+        .btn-primary {
+            background-color: #009FE3;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #007ab3;
+        }
+
+        /* Tablas */
+        .table thead {
+            background-color: #009FE3;
+            color: white;
+        }
+
+        main {
+            padding: 2rem;
         }
     </style>
 
@@ -120,133 +124,87 @@ $cakeDescription = 'Distribuidora Artemares';
 </head>
 
 <body>
-
-    <!-- Sidebar -->
-    <aside class="sidebar">
-        <div class="logo">
-            <?= $this->Html->image('Logosinfondo.png', ['alt' => 'Artemares']) ?>
-        </div>
-
-        <nav>
-            <?php $controller = $this->request->getParam('controller'); ?>
-
-            <?= $this->Html->link('<i class="bi bi-box"></i> Productos',
-                ['controller' => 'Products', 'action' => 'index'],
-                ['escape' => false, 'class' => 'nav-link' . ($controller === 'Products' ? ' active' : '')]) ?>
-
-            <?= $this->Html->link('<i class="bi bi-tags"></i> Categorías',
-                ['controller' => 'Categories', 'action' => 'index'],
-                ['escape' => false, 'class' => 'nav-link' . ($controller === 'Categories' ? ' active' : '')]) ?>
-
-            <?= $this->Html->link('<i class="bi bi-journal-text"></i> Recetas',
-                ['controller' => 'Recipes', 'action' => 'index'],
-                ['escape' => false, 'class' => 'nav-link' . ($controller === 'Recipes' ? ' active' : '')]) ?>
-
-            <?= $this->Html->link('<i class="bi bi-cart4"></i> Pedidos',
-                ['controller' => 'Orders', 'action' => 'index'],
-                ['escape' => false, 'class' => 'nav-link' . ($controller === 'Orders' ? ' active' : '')]) ?>
-
-            <?= $this->Html->link('<i class="bi bi-info-circle"></i> Info Nutricional',
-                ['controller' => 'NutritionalInformations', 'action' => 'index'],
-                ['escape' => false, 'class' => 'nav-link' . ($controller === 'NutritionalInformations' ? ' active' : '')]) ?>
-
-            <?= $this->Html->link('<i class="bi bi-person-gear"></i> Administrador',
-                ['controller' => 'Administrators', 'action' => 'index'],
-                ['escape' => false, 'class' => 'nav-link' . ($controller === 'Administrators' ? ' active' : '')]) ?>
-        </nav>
-    </aside>
-
-    <!-- Topbar -->
-    <header class="topbar">
-        <h6>Panel de Administración</h6>
-        <div>
-            <span class="me-3"><i class="bi bi-person-circle"></i> Admin</span>
-            <a href="#" class="btn btn-outline-danger btn-sm">
-                <i class="bi bi-box-arrow-right"></i> Salir
-            </a>
-        </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="main-content">
-        <div class="container-fluid">
-            <?= $this->Flash->render() ?>
-            <?= $this->fetch('content') ?>
-        </div>
-        <footer>
-            © <?= date('Y') ?> Artemares — Todos los derechos reservados
-        </footer>
-    </main>
-
-    <!-- Modal de confirmación -->
-    <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content border-0 shadow">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title"><i class="bi bi-exclamation-triangle me-2"></i> Confirmar eliminación</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body text-center py-4">
-                    <p class="mb-0 fs-5">¿Estás seguro de eliminar este elemento?</p>
-                </div>
-                <div class="modal-footer border-0 justify-content-center pb-4">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" id="confirmOkBtn" class="btn btn-danger px-4">Eliminar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Script de confirmación -->
+    <!-- Script para habilitar transiciones solo tras carga completa -->
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const modal = new bootstrap.Modal(document.getElementById('confirmModal'));
-        const okBtn = document.getElementById('confirmOkBtn');
-        let deleteUrl = null;
-
-        // Interceptar los enlaces de eliminación
-        document.querySelectorAll('.delete-link').forEach(link => {
-            link.addEventListener('click', e => {
-                e.preventDefault();
-                deleteUrl = link.getAttribute('href');
-                modal.show();
-            });
+        document.addEventListener("DOMContentLoaded", function() {
+            document.body.classList.add("body-loaded");
         });
-
-        // Enviar formulario POST manualmente
-        okBtn.addEventListener('click', () => {
-            if (deleteUrl) {
-                const form = document.createElement('form');
-                form.method = 'POST';
-                form.action = deleteUrl;
-
-                const csrf = document.querySelector('meta[name="csrfToken"]');
-                if (csrf) {
-                    const input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = '_csrfToken';
-                    input.value = csrf.getAttribute('content');
-                    form.appendChild(input);
-                }
-
-                document.body.appendChild(form);
-                form.submit();
-                deleteUrl = null;
-            }
-            modal.hide();
-        });
-
-        // Evita que Bootstrap mueva el contenido por el scrollbar
-        const modalEl = document.getElementById('confirmModal');
-        modalEl.addEventListener('show.bs.modal', () => {
-            document.body.style.paddingRight = '0px';
-        });
-        modalEl.addEventListener('hidden.bs.modal', () => {
-            document.body.style.paddingRight = '0px';
-        });
-    });
     </script>
 
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <nav class="sidebar d-flex flex-column p-3">
+            <div class="navbar-brand user-select-none">
+                <?= $this->Html->image('Logosinfondo.png', [
+                    'alt' => 'Artemares',
+                    'style' => '
+                        max-height: 40px;
+                        width: auto;
+                        object-fit: contain;
+                    '
+                ]) ?>
+            </div>
+
+            <a href="<?= $this->Url->build(['controller' => 'Products', 'action' => 'index']) ?>"
+               class="<?= $this->request->getParam('controller') === 'Products' ? 'active' : '' ?>">
+               <i class="bi bi-box-seam me-2"></i>Productos
+            </a>
+
+            <a href="<?= $this->Url->build(['controller' => 'Categories', 'action' => 'index']) ?>"
+               class="<?= $this->request->getParam('controller') === 'Categories' ? 'active' : '' ?>">
+               <i class="bi bi-tags me-2"></i>Categorías
+            </a>
+
+            <a href="<?= $this->Url->build(['controller' => 'Recipes', 'action' => 'index']) ?>"
+               class="<?= $this->request->getParam('controller') === 'Recipes' ? 'active' : '' ?>">
+               <i class="bi bi-journal-text me-2"></i>Recetas
+            </a>
+
+            <a href="<?= $this->Url->build(['controller' => 'Orders', 'action' => 'index']) ?>"
+               class="<?= $this->request->getParam('controller') === 'Orders' ? 'active' : '' ?>">
+               <i class="bi bi-cart-check me-2"></i>Pedidos
+            </a>
+
+            <a href="<?= $this->Url->build(['controller' => 'NutritionalInformations', 'action' => 'index']) ?>"
+               class="<?= $this->request->getParam('controller') === 'NutritionalInformations' ? 'active' : '' ?>">
+               <i class="bi bi-info-circle me-2"></i>Info Nutricional
+            </a>
+
+            <a href="<?= $this->Url->build(['controller' => 'Administrators', 'action' => 'index']) ?>"
+               class="<?= $this->request->getParam('controller') === 'Administrators' ? 'active' : '' ?>">
+               <i class="bi bi-person-gear me-2"></i>Administrador
+            </a>
+        </nav>
+
+        <!-- Contenido principal -->
+        <div class="flex-grow-1">
+            <nav class="navbar navbar-expand-lg shadow-sm px-4">
+                <div class="container-fluid d-flex justify-content-between align-items-center">
+                    <span class="navbar-text mb-0">
+                        <i class="bi bi-speedometer2 me-2"></i>Panel de Administración
+                    </span>
+                    <div class="d-flex align-items-center">
+                        <span class="text-secondary me-3">
+                            <i class="bi bi-person-circle me-1"></i>Admin
+                        </span>
+                        <?= $this->Form->postLink(
+                            '<i class="bi bi-box-arrow-right"></i> Salir',
+                            ['controller' => 'Administrators', 'action' => 'logout'],
+                            [
+                                'class' => 'btn btn-outline-danger btn-sm',
+                                'escape' => false,
+                                'confirm' => '¿Seguro que quieres cerrar sesión?'
+                            ]
+                        ) ?>
+                    </div>
+                </div>
+            </nav>
+
+            <main>
+                <?= $this->Flash->render() ?>
+                <?= $this->fetch('content') ?>
+            </main>
+        </div>
+    </div>
 </body>
 </html>
-

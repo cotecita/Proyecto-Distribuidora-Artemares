@@ -22,6 +22,10 @@
                     <th><?= __('Username') ?></th>
                     <td><?= h($administrator->username) ?></td>
                 </tr>
+                 <tr>
+                    <th><?= __('Contraseña') ?></th>
+                    <td><?= h($administrator->password) ?></td>
+                </tr>
                 <tr>
                     <th><?= __('Email') ?></th>
                     <td><?= h($administrator->email) ?></td>

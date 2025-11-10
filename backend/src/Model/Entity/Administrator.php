@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
+use Authentication\PasswordHasher\DefaultPasswordHasher; // para la autenticación
 use Cake\ORM\Entity;
 
 /**
@@ -18,6 +19,13 @@ use Cake\ORM\Entity;
  */
 class Administrator extends Entity
 {
+     protected function _setPassword(string $password) : ?string
+    {
+        if (strlen($password) > 0) {
+            return (new DefaultPasswordHasher())->hash($password);
+        }
+        return null;
+    }
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *

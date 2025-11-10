@@ -1,44 +1,17 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Recipe $recipe
- * @var \Cake\Collection\CollectionInterface|string[] $products
+ * Vista: Agregar Receta
  */
 ?>
-<div class="row">
-    <aside class="column">
-        <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('List Recipes'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-        </div>
-    </aside>
-    <div class="column column-80">
-        <div class="recipes form content">
-            <?= $this->Form->create($recipe, ['type' => 'file']) ?>
-            <fieldset>
-                <legend><?= __('Add Recipe') ?></legend>
-                <?php
-                    echo $this->Form->control('name');
-                    echo $this->Form->control('description');
-                    echo $this->Form->control('ingredients');
-                    #echo $this->Form->control('products._ids', ['options' => $products]);
-                    // Campo para seleccionar varios productos
-                    echo $this->Form->control('products._ids', [
-                        'label' => 'Productos asociados',
-                        'options' => $products,
-                        'multiple' => true,
-                        'class' => 'select2', 
-                    ]);
+<div class="container-fluid px-4">
 
-                    // campo para la imagen
-                    echo $this->Form->control('image_file', [
-                        'type' => 'file',
-                        'label' => 'Imagen del producto',
-                    ]);
-                ?>
-            </fieldset>
-            <?= $this->Form->button(__('Submit')) ?>
-            <?= $this->Form->end() ?>
-        </div>
-    </div>
+    <?= $this->element('form_card', [
+        'form' => $this->Form,
+        'entity' => $recipe,
+        'title' => 'Agregar Receta',
+        'icon' => 'bi-egg-fried',
+        'fields' => ['name', 'description', 'ingredients', 'image_file'],
+        'actionLabel' => 'Guardar',
+        'showDelete' => false
+    ]) ?>
 </div>

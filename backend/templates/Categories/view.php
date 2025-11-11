@@ -1,88 +1,77 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Category $category
+ * Vista: Detalle de Categoría
+ * Estilo Artemares — coherente con Products
  */
 ?>
-<div class="row">
-    <aside class="column">
-        <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('Edit Category'), ['action' => 'edit', $category->id], ['class' => 'side-nav-item']) ?>
-            <?= $this->Form->postLink(__('Delete Category'), ['action' => 'delete', $category->id], ['confirm' => __('Are you sure you want to delete # {0}?', $category->id), 'class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('List Categories'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('New Category'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
+
+<div class="mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <h3 class="fw-semibold mb-1" style="color: #009FE3;">
+            <i class="bi bi-eye me-2"></i> Detalle de la Categoría
+        </h3>
+        <?= $this->Html->link(
+            '<i class="bi bi-arrow-left"></i> Volver',
+            ['action' => 'index'],
+            ['escape' => false, 'class' => 'btn btn-outline-secondary btn-sm shadow-sm']
+        ) ?>
+    </div>
+
+    <div style="
+        height: 3px;
+        margin-top: 6px;
+        border-radius: 2px;
+        background: linear-gradient(90deg, #009FE3 0%, #4CC3FF 100%);
+        width: 100%;
+    "></div>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-4 text-muted">ID</dt>
+            <dd class="col-sm-8"><?= h($category->id) ?></dd>
+
+            <dt class="col-sm-4 text-muted">Nombre</dt>
+            <dd class="col-sm-8"><?= h($category->name) ?></dd>
+        </dl>
+    </div>
+</div>
+
+<?php if (!empty($category->products)): ?>
+    <div class="card border-0 shadow-sm mt-4">
+        <div class="card-header bg-white border-0 pb-2">
+            <h5 class="fw-semibold text-dark mb-0">
+                <i class="bi bi-box-seam me-2 text-primary"></i> Productos de esta categoría
+            </h5>
+            <div style="
+                height: 2px;
+                margin-top: 6px;
+                width: 100%;
+                background: linear-gradient(90deg, #009FE3 0%, #4CC3FF 100%);
+                border-radius: 1px;
+            "></div>
         </div>
-    </aside>
-    <div class="column column-80">
-        <div class="categories view content">
-            <h3><?= h($category->name) ?></h3>
-            <table>
-                <tr>
-                    <th><?= __('Name') ?></th>
-                    <td><?= h($category->name) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Id') ?></th>
-                    <td><?= $this->Number->format($category->id) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Created') ?></th>
-                    <td><?= h($category->created) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Modified') ?></th>
-                    <td><?= h($category->modified) ?></td>
-                </tr>
-            </table>
-            <div class="related">
-                <h4><?= __('Related Products') ?></h4>
-                <?php if (!empty($category->products)) : ?>
-                <div class="table-responsive">
-                    <table>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
                         <tr>
-                            <th><?= __('Id') ?></th>
-                            <th><?= __('Name') ?></th>
-                            <th><?= __('Description') ?></th>
-                            <th><?= __('Price') ?></th>
-                            <th><?= __('Stock') ?></th>
-                            <th><?= __('Unit Quantity') ?></th>
-                            <th><?= __('Unit') ?></th>
-                            <th><?= __('Category Id') ?></th>
-                            <th><?= __('Created') ?></th>
-                            <th><?= __('Modified') ?></th>
-                            <th class="actions"><?= __('Actions') ?></th>
+                            <th>ID</th>
+                            <th>Nombre</th>
                         </tr>
-                        <?php foreach ($category->products as $product) : ?>
-                        <tr>
-                            <td><?= h($product->id) ?></td>
-                            <td><?= h($product->name) ?></td>
-                            <td><?= h($product->description) ?></td>
-                            <td><?= h($product->price) ?></td>
-                            <td><?= h($product->stock) ?></td>
-                            <td><?= h($product->unit_quantity) ?></td>
-                            <td><?= h($product->unit) ?></td>
-                            <td><?= h($product->category_id) ?></td>
-                            <td><?= h($product->created) ?></td>
-                            <td><?= h($product->modified) ?></td>
-                            <td class="actions">
-                                <?= $this->Html->link(__('View'), ['controller' => 'Products', 'action' => 'view', $product->id]) ?>
-                                <?= $this->Html->link(__('Edit'), ['controller' => 'Products', 'action' => 'edit', $product->id]) ?>
-                                <?= $this->Form->postLink(
-                                    __('Delete'),
-                                    ['controller' => 'Products', 'action' => 'delete', $product->id],
-                                    [
-                                        'method' => 'delete',
-                                        'confirm' => __('Are you sure you want to delete # {0}?', $product->id),
-                                    ]
-                                ) ?>
-                            </td>
-                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($category->products as $product): ?>
+                            <tr>
+                                <td><?= h($product->id) ?></td>
+                                <td><?= h($product->name) ?></td>
+                            </tr>
                         <?php endforeach; ?>
-                    </table>
-                </div>
-                <?php endif; ?>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-</div>
+<?php endif; ?>

@@ -59,25 +59,36 @@
                                 </td>-->
                                 <td><?= h($product->category->name ?? 'Sin categoría') ?></td>
                                 <td class="text-center">
-                                    <div class="btn-group">
+                                    <div class="d-flex justify-content-center gap-2">
                                         <?= $this->Html->link(
                                             '<i class="bi bi-eye"></i>',
                                             ['action' => 'view', $product->id],
-                                            ['class' => 'btn btn-outline-primary btn-sm', 'escape' => false, 'title' => 'Ver']
+                                            [
+                                                'class' => 'btn btn-outline-primary btn-sm rounded shadow-sm',
+                                                'escape' => false,
+                                                'title' => 'Ver',
+                                                'style' => 'border-width:1.5px;'
+                                            ]
                                         ) ?>
                                         <?= $this->Html->link(
                                             '<i class="bi bi-pencil"></i>',
                                             ['action' => 'edit', $product->id],
-                                            ['class' => 'btn btn-outline-warning btn-sm', 'escape' => false, 'title' => 'Editar']
+                                            [
+                                                'class' => 'btn btn-outline-warning btn-sm rounded shadow-sm',
+                                                'escape' => false,
+                                                'title' => 'Editar',
+                                                'style' => 'border-width:1.5px;'
+                                            ]
                                         ) ?>
                                         <?= $this->Form->postLink(
                                             '<i class="bi bi-trash"></i>',
                                             ['action' => 'delete', $product->id],
                                             [
                                                 'confirm' => '¿Seguro que deseas eliminar este producto?',
-                                                'class' => 'btn btn-outline-danger btn-sm',
+                                                'class' => 'btn btn-outline-danger btn-sm rounded shadow-sm',
                                                 'escape' => false,
-                                                'title' => 'Eliminar'
+                                                'title' => 'Eliminar',
+                                                'style' => 'border-width:1.5px;'
                                             ]
                                         ) ?>
                                     </div>

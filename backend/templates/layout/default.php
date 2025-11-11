@@ -3,34 +3,64 @@
 <head>
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><?= $this->fetch('title') ?> | Panel Administrador - Artemares</title>
 
-    <title>
-        <?= $this->fetch('title') ?> | Panel Administrador - Artemares
-    </title>
-
-    <!-- Bootstrap 5 -->
+    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
 
-    <!-- Bootstrap Icons -->
+    <!-- Iconos -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/fonts/bootstrap-icons.woff2"
+          as="font" type="font/woff2" crossorigin>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
-    <!-- Estilos personalizados opcionales -->
+    <!-- Preload del logo para evitar “salto” durante render -->
+    <link rel="preload" as="image" href="<?= $this->Url->image('Logosinfondo.png') ?>">
+
     <style>
-        body {
+        /* ===============================================================
+           ESTILOS BASE (mismo diseño original, solo con correcciones)
+           =============================================================== */
+
+        html, body {
             background-color: #F7FAFC;
             font-family: "Segoe UI", sans-serif;
             color: #212529;
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
         }
 
-        /* === SIDEBAR === */
+        /* Oculta transiciones globales hasta carga completa */
+        body:not(.body-loaded) * {
+            transition: none !important;
+        }
+
+        /* Sidebar */
         .sidebar {
             min-height: 100vh;
-            background-color: #0E1B2B; /* azul marino oscuro */
+            background-color: #0E1B2B;
         }
 
-        .navbar-brand img {
-            filter: drop-shadow(0 0 6px rgba(0, 159, 227, 0.5));
+        /* Contenedor del logo: espacio fijo evita contracción */
+        .sidebar .navbar-brand {
+            width: 100%;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 2rem;
+            margin-top: 1rem;
+        }
+
+        /* Dimensiones fijas del logo evitan el "salto" inicial */
+        .sidebar .navbar-brand img {
+            display: block;
+            max-height: 40px;
+            width: auto;
+            object-fit: contain;
+            pointer-events: none;
+            user-select: none;
         }
 
         .sidebar a {
@@ -38,42 +68,48 @@
             text-decoration: none;
             display: block;
             padding: 12px 18px;
-            border-radius: 6px;
+            border-radius: 4px;
             margin: 4px 0;
-            transition: 0.25s;
+            font-weight: 500;
         }
 
-        .sidebar a:not(.navbar-brand):hover,
-        .sidebar a:not(.navbar-brand).active {
-            background: linear-gradient(90deg, #009FE3 0%, #4CC3FF 100%);
+        .sidebar a.active {
+            background-color: #009FE3;
             color: #fff;
-            box-shadow: 0 0 10px rgba(0, 159, 227, 0.4);
         }
 
-        /* === NAVBAR SUPERIOR === */
+        .sidebar a:hover {
+            background-color: #007ab3;
+            color: #fff;
+        }
+
+        /* Navbar superior: altura fija y sin reflow */
         .navbar {
             background-color: #ffffff;
             border-bottom: 1px solid #dee2e6;
+            min-height: 64px;
+            display: flex;
+            align-items: center;
         }
 
         .navbar-text {
             color: #4a5568;
+            font-size: 1rem;
         }
 
-        /* === BOTONES === */
+        /* Botones */
         .btn-primary {
-            background: linear-gradient(90deg, #009FE3 0%, #4CC3FF 100%);
+            background-color: #009FE3;
             border: none;
-            color: white;
         }
 
         .btn-primary:hover {
-            background: linear-gradient(90deg, #0088c7 0%, #36b2f9 100%);
+            background-color: #007ab3;
         }
 
-        /* === TABLAS === */
+        /* Tablas */
         .table thead {
-            background: linear-gradient(90deg, #009FE3 0%, #4CC3FF 100%);
+            background-color: #009FE3;
             color: white;
         }
 
@@ -82,56 +118,59 @@
         }
     </style>
 
-
-
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
 </head>
 
 <body>
+    <!-- Script para habilitar transiciones solo tras carga completa -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.body.classList.add("body-loaded");
+        });
+    </script>
+
     <div class="d-flex">
-        <!-- Sidebar lateral -->
+        <!-- Sidebar -->
         <nav class="sidebar d-flex flex-column p-3">
-            <div class="navbar-brand d-flex justify-content-center mb-5 mt-3 user-select-none" style="cursor: default;">
+            <div class="navbar-brand user-select-none">
                 <?= $this->Html->image('Logosinfondo.png', [
                     'alt' => 'Artemares',
                     'style' => '
                         max-height: 40px;
                         width: auto;
                         object-fit: contain;
-                        pointer-events: none;
-                        user-select: none;
                     '
                 ]) ?>
             </div>
 
-            <a href="<?= $this->Url->build(['controller' => 'Products', 'action' => 'index']) ?>" 
+            <a href="<?= $this->Url->build(['controller' => 'Products', 'action' => 'index']) ?>"
                class="<?= $this->request->getParam('controller') === 'Products' ? 'active' : '' ?>">
                <i class="bi bi-box-seam me-2"></i>Productos
             </a>
 
-            <a href="<?= $this->Url->build(['controller' => 'Categories', 'action' => 'index']) ?>" 
+            <a href="<?= $this->Url->build(['controller' => 'Categories', 'action' => 'index']) ?>"
                class="<?= $this->request->getParam('controller') === 'Categories' ? 'active' : '' ?>">
                <i class="bi bi-tags me-2"></i>Categorías
             </a>
 
-            <a href="<?= $this->Url->build(['controller' => 'Recipes', 'action' => 'index']) ?>" 
+            <a href="<?= $this->Url->build(['controller' => 'Recipes', 'action' => 'index']) ?>"
                class="<?= $this->request->getParam('controller') === 'Recipes' ? 'active' : '' ?>">
                <i class="bi bi-journal-text me-2"></i>Recetas
             </a>
 
-            <a href="<?= $this->Url->build(['controller' => 'Orders', 'action' => 'index']) ?>" 
+            <a href="<?= $this->Url->build(['controller' => 'Orders', 'action' => 'index']) ?>"
                class="<?= $this->request->getParam('controller') === 'Orders' ? 'active' : '' ?>">
                <i class="bi bi-cart-check me-2"></i>Pedidos
             </a>
 
-            <a href="<?= $this->Url->build(['controller' => 'NutritionalInformations', 'action' => 'index']) ?>" 
+            <a href="<?= $this->Url->build(['controller' => 'NutritionalInformations', 'action' => 'index']) ?>"
                class="<?= $this->request->getParam('controller') === 'NutritionalInformations' ? 'active' : '' ?>">
                <i class="bi bi-info-circle me-2"></i>Info Nutricional
             </a>
 
-            <a href="<?= $this->Url->build(['controller' => 'Administrators', 'action' => 'index']) ?>" 
+            <a href="<?= $this->Url->build(['controller' => 'Administrators', 'action' => 'index']) ?>"
                class="<?= $this->request->getParam('controller') === 'Administrators' ? 'active' : '' ?>">
                <i class="bi bi-person-gear me-2"></i>Administrador
             </a>
@@ -139,10 +178,9 @@
 
         <!-- Contenido principal -->
         <div class="flex-grow-1">
-            <!-- Navbar superior -->
-            <nav class="navbar navbar-expand-lg bg-white shadow-sm px-4">
-                <div class="container-fluid">
-                    <span class="navbar-text text-muted">
+            <nav class="navbar navbar-expand-lg shadow-sm px-4">
+                <div class="container-fluid d-flex justify-content-between align-items-center">
+                    <span class="navbar-text mb-0">
                         <i class="bi bi-speedometer2 me-2"></i>Panel de Administración
                     </span>
                     <div class="d-flex align-items-center">
@@ -154,16 +192,14 @@
                             ['controller' => 'Administrators', 'action' => 'logout'],
                             [
                                 'class' => 'btn btn-outline-danger btn-sm',
-                                'escape' => false, // para que el ícono se renderice como HTML
+                                'escape' => false,
                                 'confirm' => '¿Seguro que quieres cerrar sesión?'
                             ]
                         ) ?>
-
                     </div>
                 </div>
             </nav>
 
-            <!-- Contenedor del contenido renderizado -->
             <main>
                 <?= $this->Flash->render() ?>
                 <?= $this->fetch('content') ?>

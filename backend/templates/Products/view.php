@@ -1,162 +1,99 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Product $product
+ * Vista: Detalle de Producto
+ * Estilo Artemares — coherente con index y forms
  */
 ?>
-<div class="row">
-    <aside class="column">
-        <div class="side-nav">
-            <h4 class="heading"><?= __('Opciones') ?></h4>
-            <?= $this->Html->link(__('Editar Producto'), ['action' => 'edit', $product->id], ['class' => 'side-nav-item']) ?>
-            <?= $this->Form->postLink(__('Eliminar Producto'), ['action' => 'delete', $product->id], ['confirm' => __('¿Estás seguro de eliminar # {0}?', $product->id), 'class' => 'side-nav-item']) ?>
-            <!--<?= $this->Html->link(__('List Products'), ['action' => 'index'], ['class' => 'side-nav-item']) ?> -->
-            <!--<?= $this->Html->link(__('New Product'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>-->
-        </div>
-    </aside>
-    <div class="column column-80">
-        <div class="products view content">
-            <h3><?= h($product->name) ?></h3>
-            <table>
-                <tr>
-                    <th><?= __('Nombre') ?></th>
-                    <td><?= h($product->name) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Unidad') ?></th>
-                    <td><?= h($product->unit) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Categoría') ?></th>
-                    <td><?= $product->hasValue('category') ? $this->Html->link($product->category->name, ['controller' => 'Categories', 'action' => 'view', $product->category->id]) : '' ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Información Nutricional') ?></th>
-                    <td><?= $product->hasValue('nutritional_information') ? $this->Html->link($product->nutritional_information->id, ['controller' => 'NutritionalInformations', 'action' => 'view', $product->nutritional_information->id]) : '' ?></td>
-                </tr>
-                <tr>
-                    <!--<th><?= __('Imagen') ?></th>
-                    <td><?= $product->hasValue('product_image') ? $this->Html->link($product->product_image->mime_type_small, ['controller' => 'ProductImages', 'action' => 'view', $product->product_image->id]) : '' ?></td>
-                        -->
-                    <th><?= __('Imagen') ?></th>
-                    <td>
-                        <?php if (!empty($product->product_image)): ?>
-                            <img src="data:<?= h($product->product_image->mime_type_medium) ?>;base64,<?= base64_encode(stream_get_contents($product->product_image->image_medium)) ?>" 
-                                alt="Imagen del producto" style="max-width:200px; border-radius:10px;">
-                        <?php else: ?>
-                            <em>Sin imagen</em>
-                        <?php endif; ?>
-                    </td>
-                </tr>
-                <tr>
-                    <th><?= __('Id') ?></th>
-                    <td><?= $this->Number->format($product->id) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Precio') ?></th>
-                    <td><?= $this->Number->format($product->price) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Stock') ?></th>
-                    <td><?= $this->Number->format($product->stock) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Formato') ?></th>
-                    <td><?= $this->Number->format($product->unit_quantity) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Creado') ?></th>
-                    <td><?= h($product->created) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Modificado') ?></th>
-                    <td><?= h($product->modified) ?></td>
-                </tr>
-            </table>
-            <div class="text">
-                <strong><?= __('Descripción') ?></strong>
-                <blockquote>
-                    <?= $this->Text->autoParagraph(h($product->description)); ?>
-                </blockquote>
-            </div>
-            <!--
-            <div class="related">
-                <h4><?= __('Pedidos relacionados') ?></h4>
-                <?php if (!empty($product->orders)) : ?>
-                <div class="table-responsive">
-                    <table>
-                        <tr>
-                            <th><?= __('Id') ?></th>
-                            <th><?= __('Status') ?></th>
-                            <th><?= __('Created') ?></th>
-                            <th><?= __('Modified') ?></th>
-                            <th class="actions"><?= __('Actions') ?></th>
-                        </tr>
-                        <?php foreach ($product->orders as $order) : ?>
-                        <tr>
-                            <td><?= h($order->id) ?></td>
-                            <td><?= h($order->status) ?></td>
-                            <td><?= h($order->created) ?></td>
-                            <td><?= h($order->modified) ?></td>
-                            <td class="actions">
-                                <?= $this->Html->link(__('View'), ['controller' => 'Orders', 'action' => 'view', $order->id]) ?>
-                                <?= $this->Html->link(__('Edit'), ['controller' => 'Orders', 'action' => 'edit', $order->id]) ?>
-                                <?= $this->Form->postLink(
-                                    __('Delete'),
-                                    ['controller' => 'Orders', 'action' => 'delete', $order->id],
-                                    [
-                                        'method' => 'delete',
-                                        'confirm' => __('Are you sure you want to delete # {0}?', $order->id),
-                                    ]
-                                ) ?>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </table>
-                </div>
+
+<!-- Encabezado -->
+<div class="mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <h3 class="fw-semibold mb-1" style="color: #009FE3;">
+            <i class="bi bi-eye me-2"></i> Detalle del Producto
+        </h3>
+        <?= $this->Html->link(
+            '<i class="bi bi-arrow-left"></i> Volver',
+            ['action' => 'index'],
+            ['escape' => false, 'class' => 'btn btn-outline-secondary btn-sm shadow-sm']
+        ) ?>
+    </div>
+
+    <div style="
+        height: 3px;
+        margin-top: 6px;
+        border-radius: 2px;
+        background: linear-gradient(90deg, #009FE3 0%, #4CC3FF 100%);
+        width: 100%;
+    "></div>
+</div>
+
+<!-- Card principal con datos del producto -->
+<div class="card border-0 shadow-sm">
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-4 text-muted">ID</dt>
+            <dd class="col-sm-8"><?= h($product->id) ?></dd>
+
+            <dt class="col-sm-4 text-muted">Nombre</dt>
+            <dd class="col-sm-8"><?= h($product->name) ?></dd>
+
+            <dt class="col-sm-4 text-muted">Descripción</dt>
+            <dd class="col-sm-8"><?= h($product->description) ?></dd>
+
+            <dt class="col-sm-4 text-muted">Precio</dt>
+            <dd class="col-sm-8">$<?= number_format($product->price, 0, ',', '.') ?></dd>
+
+            <dt class="col-sm-4 text-muted">Stock</dt>
+            <dd class="col-sm-8">
+                <?php if ($product->stock < 10): ?>
+                    <span class="badge bg-danger"><?= h($product->stock) ?> bajo</span>
+                <?php elseif ($product->stock < 30): ?>
+                    <span class="badge bg-warning text-dark"><?= h($product->stock) ?></span>
+                <?php else: ?>
+                    <span class="badge bg-success"><?= h($product->stock) ?></span>
                 <?php endif; ?>
+            </dd>
+
+            <dt class="col-sm-4 text-muted">Cantidad por unidad</dt>
+            <dd class="col-sm-8"><?= h($product->unit_quantity) ?></dd>
+
+            <dt class="col-sm-4 text-muted">Unidad</dt>
+            <dd class="col-sm-8"><?= h($product->unit) ?></dd>
+
+            <dt class="col-sm-4 text-muted">Categoría</dt>
+            <dd class="col-sm-8"><?= h($product->category->name ?? 'Sin categoría') ?></dd>
+        </dl>
+    </div>
+</div>
+
+<!-- Imagen del producto -->
+<div class="card border-0 shadow-sm mt-4">
+    <div class="card-header bg-white border-0 pb-2">
+        <h5 class="fw-semibold text-dark mb-0">
+            <i class="bi bi-image me-2 text-primary"></i> Imagen del producto
+        </h5>
+        <div style="
+            height: 2px;
+            margin-top: 6px;
+            width: 100%;
+            background: linear-gradient(90deg, #009FE3 0%, #4CC3FF 100%);
+            border-radius: 1px;
+        "></div>
+    </div>
+
+    <div class="card-body text-center">
+        <?php if (!empty($product->product_image) && !empty($product->product_image->image_large)): ?>
+            <img
+                src="data:<?= h($product->product_image->mime_type_large ?? 'image/jpeg') ?>;base64,<?= base64_encode(stream_get_contents($product->product_image->image_large)) ?>"
+                alt="Imagen del producto"
+                class="img-fluid rounded shadow-sm"
+                style="max-height: 320px;"
+            />
+        <?php else: ?>
+            <div class="p-4 text-muted">
+                <i class="bi bi-card-image display-6 d-block mb-2 text-secondary"></i>
+                <span>Sin imagen disponible</span>
             </div>
-            <div class="related">
-                <h4><?= __('Recetas relacionadas') ?></h4>
-                <?php if (!empty($product->recipes)) : ?>
-                <div class="table-responsive">
-                    <table>
-                        <tr>
-                            <th><?= __('Id') ?></th>
-                            <th><?= __('Name') ?></th>
-                            <th><?= __('Description') ?></th>
-                            <th><?= __('Ingredients') ?></th>
-                            <th><?= __('Created') ?></th>
-                            <th><?= __('Modified') ?></th>
-                            <th class="actions"><?= __('Actions') ?></th>
-                        </tr>
-                        <?php foreach ($product->recipes as $recipe) : ?>
-                        <tr>
-                            <td><?= h($recipe->id) ?></td>
-                            <td><?= h($recipe->name) ?></td>
-                            <td><?= h($recipe->description) ?></td>
-                            <td><?= h($recipe->ingredients) ?></td>
-                            <td><?= h($recipe->created) ?></td>
-                            <td><?= h($recipe->modified) ?></td>
-                            <td class="actions">
-                                <?= $this->Html->link(__('View'), ['controller' => 'Recipes', 'action' => 'view', $recipe->id]) ?>
-                                <?= $this->Html->link(__('Edit'), ['controller' => 'Recipes', 'action' => 'edit', $recipe->id]) ?>
-                                <?= $this->Form->postLink(
-                                    __('Delete'),
-                                    ['controller' => 'Recipes', 'action' => 'delete', $recipe->id],
-                                    [
-                                        'method' => 'delete',
-                                        'confirm' => __('Are you sure you want to delete # {0}?', $recipe->id),
-                                    ]
-                                ) ?>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </table>
-                </div>
-                <?php endif; ?>
-            </div>
-            -->
-        </div>
+        <?php endif; ?>
     </div>
 </div>

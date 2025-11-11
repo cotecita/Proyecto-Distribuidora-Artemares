@@ -144,6 +144,11 @@
                     '
                 ]) ?>
             </div>
+            
+            <a href="<?= $this->Url->build(['controller' => 'Dashboard', 'action' => 'index']) ?>"
+                class="<?= $this->request->getParam('controller') === 'Dashboard' ? 'active' : '' ?>">
+                <i class="bi bi-speedometer2 me-2"></i>Dashboard
+            </a>        
 
             <a href="<?= $this->Url->build(['controller' => 'Products', 'action' => 'index']) ?>"
                class="<?= $this->request->getParam('controller') === 'Products' ? 'active' : '' ?>">

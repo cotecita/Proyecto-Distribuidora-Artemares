@@ -66,6 +66,7 @@ class DashboardController extends AppController
         // 8. accesos rápidos
         $quickAccess = [
             ['label' => 'Agregar Producto', 'url' => ['controller' => 'Products', 'action' => 'add']],
+            ['label' => 'Agregar Pedido', 'url' => ['controller' => 'Orders', 'action' => 'add']],
             ['label' => 'Ver Pedidos', 'url' => ['controller' => 'Orders', 'action' => 'index']],
             ['label' => 'Ver Categorías', 'url' => ['controller' => 'Categories', 'action' => 'index']],
         ];

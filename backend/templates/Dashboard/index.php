@@ -37,9 +37,38 @@
         </div>
     </div>
 </div>
+<!-- Accesos rápidos -->
+<h2 class="mb-3">Accesos Rápidos</h2>
+<div class="mb-4">
+    <?php foreach ($quickAccess as $link): ?>
+        <a class="btn btn-outline-primary me-2 mb-2" href="<?= $this->Url->build($link['url']) ?>">
+            <?= h($link['label']) ?>
+        </a>
+    <?php endforeach; ?>
+</div>
+
+<!-- Alertas de pedidos pendientes -->
+<h2 class="mb-3">Pedidos Pendientes</h2>
+<ul class="list-group mb-4">
+    <?php 
+        // mapear estados
+        $statusLabels = [
+            'pending' => 'Pendiente',
+            'in_process' => 'En proceso',
+            'closed' => 'Cerrado',
+            'cancelled' => 'Cancelado',
+            'completed' => 'Completado'
+        ];
+    ?>
+    <?php foreach ($alerts as $order): ?>
+        <li class="list-group-item list-group-item-warning">
+            Pedido #<?= $order->id ?> - <?= $statusLabels[$order->status] ?? ucfirst($order->status) ?> - <?= $order->created->format('d-m-Y') ?>
+        </li>
+    <?php endforeach; ?>
+</ul>
 
 <!-- Productos más vendidos -->
-<h2 class="mb-3">Productos más vendidos (Top 5)</h2>
+<h2 class="mb-3">Productos más vendidos</h2>
 <div class="table-responsive mb-4">
     <table class="table table-striped table-bordered">
         <thead class="table-dark">
@@ -103,25 +132,7 @@
     </table>
 </div>
 
-<!-- Alertas de pedidos pendientes -->
-<h2 class="mb-3">Alertas de Pedidos Pendientes</h2>
-<ul class="list-group mb-4">
-    <?php foreach ($alerts as $order): ?>
-        <li class="list-group-item list-group-item-warning">
-            Pedido #<?= $order->id ?> - <?= h($order->status) ?> - <?= $order->created->format('d-m-Y') ?>
-        </li>
-    <?php endforeach; ?>
-</ul>
 
-<!-- Accesos rápidos -->
-<h2 class="mb-3">Accesos Rápidos</h2>
-<div class="mb-4">
-    <?php foreach ($quickAccess as $link): ?>
-        <a class="btn btn-outline-primary me-2 mb-2" href="<?= $this->Url->build($link['url']) ?>">
-            <?= h($link['label']) ?>
-        </a>
-    <?php endforeach; ?>
-</div>
 
 <!-- Evolución de ventas -->
 <div class="card mb-4">

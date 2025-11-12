@@ -13,7 +13,16 @@
                 ['class' => 'btn btn-primary shadow-sm', 'escape' => false]
             ) ?>
         </div>
-
+        <div class="mb-3">
+        <?= $this->Form->create(null, ['type' => 'get', 'class' => 'd-flex']) ?>
+            <?= $this->Form->control('search', [
+                'label' => false,
+                'value' => $search ?? '',
+                'placeholder' => 'Buscar pedido...',
+                'class' => 'form-control me-2'
+            ]) ?>
+            <?= $this->Form->button('Buscar', ['class' => 'btn btn-primary']) ?>
+        <?= $this->Form->end() ?>
         <div class="card shadow-sm border-0">
             <div class="card-body">
                 <div class="table-responsive">

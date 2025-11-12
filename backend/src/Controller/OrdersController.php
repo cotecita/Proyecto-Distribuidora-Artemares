@@ -18,9 +18,16 @@ class OrdersController extends AppController
     public function index()
     {
         $query = $this->Orders->find();
+
+         // --- Búsqueda por ID de pedido ---
+        $search = $this->request->getQuery('search');
+        if (!empty($search)) {
+            //filtrar por ID 
+            $query->where(['Orders.id' => $search]);
+        }
         $orders = $this->paginate($query);
 
-        $this->set(compact('orders'));
+        $this->set(compact('orders', 'search'));
     }
 
     /**

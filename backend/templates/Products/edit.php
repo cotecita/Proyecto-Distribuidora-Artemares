@@ -21,6 +21,6 @@
         'image_file'
     ],
     'actionLabel' => 'Actualizar',
-    'showDelete' => true,
+    'showDelete' => false,
     'categories' => $categories ?? []
 ]) ?>

@@ -1,6 +1,7 @@
 <?php
 /**
  * Vista: Agregar Receta
+ * Usa la plantilla form_card genérica (estilo Artemares)
  */
 ?>
 <div class="container-fluid px-4">
@@ -9,9 +10,16 @@
         'form' => $this->Form,
         'entity' => $recipe,
         'title' => 'Agregar Receta',
-        'icon' => 'bi-egg-fried',
-        'fields' => ['name', 'description', 'ingredients', 'image_file'],
+        'icon' => 'bi-journal-plus',
+        'fields' => [
+            'name',
+            'description',
+            'ingredients',
+            'image_file',
+            'products._ids' // campo para seleccionar productos asociados
+        ],
         'actionLabel' => 'Guardar',
-        'showDelete' => false
+        'categories' => $products // lista de productos (reutilizamos esta variable)
     ]) ?>
+
 </div>

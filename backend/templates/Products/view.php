@@ -43,17 +43,6 @@
             <dt class="col-sm-4 text-muted">Precio</dt>
             <dd class="col-sm-8">$<?= number_format($product->price, 0, ',', '.') ?></dd>
 
-            <dt class="col-sm-4 text-muted">Stock</dt>
-            <dd class="col-sm-8">
-                <?php if ($product->stock < 10): ?>
-                    <span class="badge bg-danger"><?= h($product->stock) ?> bajo</span>
-                <?php elseif ($product->stock < 30): ?>
-                    <span class="badge bg-warning text-dark"><?= h($product->stock) ?></span>
-                <?php else: ?>
-                    <span class="badge bg-success"><?= h($product->stock) ?></span>
-                <?php endif; ?>
-            </dd>
-
             <dt class="col-sm-4 text-muted">Cantidad por unidad</dt>
             <dd class="col-sm-8"><?= h($product->unit_quantity) ?></dd>
 
@@ -62,6 +51,12 @@
 
             <dt class="col-sm-4 text-muted">Categoría</dt>
             <dd class="col-sm-8"><?= h($product->category->name ?? 'Sin categoría') ?></dd>
+
+            <dt class="col-sm-4 text-muted">Creado</dt>
+            <dd class="col-sm-8"><?= $product->created ? $product->created->format('d/m/Y H:i') : '-' ?></dd>
+
+            <dt class="col-sm-4 text-muted">Última modificación</dt>
+            <dd class="col-sm-8"><?= $product->modified ? $product->modified->format('d/m/Y H:i') : '-' ?></dd>
         </dl>
     </div>
 </div>

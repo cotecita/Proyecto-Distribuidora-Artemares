@@ -19,6 +19,11 @@ $labels = [
     'unit' => 'Unidad',
     'category_id' => 'Categoría',
 
+    // --- Recetas ---
+    'ingredients' => 'Ingredientes',
+    'products._ids' => 'Productos relacionados',
+    'image_file' => 'Imagen asociada',
+
     // --- Imágenes ---
     'image_small' => 'Imagen pequeña',
     'image_medium' => 'Imagen mediana',
@@ -37,8 +42,32 @@ $labels = [
     // --- Fechas ---
     'created' => 'Creado',
     'modified' => 'Modificado',
+
+    // --- Administradores ---
+    'full_name' => 'Nombre completo',
+    'email' => 'Correo electrónico',
+    'username' => 'Usuario',
+    'password' => 'Contraseña',
 ];
 ?>
+
+<!-- Estilos adicionales -->
+<style>
+.select-multiple {
+    width: 100%;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    padding: 0.5rem;
+    height: auto;
+    min-height: 100px;
+    background-color: #fff;
+    transition: box-shadow 0.2s ease-in-out;
+}
+.select-multiple:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 159, 227, 0.25);
+    outline: none;
+}
+</style>
 
 <div class="card shadow-sm border-0 mb-4">
     <!-- Header -->
@@ -72,21 +101,36 @@ $labels = [
 
         <?php foreach ($fields as $field): ?>
             <?php
-                $label = $labels[$field] ?? ucfirst(str_replace('_', ' ', $field));
+                $label = $labels[$field] ?? ucfirst(str_replace(['_', '.'], ' ', $field));
                 $options = [
                     'class' => 'form-control',
                     'label' => $label
                 ];
 
-                if (str_contains($field, 'description')) {
+                // --- Tipos especiales ---
+                if (str_contains($field, 'description') || str_contains($field, 'ingredients')) {
                     $options['type'] = 'textarea';
                     $options['rows'] = 4;
+
+                } elseif (str_ends_with($field, '._ids')) {
+                    // Relación muchos a muchos → select múltiple
+                    $options['type'] = 'select';
+                    $options['multiple'] = true;
+                    $options['options'] = $categories ?? [];
+                    $options['label'] = $label;
+                    $options['class'] = 'select-multiple';
+
                 } elseif (str_contains($field, 'category')) {
                     $options['options'] = $categories ?? [];
                     $options['empty'] = 'Selecciona una categoría';
+
                 } elseif (str_contains($field, 'image') || $field === 'image_file') {
                     $options['type'] = 'file';
                     $options['accept'] = 'image/*';
+                    $hasImage = !empty($entity->product_image?->image_medium) || !empty($entity->recipe_image?->image_medium);
+                    $options['after'] = $hasImage
+                        ? '<small class="text-muted">Selecciona una nueva imagen para reemplazar la actual.</small>'
+                        : '<small class="text-muted">Selecciona una imagen para subir.</small>';
                 }
             ?>
             <div class="col-md-6">
@@ -94,7 +138,7 @@ $labels = [
             </div>
         <?php endforeach; ?>
 
-        <!-- Imagen actual si existe -->
+        <!-- Imagen actual -->
         <?php if (!empty($entity->product_image) && !empty($entity->product_image->image_medium)): ?>
             <div class="col-md-6">
                 <label class="form-label fw-semibold text-secondary">Imagen actual</label>
@@ -104,6 +148,36 @@ $labels = [
                         alt="Imagen del producto"
                         style="max-width: 100%; height: auto;"
                     />
+                </div>
+
+                <!-- Checkbox eliminar imagen -->
+                <div class="form-check mt-2">
+                    <?= $form->checkbox('remove_image', [
+                        'class' => 'form-check-input',
+                        'id' => 'removeImage'
+                    ]) ?>
+                    <label for="removeImage" class="form-check-label text-muted">Eliminar imagen actual</label>
+                </div>
+            </div>
+
+        <?php elseif (!empty($entity->recipe_image) && !empty($entity->recipe_image->image_medium)): ?>
+            <div class="col-md-6">
+                <label class="form-label fw-semibold text-secondary">Imagen actual</label>
+                <div class="border rounded p-2 bg-light text-center">
+                    <img
+                        src="data:<?= h($entity->recipe_image->mime_type_medium ?? 'image/jpeg') ?>;base64,<?= base64_encode(stream_get_contents($entity->recipe_image->image_medium)) ?>"
+                        alt="Imagen de la receta"
+                        style="max-width: 100%; height: auto;"
+                    />
+                </div>
+
+                <!-- Checkbox eliminar imagen -->
+                <div class="form-check mt-2">
+                    <?= $form->checkbox('remove_image', [
+                        'class' => 'form-check-input',
+                        'id' => 'removeImage'
+                    ]) ?>
+                    <label for="removeImage" class="form-check-label text-muted">Eliminar imagen actual</label>
                 </div>
             </div>
         <?php endif; ?>

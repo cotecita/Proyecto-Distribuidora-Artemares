@@ -18,7 +18,6 @@
         ) ?>
     </div>
 
-    <!-- Línea degradada azul -->
     <div style="
         height: 3px;
         margin-top: 6px;
@@ -58,7 +57,12 @@
 
             <dt class="col-sm-4 text-muted">Colesterol</dt>
             <dd class="col-sm-8"><?= h($nutritionalInformation->cholesterol) ?> mg</dd>
+
+            <dt class="col-sm-4 text-muted">Creado</dt>
+            <dd class="col-sm-8"><?= $nutritionalInformation->created ? $nutritionalInformation->created->format('d/m/Y H:i') : '-' ?></dd>
+
+            <dt class="col-sm-4 text-muted">Última modificación</dt>
+            <dd class="col-sm-8"><?= $nutritionalInformation->modified ? $nutritionalInformation->modified->format('d/m/Y H:i') : '-' ?></dd>
         </dl>
     </div>
 </div>
-

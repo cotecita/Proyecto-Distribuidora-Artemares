@@ -14,14 +14,33 @@
         ) ?>
     </div>
     <div class="mb-3">
-        <?= $this->Form->create(null, ['type' => 'get', 'class' => 'd-flex']) ?>
-            <?= $this->Form->control('search', [
-                'label' => false,
-                'value' => $search ?? '',
-                'placeholder' => 'Buscar categoría...',
-                'class' => 'form-control me-2'
-            ]) ?>
-            <?= $this->Form->button('Buscar', ['class' => 'btn btn-primary']) ?>
+        <?= $this->Form->create(null, ['type' => 'get', 'class' => 'row g-2 align-items-end']) ?>
+            <div class="col-md-4">
+                <?= $this->Form->control('search', [
+                    'label' => 'Buscar por nombre',
+                    'value' => $search ?? '',
+                    'placeholder' => 'Ej. salmón, ostiones...',
+                    'class' => 'form-control'
+                ]) ?>
+            </div>
+            <div class="col-md-4">
+                <?= $this->Form->control('category', [
+                    'label' => 'Filtrar por categoría',
+                    'value' => $categoryName ?? '',
+                    'placeholder' => 'Ej. Mariscos, Pescados...',
+                    'class' => 'form-control'
+                ]) ?>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-primary w-100" type="submit">
+                    <i class="bi bi-search"></i> Buscar
+                </button>
+            </div>
+            <div class="col-md-2">
+                <a href="<?= $this->Url->build(['action' => 'index']) ?>" class="btn btn-secondary w-100">
+                    <i class="bi bi-x-circle"></i> Limpiar
+                </a>
+            </div>
         <?= $this->Form->end() ?>
     </div>
     <div class="card shadow-sm border-0">

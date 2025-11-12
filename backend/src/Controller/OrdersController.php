@@ -25,9 +25,21 @@ class OrdersController extends AppController
             //filtrar por ID 
             $query->where(['Orders.id' => $search]);
         }
-        $orders = $this->paginate($query);
 
-        $this->set(compact('orders', 'search'));
+        // --- Filtro por estado ---
+        $statusFilter = $this->request->getQuery('status');
+        if (!empty($statusFilter)) {
+            $query->where(['Orders.status' => $statusFilter]);
+        }
+        $orders = $this->paginate($query);
+        // Opciones disponibles de estado
+        $statuses = [
+            'in_process' => 'En proceso',
+            'closed' => 'Cerrado',
+            'cancelled' => 'Cancelado'
+        ];
+
+        $this->set(compact('orders', 'search', 'statusFilter', 'statuses'));
     }
 
     /**

@@ -27,19 +27,29 @@ class ProductsController extends AppController
 
     public function index()
     {
-        $query = $this->Products->find()
-            ->contain(['Categories']); 
+        $query = $this->Products->find()->contain(['Categories']);
 
-        // búsqueda por nombre
+        // Búsqueda por nombre
         $search = $this->request->getQuery('search');
         if (!empty($search)) {
-            //  ILIKE si BBDD es PostgreSQL
             $query->where(['Products.name ILIKE' => "%$search%"]);
+        }
+
+        // Lista de categorías para el <select>
+        $categoriesList = $this->Products->Categories->find('list', [
+            'keyField' => 'id',
+            'valueField' => 'name'
+        ])->toArray();
+
+        // Filtro por categoría (ID)
+        $categoryFilter = $this->request->getQuery('category');
+        if (!empty($categoryFilter)) {
+            $query->where(['Products.category_id' => $categoryFilter]);
         }
 
         $products = $this->paginate($query);
 
-        $this->set(compact('products', 'search'));
+        $this->set(compact('products', 'search', 'categoryFilter', 'categoriesList'));
     }
 
     /**

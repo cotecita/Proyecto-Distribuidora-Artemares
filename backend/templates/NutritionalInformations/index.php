@@ -14,6 +14,26 @@
         ) ?>
     </div>
 
+    <div class="mb-3">
+        <?= $this->Form->create(null, ['type' => 'get', 'class' => 'd-flex align-items-center flex-wrap']) ?>
+
+            <!-- Buscador por nombre de producto -->
+            <?= $this->Form->control('search', [
+                'label' => false,
+                'value' => $search ?? '',
+                'placeholder' => 'Buscar por producto...',
+                'class' => 'form-control me-2 mb-2'
+            ]) ?>
+
+            <!-- Botón Buscar -->
+            <?= $this->Form->button('Buscar', ['class' => 'btn btn-primary mb-2 me-2']) ?>
+
+            <!-- Botón Limpiar -->
+            <?= $this->Html->link('Limpiar', ['action' => 'index'], ['class' => 'btn btn-secondary mb-2']) ?>
+
+        <?= $this->Form->end() ?>
+    </div>
+
 
     <div class="card shadow-sm border-0">
         <div class="card-body">

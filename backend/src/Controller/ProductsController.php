@@ -27,8 +27,9 @@ class ProductsController extends AppController
 
     public function index()
     {
-        $query = $this->Products->find()->contain(['Categories']);
-
+        $query = $this->Products->find()
+        ->contain(['Categories'])
+        ->order(['Products.modified' => 'DESC']);
         // Búsqueda por nombre
         $search = $this->request->getQuery('search');
         if (!empty($search)) {

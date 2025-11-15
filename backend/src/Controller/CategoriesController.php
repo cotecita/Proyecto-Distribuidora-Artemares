@@ -17,7 +17,9 @@ class CategoriesController extends AppController
      */
     public function index()
     {
-        $query = $this->Categories->find();
+        $query = $this->Categories->find()
+        ->order(['Categories.modified' => 'DESC']);
+
         // búsqueda por nombre
         $search = $this->request->getQuery('search');
         if (!empty($search)) {

@@ -17,7 +17,8 @@ class OrdersController extends AppController
      */
     public function index()
     {
-        $query = $this->Orders->find();
+        $query = $this->Orders->find()
+        ->order(['Orders.modified' => 'DESC']);
 
          // --- Búsqueda por ID de pedido ---
         $search = $this->request->getQuery('search');

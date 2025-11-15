@@ -18,7 +18,8 @@ class NutritionalInformationsController extends AppController
     public function index()
     {
         $query = $this->NutritionalInformations->find()
-            ->contain(['Products']);
+            ->contain(['Products'])
+            ->order(['NutritionalInformations.modified' => 'DESC']);
 
         // --- Búsqueda por nombre de producto ---
         $search = $this->request->getQuery('search');

@@ -17,7 +17,9 @@ class RecipesController extends AppController
      */
     public function index()
     {
-        $query = $this->Recipes->find();
+        $query = $this->Recipes->find()
+        ->order(['Recipes.modified' => 'DESC']);
+        
 
         // búsqueda por nombre
         $search = $this->request->getQuery('search');

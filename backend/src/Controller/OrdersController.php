@@ -17,10 +17,30 @@ class OrdersController extends AppController
      */
     public function index()
     {
-        $query = $this->Orders->find();
-        $orders = $this->paginate($query);
+        $query = $this->Orders->find()
+        ->order(['Orders.modified' => 'DESC']);
 
-        $this->set(compact('orders'));
+         // --- Búsqueda por ID de pedido ---
+        $search = $this->request->getQuery('search');
+        if (!empty($search)) {
+            //filtrar por ID 
+            $query->where(['Orders.id' => $search]);
+        }
+
+        // --- Filtro por estado ---
+        $statusFilter = $this->request->getQuery('status');
+        if (!empty($statusFilter)) {
+            $query->where(['Orders.status' => $statusFilter]);
+        }
+        $orders = $this->paginate($query);
+        // Opciones disponibles de estado
+        $statuses = [
+            'in_process' => 'En proceso',
+            'closed' => 'Cerrado',
+            'cancelled' => 'Cancelado'
+        ];
+
+        $this->set(compact('orders', 'search', 'statusFilter', 'statuses'));
     }
 
     /**

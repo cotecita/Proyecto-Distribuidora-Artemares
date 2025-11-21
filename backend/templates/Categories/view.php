@@ -5,6 +5,7 @@
  */
 ?>
 
+<!-- Encabezado -->
 <div class="mb-4">
     <div class="d-flex justify-content-between align-items-center">
         <h3 class="fw-semibold mb-1" style="color: #009FE3;">
@@ -26,6 +27,7 @@
     "></div>
 </div>
 
+<!-- Card principal con los datos -->
 <div class="card border-0 shadow-sm">
     <div class="card-body">
         <dl class="row mb-0">
@@ -34,10 +36,17 @@
 
             <dt class="col-sm-4 text-muted">Nombre</dt>
             <dd class="col-sm-8"><?= h($category->name) ?></dd>
+
+            <dt class="col-sm-4 text-muted">Creado</dt>
+            <dd class="col-sm-8"><?= $category->created ? $category->created->format('d/m/Y H:i') : '-' ?></dd>
+
+            <dt class="col-sm-4 text-muted">Última modificación</dt>
+            <dd class="col-sm-8"><?= $category->modified ? $category->modified->format('d/m/Y H:i') : '-' ?></dd>
         </dl>
     </div>
 </div>
 
+<!-- Listado de productos asociados -->
 <?php if (!empty($category->products)): ?>
     <div class="card border-0 shadow-sm mt-4">
         <div class="card-header bg-white border-0 pb-2">

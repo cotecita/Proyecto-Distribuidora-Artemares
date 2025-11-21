@@ -18,10 +18,19 @@ class NutritionalInformationsController extends AppController
     public function index()
     {
         $query = $this->NutritionalInformations->find()
-            ->contain(['Products']);
+            ->contain(['Products'])
+            ->order(['NutritionalInformations.modified' => 'DESC']);
+
+        // --- Búsqueda por nombre de producto ---
+        $search = $this->request->getQuery('search');
+        if (!empty($search)) {
+            $query->matching('Products', function ($q) use ($search) {
+                return $q->where(['Products.name ILIKE' => "%$search%"]);
+            });
+        }
         $nutritionalInformations = $this->paginate($query);
 
-        $this->set(compact('nutritionalInformations'));
+        $this->set(compact('nutritionalInformations', 'search'));
     }
 
     /**

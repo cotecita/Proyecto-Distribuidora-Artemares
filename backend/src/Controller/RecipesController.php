@@ -17,10 +17,19 @@ class RecipesController extends AppController
      */
     public function index()
     {
-        $query = $this->Recipes->find();
+        $query = $this->Recipes->find()
+        ->order(['Recipes.modified' => 'DESC']);
+        
+
+        // búsqueda por nombre
+        $search = $this->request->getQuery('search');
+        if (!empty($search)) {
+            //  ILIKE si BBDD es PostgreSQL
+            $query->where(['Recipes.name ILIKE' => "%$search%"]);
+        }
         $recipes = $this->paginate($query);
 
-        $this->set(compact('recipes'));
+        $this->set(compact('recipes', 'search'));
     }
 
     /**

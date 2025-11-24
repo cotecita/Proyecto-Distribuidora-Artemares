@@ -77,27 +77,25 @@ class ProductsController extends AppController
         $product = $this->Products->newEmptyEntity();
 
         if ($this->request->is('post')) {
-
             // Obtenemos todos los datos enviados desde el formulario
             $data = $this->request->getData();
 
             // Asignamos los datos al producto (nombre, descripción, etc.)
-            $product = $this->Products->patchEntity($product, $data);
+            $product = $this->Products->patchEntity($product, $data, [
+                'associated' => ['NutritionalInformations', 'ProductImages']
+            ]);
 
-            //procesar la imagen 
+            // Procesar imagen
             $imageFile = $data['image_file'] ?? null; // viene del campo del formulario
 
             if ($imageFile && $imageFile->getError() === UPLOAD_ERR_OK) {
-                // Leemos los bytes del archivo
                 $imageContent = file_get_contents($imageFile->getStream()->getMetadata('uri'));
                 $mimeType = $imageFile->getClientMediaType();
 
-                // Generar versiones small, medium, large
-                $imageSmall = $this->resizeImage($imageContent, 100, 100);
+                $imageSmall  = $this->resizeImage($imageContent, 100, 100);
                 $imageMedium = $this->resizeImage($imageContent, 300, 300);
-                $imageLarge = $this->resizeImage($imageContent, 800, 800);
-                
-                // Creamos una entidad para la tabla product_images
+                $imageLarge  = $this->resizeImage($imageContent, 800, 800);
+
                 $productImage = $this->Products->ProductImages->newEntity([
                     'image_small' => $imageSmall,
                     'image_medium' => $imageMedium,
@@ -111,7 +109,7 @@ class ProductsController extends AppController
                 $product->product_image = $productImage;
             }
 
-            if ($this->Products->save($product, ['associated' => ['ProductImages']])) {
+            if ($this->Products->save($product, ['associated' => ['NutritionalInformations', 'ProductImages']])) {
                 $this->Flash->success(__('El producto ha sido guardado con éxito.'));
                 return $this->redirect(['action' => 'index']);
             }
@@ -122,7 +120,6 @@ class ProductsController extends AppController
         $categories = $this->Products->Categories->find('list', limit: 200)->all();
         $orders = $this->Products->Orders->find('list', limit: 200)->all();
         $recipes = $this->Products->Recipes->find('list', limit: 200)->all();
-
         $this->set(compact('product', 'categories', 'orders', 'recipes'));
     }
 
@@ -179,17 +176,18 @@ class ProductsController extends AppController
     public function edit($id = null)
     {
         // Obtenemos el producto incluyendo relaciones
-        $product = $this->Products->get($id, contain: ['Orders', 'Recipes', 'ProductImages']);
+       $product = $this->Products->get($id, contain: ['Orders', 'Recipes', 'ProductImages', 'NutritionalInformations']);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
             $data = $this->request->getData();
 
             // Asignamos datos básicos al producto
-            $product = $this->Products->patchEntity($product, $data);
+            $product = $this->Products->patchEntity($product, $data, ['associated' => ['NutritionalInformations', 'ProductImages']]);
 
             // Procesar nueva imagen si se subió
             $imageFile = $data['image_file'] ?? null;
             if ($imageFile && $imageFile->getError() === UPLOAD_ERR_OK) {
+                // Leemos los bytes del archivo
                 $imageContent = file_get_contents($imageFile->getStream()->getMetadata('uri'));
                 $mimeType = $imageFile->getClientMediaType();
 
@@ -226,7 +224,7 @@ class ProductsController extends AppController
             }
 
             // Guardar producto con imagen asociada
-            if ($this->Products->save($product, ['associated' => ['ProductImages']])) {
+            if ($this->Products->save($product, ['associated' => ['NutritionalInformations', 'ProductImages']])) {
                 $this->Flash->success(__('El producto ha sido actualizado con éxito.'));
                 return $this->redirect(['action' => 'index']);
             }

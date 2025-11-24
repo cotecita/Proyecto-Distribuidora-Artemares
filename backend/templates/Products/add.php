@@ -1,7 +1,6 @@
 <?php
 /**
  * Vista: Agregar Producto
- * Usa el element form_card, adaptado al controlador actual (campo image_file)
  */
 ?>
 
@@ -18,7 +17,16 @@
         'unit_quantity',
         'unit',
         'category_id',
-        'image_file'
+        'image_file',
+
+        // --- Información Nutricional ---
+        'nutritional_information.measurement',
+        'nutritional_information.calories',
+        'nutritional_information.protein',
+        'nutritional_information.total_fat',
+        'nutritional_information.carbohydrates',
+        'nutritional_information.sodium',
+        'nutritional_information.cholesterol'
     ],
     'actionLabel' => 'Guardar',
     'showDelete' => false,

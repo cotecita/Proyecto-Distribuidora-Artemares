@@ -1,7 +1,7 @@
 <?php
 /**
  * Vista: Editar Producto
- * Usa el element form_card, adaptado al controlador actual (campo image_file)
+ * Incluye edición de información nutricional dentro del mismo formulario
  */
 ?>
 
@@ -18,7 +18,16 @@
         'unit_quantity',
         'unit',
         'category_id',
-        'image_file'
+        'image_file',
+
+        // --- Campos nutricionales integrados ---
+        'nutritional_information.measurement',
+        'nutritional_information.calories',
+        'nutritional_information.protein',
+        'nutritional_information.total_fat',
+        'nutritional_information.carbohydrates',
+        'nutritional_information.sodium',
+        'nutritional_information.cholesterol'
     ],
     'actionLabel' => 'Actualizar',
     'showDelete' => false,

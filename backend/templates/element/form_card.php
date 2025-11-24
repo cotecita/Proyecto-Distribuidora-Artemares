@@ -10,6 +10,7 @@ $fieldOptions = $fieldOptions ?? [];
  * Diccionario de etiquetas en español
  */
 $labels = [
+
     // --- Productos ---
     'name' => 'Nombre',
     'description' => 'Descripción',
@@ -24,13 +25,7 @@ $labels = [
     'products._ids' => 'Productos relacionados',
     'image_file' => 'Imagen asociada',
 
-    // --- Imágenes ---
-    'image_small' => 'Imagen pequeña',
-    'image_medium' => 'Imagen mediana',
-    'image_large' => 'Imagen grande',
-
     // --- Información nutricional ---
-    'product_id' => 'Producto',
     'measurement' => 'Medición',
     'calories' => 'Calorías',
     'protein' => 'Proteína',
@@ -38,10 +33,6 @@ $labels = [
     'carbohydrates' => 'Carbohidratos',
     'sodium' => 'Sodio',
     'cholesterol' => 'Colesterol',
-
-    // --- Fechas ---
-    'created' => 'Creado',
-    'modified' => 'Modificado',
 
     // --- Administradores ---
     'full_name' => 'Nombre completo',
@@ -51,14 +42,12 @@ $labels = [
 ];
 ?>
 
-<!-- Estilos adicionales -->
 <style>
 .select-multiple {
     width: 100%;
     border: 1px solid #ced4da;
     border-radius: 6px;
     padding: 0.5rem;
-    height: auto;
     min-height: 100px;
     background-color: #fff;
     transition: box-shadow 0.2s ease-in-out;
@@ -70,10 +59,11 @@ $labels = [
 </style>
 
 <div class="card shadow-sm border-0 mb-4">
+
     <!-- Header -->
     <div class="card-header bg-white border-0 pb-2">
         <div class="d-flex justify-content-between align-items-center">
-            <h4 class="mb-0 fw-semibold" style="color: #009FE3;">
+            <h4 class="mb-0 fw-semibold" style="color:#009FE3;">
                 <?php if (!empty($icon)): ?>
                     <i class="bi <?= h($icon) ?> me-2"></i>
                 <?php endif; ?>
@@ -88,10 +78,10 @@ $labels = [
         </div>
 
         <div style="
-            height: 3px;
-            margin-top: 10px;
-            border-radius: 2px;
-            background: linear-gradient(90deg, #009FE3 0%, #4CC3FF 100%);
+            height:3px;
+            margin-top:10px;
+            border-radius:2px;
+            background:linear-gradient(90deg,#009FE3 0%,#4CC3FF 100%);
         "></div>
     </div>
 
@@ -100,78 +90,103 @@ $labels = [
         <?= $form->create($entity, ['class' => 'row g-3', 'type' => 'file']) ?>
 
         <?php foreach ($fields as $field): ?>
+
             <?php
-                $label = $labels[$field] ?? ucfirst(str_replace(['_', '.'], ' ', $field));
-                $options = [
-                    'class' => 'form-control',
-                    'label' => $label
-                ];
+                // ----------------------------
+                // SOPORTE PARA CAMPOS ANIDADOS
+                // ----------------------------
+                if (strpos($field, '.') !== false) {
 
-                // --- Tipos especiales ---
-                if (str_contains($field, 'description') || str_contains($field, 'ingredients')) {
-                    $options['type'] = 'textarea';
-                    $options['rows'] = 4;
+                    $parts = explode('.', $field); // ej: nutritional_information.calories
+                    $entityName = $parts[0]; // nutritional_information
+                    $realField  = $parts[1]; // calories
 
-                } elseif (str_ends_with($field, '._ids')) {
-                    // Relación muchos a muchos → select múltiple
-                    $options['type'] = 'select';
-                    $options['multiple'] = true;
-                    $options['options'] = $categories ?? [];
-                    $options['label'] = $label;
-                    $options['class'] = 'select-multiple';
+                    $label = $labels[$realField] ?? ucfirst(str_replace('_', ' ', $realField));
 
-                } elseif (str_contains($field, 'category')) {
-                    $options['options'] = $categories ?? [];
-                    $options['empty'] = 'Selecciona una categoría';
+                    $options = [
+                        'class' => 'form-control',
+                        'label' => $label,
+                        'name' => "{$entityName}[{$realField}]"
+                    ];
 
-                } elseif (str_contains($field, 'image') || $field === 'image_file') {
-                    $options['type'] = 'file';
-                    $options['accept'] = 'image/*';
-                    $hasImage = !empty($entity->product_image?->image_medium) || !empty($entity->recipe_image?->image_medium);
-                    $options['after'] = $hasImage
-                        ? '<small class="text-muted">Selecciona una nueva imagen para reemplazar la actual.</small>'
-                        : '<small class="text-muted">Selecciona una imagen para subir.</small>';
+                    // Cargar valor actual si existe
+                    if (!empty($entity->{$entityName}) && isset($entity->{$entityName}->{$realField})) {
+                        $options['value'] = $entity->{$entityName}->{$realField};
+                    }
+
+                } else {
+
+                    // ----------------------------
+                    // CAMPOS NO ANIDADOS (NORMALES)
+                    // ----------------------------
+                    $label = $labels[$field] ?? ucfirst(str_replace('_',' ', $field));
+
+                    $options = [
+                        'class' => 'form-control',
+                        'label' => $label
+                    ];
+
+                    // Textareas
+                    if (str_contains($field, 'description') || str_contains($field, 'ingredients')) {
+                        $options['type'] = 'textarea';
+                        $options['rows'] = 4;
+
+                    // Select múltiple
+                    } elseif (str_ends_with($field, '._ids')) {
+                        $options['type'] = 'select';
+                        $options['multiple'] = true;
+                        $options['options'] = $categories ?? [];
+                        $options['class'] = 'select-multiple';
+
+                    // Categorías
+                    } elseif (str_contains($field, 'category')) {
+                        $options['options'] = $categories ?? [];
+                        $options['empty'] = 'Selecciona una categoría';
+
+                    // Imagen
+                    } elseif (str_contains($field, 'image') || $field === 'image_file') {
+
+                        $options['type'] = 'file';
+                        $options['accept'] = 'image/*';
+
+                        $hasImg = !empty($entity->product_image?->image_medium)
+                                  || !empty($entity->recipe_image?->image_medium);
+
+                        $options['after'] = $hasImg
+                            ? '<small class="text-muted">Sube una nueva imagen para reemplazar la actual.</small>'
+                            : '<small class="text-muted">Selecciona una imagen para subir.</small>';
+                    }
                 }
             ?>
+
             <div class="col-md-6">
                 <?= $form->control($field, $options) ?>
             </div>
+
         <?php endforeach; ?>
 
         <!-- Imagen actual -->
-        <?php if (!empty($entity->product_image) && !empty($entity->product_image->image_medium)): ?>
+        <?php if (!empty($entity->product_image?->image_medium) || !empty($entity->recipe_image?->image_medium)): ?>
             <div class="col-md-6">
                 <label class="form-label fw-semibold text-secondary">Imagen actual</label>
+
                 <div class="border rounded p-2 bg-light text-center">
                     <img
-                        src="data:<?= h($entity->product_image->mime_type_medium ?? 'image/jpeg') ?>;base64,<?= base64_encode(stream_get_contents($entity->product_image->image_medium)) ?>"
-                        alt="Imagen del producto"
-                        style="max-width: 100%; height: auto;"
+                        src="data:<?= h(
+                            $entity->product_image->mime_type_medium
+                            ?? $entity->recipe_image->mime_type_medium
+                            ?? 'image/jpeg'
+                        ) ?>;base64,<?= base64_encode(
+                            stream_get_contents(
+                                $entity->product_image->image_medium
+                                ?? $entity->recipe_image->image_medium
+                            )
+                        ) ?>"
+                        class="img-fluid rounded"
+                        style="max-width:100%;height:auto;"
                     />
                 </div>
 
-                <!-- Checkbox eliminar imagen -->
-                <div class="form-check mt-2">
-                    <?= $form->checkbox('remove_image', [
-                        'class' => 'form-check-input',
-                        'id' => 'removeImage'
-                    ]) ?>
-                    <label for="removeImage" class="form-check-label text-muted">Eliminar imagen actual</label>
-                </div>
-            </div>
-
-        <?php elseif (!empty($entity->recipe_image) && !empty($entity->recipe_image->image_medium)): ?>
-            <div class="col-md-6">
-                <label class="form-label fw-semibold text-secondary">Imagen actual</label>
-                <div class="border rounded p-2 bg-light text-center">
-                    <img
-                        src="data:<?= h($entity->recipe_image->mime_type_medium ?? 'image/jpeg') ?>;base64,<?= base64_encode(stream_get_contents($entity->recipe_image->image_medium)) ?>"
-                        alt="Imagen de la receta"
-                        style="max-width: 100%; height: auto;"
-                    />
-                </div>
-
-                <!-- Checkbox eliminar imagen -->
                 <div class="form-check mt-2">
                     <?= $form->checkbox('remove_image', [
                         'class' => 'form-check-input',
@@ -183,6 +198,7 @@ $labels = [
         <?php endif; ?>
 
         <div class="col-12 d-flex justify-content-end mt-4">
+
             <?php if (!empty($showDelete) && $showDelete): ?>
                 <?= $form->postLink(
                     '<i class="bi bi-trash"></i> Eliminar',

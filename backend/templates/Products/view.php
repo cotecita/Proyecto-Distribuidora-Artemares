@@ -1,7 +1,7 @@
 <?php
 /**
  * Vista: Detalle de Producto
- * Estilo Artemares — coherente con index y forms
+ * Estilo Artemares — con sección de Información Nutricional incluida
  */
 ?>
 
@@ -27,7 +27,7 @@
     "></div>
 </div>
 
-<!-- Card principal con datos del producto -->
+<!-- Card principal -->
 <div class="card border-0 shadow-sm">
     <div class="card-body">
         <dl class="row mb-0">
@@ -53,15 +53,53 @@
             <dd class="col-sm-8"><?= h($product->category->name ?? 'Sin categoría') ?></dd>
 
             <dt class="col-sm-4 text-muted">Creado</dt>
-            <dd class="col-sm-8"><?= $product->created ? $product->created->format('d/m/Y H:i') : '-' ?></dd>
+            <dd class="col-sm-8"><?= $product->created? $product->created->format('d/m/Y H:i') : '-' ?></dd>
 
             <dt class="col-sm-4 text-muted">Última modificación</dt>
-            <dd class="col-sm-8"><?= $product->modified ? $product->modified->format('d/m/Y H:i') : '-' ?></dd>
+            <dd class="col-sm-8"><?= $product->modified? $product->modified->format('d/m/Y H:i') : '-' ?></dd>
         </dl>
     </div>
 </div>
 
-<!-- Imagen del producto -->
+<!-- Información Nutricional -->
+<div class="card border-0 shadow-sm mt-4">
+    <div class="card-header bg-white border-0 pb-2">
+        <h5 class="fw-semibold text-dark mb-0">
+            <i class="bi bi-nutrition me-2 text-primary"></i> Información Nutricional
+        </h5>
+        <div style="
+            height: 2px;
+            margin-top: 6px;
+            width: 100%;
+            background: linear-gradient(90deg, #009FE3 0%, #4CC3FF 100%);
+            border-radius: 1px;
+        "></div>
+    </div>
+
+    <div class="card-body">
+        <?php if (!empty($product->nutritional_information)): ?>
+            <?php $n = $product->nutritional_information; ?>
+
+            <table class="table table-bordered align-middle mb-0">
+                <tr><th style="width:200px;">Medición</th><td><?= h($n->measurement) ?></td></tr>
+                <tr><th>Calorías</th><td><?= h($n->calories) ?> kcal</td></tr>
+                <tr><th>Proteína</th><td><?= h($n->protein) ?> g</td></tr>
+                <tr><th>Grasas Totales</th><td><?= h($n->total_fat) ?> g</td></tr>
+                <tr><th>Carbohidratos</th><td><?= h($n->carbohydrates) ?> g</td></tr>
+                <tr><th>Sodio</th><td><?= h($n->sodium) ?> mg</td></tr>
+                <tr><th>Colesterol</th><td><?= h($n->cholesterol) ?> mg</td></tr>
+            </table>
+
+        <?php else: ?>
+            <div class="p-3 text-muted text-center">
+                <i class="bi bi-info-circle me-2"></i>
+                Este producto no tiene información nutricional registrada.
+            </div>
+        <?php endif; ?>
+    </div>
+</div>
+
+<!-- Imagen -->
 <div class="card border-0 shadow-sm mt-4">
     <div class="card-header bg-white border-0 pb-2">
         <h5 class="fw-semibold text-dark mb-0">

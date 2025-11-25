@@ -109,7 +109,6 @@
                         <tr>
                             <th>ID</th>
                             <th>Nombre</th>
-                            <th>Categoría</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -125,3 +124,20 @@
         </div>
     </div>
 <?php endif; ?>
+
+<style>
+    table {
+        table-layout: fixed;
+        width: 100%;
+    }
+
+    th {
+        white-space: nowrap;
+    }
+
+    td, th {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>
+

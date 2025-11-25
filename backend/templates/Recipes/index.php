@@ -4,8 +4,24 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Recipe[]|\Cake\Collection\CollectionInterface $recipes
  */
+
 use Cake\Utility\Text;
+
+// Detectar sort activo
+$params = $this->Paginator->params();
+$sort = $params['sort'] ?? null;
+$direction = $params['direction'] ?? null;
+
+function sortIcon($field, $currentSort, $direction) {
+    if ($field !== $currentSort) {
+        return '';
+    }
+    return $direction === 'asc'
+        ? ' <i class="bi bi-caret-up-fill"></i>'
+        : ' <i class="bi bi-caret-down-fill"></i>';
+}
 ?>
+
 <div class="container-fluid px-4">
     <div class="d-flex justify-content-between align-items-center mt-3 mb-4">
         <h2 class="fw-semibold text-dark">Gestión de Recetas</h2>
@@ -27,38 +43,60 @@ use Cake\Utility\Text;
             <?= $this->Form->button('Buscar', ['class' => 'btn btn-primary']) ?>
         <?= $this->Form->end() ?>
     </div>
+
     <div class="card shadow-sm border-0">
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-hover align-middle">
                     <thead style="background: linear-gradient(90deg, #009FE3 0%, #4CC3FF 100%); color: #fff;">
                         <tr>
-                            <th><?= $this->Paginator->sort('id', 'ID') ?></th>
-                            <th><?= $this->Paginator->sort('name', 'Nombre') ?></th>
+
+                            <th>
+                                <?= $this->Paginator->sort('name', 'Nombre') ?>
+                                <?= sortIcon('name', $sort, $direction) ?>
+                            </th>
+
                             <th class="text-center">Acciones</th>
                         </tr>
                     </thead>
+
                     <tbody>
                         <?php foreach ($recipes as $recipe): ?>
                             <tr>
                                 <td><?= h($recipe->id) ?></td>
                                 <td><?= h($recipe->name) ?></td>
+
                                 <td class="text-center">
                                     <div class="d-flex justify-content-center gap-2">
                                         <?= $this->Html->link(
                                             '<i class="bi bi-eye"></i>',
                                             ['action' => 'view', $recipe->id],
-                                            ['class' => 'btn btn-outline-primary btn-sm rounded shadow-sm', 'escape' => false, 'title' => 'Ver']
+                                            [
+                                                'class' => 'btn btn-outline-primary btn-sm rounded shadow-sm',
+                                                'escape' => false,
+                                                'title' => 'Ver'
+                                            ]
                                         ) ?>
+
                                         <?= $this->Html->link(
                                             '<i class="bi bi-pencil"></i>',
                                             ['action' => 'edit', $recipe->id],
-                                            ['class' => 'btn btn-outline-warning btn-sm rounded shadow-sm', 'escape' => false, 'title' => 'Editar']
+                                            [
+                                                'class' => 'btn btn-outline-warning btn-sm rounded shadow-sm',
+                                                'escape' => false,
+                                                'title' => 'Editar'
+                                            ]
                                         ) ?>
+
                                         <?= $this->Form->postLink(
                                             '<i class="bi bi-trash"></i>',
                                             ['action' => 'delete', $recipe->id],
-                                            ['confirm' => '¿Seguro que deseas eliminar esta receta?', 'class' => 'btn btn-outline-danger btn-sm rounded shadow-sm', 'escape' => false, 'title' => 'Eliminar']
+                                            [
+                                                'confirm' => '¿Seguro que deseas eliminar esta receta?',
+                                                'class' => 'btn btn-outline-danger btn-sm rounded shadow-sm',
+                                                'escape' => false,
+                                                'title' => 'Eliminar'
+                                            ]
                                         ) ?>
                                     </div>
                                 </td>
@@ -74,6 +112,7 @@ use Cake\Utility\Text;
                     <?= $this->Paginator->numbers(['class' => 'pagination pagination-sm d-inline-flex']) ?>
                     <?= $this->Paginator->next('Siguiente >', ['class' => 'btn btn-outline-secondary btn-sm']) ?>
                 </div>
+
                 <p class="text-muted mb-0 small">
                     Página <?= $this->Paginator->counter('{{page}} de {{pages}}') ?>
                 </p>
@@ -81,3 +120,19 @@ use Cake\Utility\Text;
         </div>
     </div>
 </div>
+
+<style>
+    table {
+        table-layout: fixed;
+        width: 100%;
+    }
+
+    th {
+        white-space: nowrap;
+    }
+
+    td, th {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>

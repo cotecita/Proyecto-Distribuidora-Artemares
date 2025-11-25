@@ -3,7 +3,24 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Product[]|\Cake\Collection\CollectionInterface $products
  */
+
+// Detectar columna ordenada y dirección
+$params = $this->Paginator->params();
+$sort = $params['sort'] ?? null;
+$direction = $params['direction'] ?? null;
+
+
+function sortIcon($field, $currentSort, $direction) {
+    if ($field !== $currentSort) {
+        return '';
+    }
+
+    return $direction === 'asc'
+        ? ' <i class="bi bi-caret-up-fill"></i>'
+        : ' <i class="bi bi-caret-down-fill"></i>';
+}
 ?>
+
 <div class="container-fluid px-4">
     <div class="d-flex justify-content-between align-items-center mt-3 mb-4">
         <h2 class="fw-semibold text-dark">Gestión de Productos</h2>
@@ -17,7 +34,6 @@
     <div class="mb-3">
         <?= $this->Form->create(null, ['type' => 'get', 'class' => 'd-flex align-items-center flex-wrap']) ?>
 
-            <!-- Buscador por nombre de producto -->
             <?= $this->Form->control('search', [
                 'label' => false,
                 'value' => $search ?? '',
@@ -25,7 +41,6 @@
                 'class' => 'form-control me-2 mb-2'
             ]) ?>
 
-            <!-- Filtro por categoría -->
             <?= $this->Form->control('category', [
                 'label' => false,
                 'options' => $categoriesList ?? [],
@@ -34,10 +49,8 @@
                 'class' => 'form-select me-2 mb-2'
             ]) ?>
 
-            <!-- Botón Buscar -->
             <?= $this->Form->button('Buscar', ['class' => 'btn btn-primary mb-2 me-2']) ?>
 
-            <!--  Botón Limpiar -->
             <?= $this->Html->link('Limpiar', ['action' => 'index'], ['class' => 'btn btn-secondary mb-2']) ?>
 
         <?= $this->Form->end() ?>
@@ -49,31 +62,32 @@
                 <table class="table table-hover align-middle">
                     <thead style="background: linear-gradient(90deg, #009FE3 0%, #4CC3FF 100%); color: #fff;">
                         <tr>
-                            <th><?= $this->Paginator->sort('id', 'ID') ?></th>
-                            <th><?= $this->Paginator->sort('name', 'Nombre') ?></th>
-                            <th><?= $this->Paginator->sort('price', 'Precio') ?></th>
-                            <!--<th><?= $this->Paginator->sort('stock', 'Stock') ?></th>-->
-                            <th><?= $this->Paginator->sort('category_id', 'Categoría') ?></th>
+                            <th>
+                                <?= $this->Paginator->sort('name', 'Nombre') ?>
+                                <?= sortIcon('name', $sort, $direction) ?>
+                            </th>
+
+                            <th>
+                                <?= $this->Paginator->sort('price', 'Precio') ?>
+                                <?= sortIcon('price', $sort, $direction) ?>
+                            </th>
+
+                            <th>
+                                <?= $this->Paginator->sort('category_id', 'Categoría') ?>
+                                <?= sortIcon('category_id', $sort, $direction) ?>
+                            </th>
+
                             <th class="text-center">Acciones</th>
                         </tr>
                     </thead>
+
                     <tbody>
                         <?php foreach ($products as $product): ?>
                             <tr>
-                                <td><?= h($product->id) ?></td>
                                 <td><?= h($product->name) ?></td>
                                 <td>$<?= number_format($product->price, 0, ',', '.') ?></td>
-                                <!--
-                                <td>
-                                    <?php if ($product->stock < 10): ?>
-                                        <span class="badge bg-danger"><?= h($product->stock) ?> bajo</span>
-                                    <?php elseif ($product->stock < 30): ?>
-                                        <span class="badge bg-warning text-dark"><?= h($product->stock) ?></span>
-                                    <?php else: ?>
-                                        <span class="badge bg-success"><?= h($product->stock) ?></span>
-                                    <?php endif; ?>
-                                </td>-->
                                 <td><?= h($product->category->name ?? 'Sin categoría') ?></td>
+
                                 <td class="text-center">
                                     <div class="d-flex justify-content-center gap-2">
                                         <?= $this->Html->link(
@@ -86,6 +100,7 @@
                                                 'style' => 'border-width:1.5px;'
                                             ]
                                         ) ?>
+
                                         <?= $this->Html->link(
                                             '<i class="bi bi-pencil"></i>',
                                             ['action' => 'edit', $product->id],
@@ -96,6 +111,7 @@
                                                 'style' => 'border-width:1.5px;'
                                             ]
                                         ) ?>
+
                                         <?= $this->Form->postLink(
                                             '<i class="bi bi-trash"></i>',
                                             ['action' => 'delete', $product->id],
@@ -115,13 +131,13 @@
                 </table>
             </div>
 
-            <!-- Paginación -->
             <div class="d-flex justify-content-between align-items-center mt-4 flex-wrap gap-2">
                 <div>
                     <?= $this->Paginator->prev('< Anterior', ['class' => 'btn btn-outline-secondary btn-sm']) ?>
                     <?= $this->Paginator->numbers(['class' => 'pagination pagination-sm d-inline-flex']) ?>
                     <?= $this->Paginator->next('Siguiente >', ['class' => 'btn btn-outline-secondary btn-sm']) ?>
                 </div>
+
                 <p class="text-muted mb-0 small">
                     Página <?= $this->Paginator->counter('{{page}} de {{pages}}') ?>
                 </p>
@@ -129,3 +145,19 @@
         </div>
     </div>
 </div>
+
+<style>
+    table {
+        table-layout: fixed;
+        width: 100%;
+    }
+
+    th {
+        white-space: nowrap;
+    }
+
+    td, th {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>

@@ -25,11 +25,11 @@ class ProductsController extends AppController
         $this->set(compact('products'));
     }*/
 
-    public function index()
+   public function index()
     {
         $query = $this->Products->find()
-        ->contain(['Categories'])
-        ->order(['Products.modified' => 'DESC']);
+            ->contain(['Categories']);
+
         // Búsqueda por nombre
         $search = $this->request->getQuery('search');
         if (!empty($search)) {
@@ -48,10 +48,25 @@ class ProductsController extends AppController
             $query->where(['Products.category_id' => $categoryFilter]);
         }
 
+        //Permitir ordenamiento dinámico
+        $this->paginate = [
+            'limit' => 20,
+            'order' => ['CAST(Products.id AS INTEGER)' => 'asc'], // orden por defecto   
+            'sortableFields' => [
+                'id',
+                'name',
+                'price',
+                'category_id',
+                'modified',
+                'created'
+            ]
+        ];
+
         $products = $this->paginate($query);
 
         $this->set(compact('products', 'search', 'categoryFilter', 'categoriesList'));
     }
+
 
     /**
      * View method

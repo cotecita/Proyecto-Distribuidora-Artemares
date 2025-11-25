@@ -17,20 +17,28 @@ class RecipesController extends AppController
      */
     public function index()
     {
-        $query = $this->Recipes->find()
-        ->order(['Recipes.modified' => 'DESC']);
-        
+        // Query base
+        $query = $this->Recipes->find();
 
-        // búsqueda por nombre
+        // Búsqueda por nombre
         $search = $this->request->getQuery('search');
         if (!empty($search)) {
-            //  ILIKE si BBDD es PostgreSQL
             $query->where(['Recipes.name ILIKE' => "%$search%"]);
         }
+
+        // Paginación + ordenamiento dinámico habilitado
+        $this->paginate = [
+            'limit' => 20,
+            'order' => ['Recipes.modified' => 'DESC'], // orden por defecto
+            'sortableFields' => ['id', 'name', 'modified', 'created']
+        ];
+
+        // Ejecutar paginación
         $recipes = $this->paginate($query);
 
         $this->set(compact('recipes', 'search'));
     }
+
 
     /**
      * View method

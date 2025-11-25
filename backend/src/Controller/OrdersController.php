@@ -17,13 +17,13 @@ class OrdersController extends AppController
      */
     public function index()
     {
-        $query = $this->Orders->find()
-        ->order(['Orders.modified' => 'DESC']);
+        // Query base sin order forzado para permitir sort dinámico
+        $query = $this->Orders->find();
 
-         // --- Búsqueda por ID de pedido ---
+        // --- Búsqueda por ID de pedido ---
         $search = $this->request->getQuery('search');
         if (!empty($search)) {
-            //filtrar por ID 
+            // filtrar por ID exacto
             $query->where(['Orders.id' => $search]);
         }
 
@@ -32,7 +32,17 @@ class OrdersController extends AppController
         if (!empty($statusFilter)) {
             $query->where(['Orders.status' => $statusFilter]);
         }
+
+        // --- Configurar paginación con orden dinámico ---
+        $this->paginate = [
+            'limit' => 20,
+            'order' => ['CAST(Orders.id AS INTEGER)' => 'asc'],   // Orden por defecto
+            'sortableFields' => ['id', 'status', 'created', 'modified']
+        ];
+
+        // Ejecutar paginación
         $orders = $this->paginate($query);
+
         // Opciones disponibles de estado
         $statuses = [
             'in_process' => 'En proceso',

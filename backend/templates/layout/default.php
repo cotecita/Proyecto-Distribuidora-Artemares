@@ -170,11 +170,6 @@
                <i class="bi bi-cart-check me-2"></i>Pedidos
             </a>
 
-            <a href="<?= $this->Url->build(['controller' => 'NutritionalInformations', 'action' => 'index']) ?>"
-               class="<?= $this->request->getParam('controller') === 'NutritionalInformations' ? 'active' : '' ?>">
-               <i class="bi bi-info-circle me-2"></i>Info Nutricional
-            </a>
-
             <a href="<?= $this->Url->build(['controller' => 'Administrators', 'action' => 'index']) ?>"
                class="<?= $this->request->getParam('controller') === 'Administrators' ? 'active' : '' ?>">
                <i class="bi bi-person-gear me-2"></i>Administrador

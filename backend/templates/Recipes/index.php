@@ -63,7 +63,6 @@ function sortIcon($field, $currentSort, $direction) {
                     <tbody>
                         <?php foreach ($recipes as $recipe): ?>
                             <tr>
-                                <td><?= h($recipe->id) ?></td>
                                 <td><?= h($recipe->name) ?></td>
 
                                 <td class="text-center">

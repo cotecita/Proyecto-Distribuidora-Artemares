@@ -170,6 +170,11 @@
                <i class="bi bi-cart-check me-2"></i>Pedidos
             </a>
 
+            <a href="<?= $this->Url->build(['controller' => 'CashClosure', 'action' => 'index']) ?>"
+                class="<?= $this->request->getParam('controller') === 'CashClosure' ? 'active' : '' ?>">
+                <i class="bi bi-cash-stack me-2"></i>Cuadratura de Caja
+            </a>
+
             <a href="<?= $this->Url->build(['controller' => 'Administrators', 'action' => 'index']) ?>"
                class="<?= $this->request->getParam('controller') === 'Administrators' ? 'active' : '' ?>">
                <i class="bi bi-person-gear me-2"></i>Administrador

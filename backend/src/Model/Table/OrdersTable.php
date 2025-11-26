@@ -7,6 +7,8 @@ use Cake\ORM\Query\SelectQuery;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\I18n\FrozenDate;
+
 
 /**
  * Orders Model
@@ -47,11 +49,6 @@ class OrdersTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        #$this->hasMany('OrdersProducts', [
-         #   'foreignKey' => 'order_id',
-          #  'dependent' => true,
-        #]);
-
         $this->belongsToMany('Products', [
             'foreignKey' => 'order_id',
             'targetForeignKey' => 'product_id',
@@ -75,4 +72,25 @@ class OrdersTable extends Table
 
         return $validator;
     }
+
+    public function findClosedToday(SelectQuery $query, array $options)
+    {
+        $today = FrozenDate::today()->format('Y-m-d'); 
+
+        return $query
+            ->where([
+                'Orders.status' => 'closed',
+                'DATE(Orders.created) =' => $today,
+            ])
+            ->contain([
+                'Products' => function ($q) {
+                    return $q->select([
+                        'Products.id',
+                        'Products.name',
+                        'Products.price',
+                    ]);
+                }
+            ]);
+    }
+
 }

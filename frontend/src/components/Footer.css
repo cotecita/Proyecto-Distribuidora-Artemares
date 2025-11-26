@@ -1,61 +1,92 @@
-/* Estilos generales del footer */
+/* ===========================
+   FOOTER — Estilo Premium
+   =========================== */
+
 .footer {
   width: 100%;
-  background-color: #0A3D62; /* azul marino */
-  color: #F8FAFC; /* texto blanco claro */
-  padding: 1rem 0; /* altura compacta */
+  background: #062646; /* Azul marino corporativo */
+  color: #F1F5F9;
+  padding: 3.5rem 0 2rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
-  font-size: 0.9rem;
+  gap: 2.2rem;
+  border-top: 1px solid rgba(255,255,255,0.08);
 }
 
-/* Contenedor principal del contenido del footer */
-.footer-content {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
+.footer-inner {
+  width: 90%;
+  max-width: 1150px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 2rem;
-  margin-bottom: 0.6rem;
 }
 
-/* Estilo de cada línea de contacto */
-.footer-content p {
-  margin: 0;
-  color: #E6F7FF;
-  font-weight: 400;
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.9rem;
+.footer-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.02em;
 }
 
-/* Destacar las etiquetas (Dirección, Teléfono, Correo) */
-.footer-content p strong {
+.footer-description {
+  line-height: 1.6;
+  color: rgba(241, 245, 249, 0.8);
+  font-size: 0.95rem;
+}
+
+/* Subtítulos de las secciones */
+.footer-subtitle {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
   color: #FFFFFF;
 }
 
-/* Línea inferior del footer */
+/* Lista de info */
+.footer-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-list li {
+  color: rgba(241, 245, 249, 0.87);
+  margin-bottom: 0.55rem;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.footer-list li span {
+  font-size: 1.05rem;
+  opacity: 0.85;
+}
+
+/* Línea inferior */
 .footer-bottom {
-  width: 100%;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 1rem;
   text-align: center;
-  font-size: 0.85rem;
-  color: #E6F7FF; /* color más claro y visible */
-  border-top: 1px solid rgba(255, 255, 255, 0.25);
-  padding-top: 0.5rem;
 }
 
 .footer-bottom p {
-  color: #FFFFFF !important;
+  font-size: 0.85rem;
+  color: rgba(241, 245, 249, 0.75);
 }
-/* Ajuste para pantallas pequeñas */
-@media (max-width: 768px) {
-  .footer-content {
-    flex-direction: column;
-    gap: 0.6rem;
+
+/* ===========================
+   RESPONSIVO
+   =========================== */
+@media (max-width: 900px) {
+  .footer-inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .footer-list li {
+    justify-content: center;
   }
 }

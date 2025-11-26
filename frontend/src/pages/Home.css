@@ -1,96 +1,276 @@
-.video-hero {
-  position: relative;
-  height: calc(100vh - 100px); /* resta el alto real de la navbar */
-  width: 100%;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* ==========================================================
+   TIPOGRAFÍA (Playfair + Inter)
+========================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+  --nav-height: 101px;
 }
 
-.background-video {
+
+body {
+  font-family: "Inter", sans-serif;
+}
+
+
+/* ==========================================================
+   HERO (100vh - navbar)
+========================================================== */
+
+.hero-video {
+  position: relative;
+  height: calc(101vh - var(--nav-height));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero-video__bg {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   z-index: 0;
 }
 
-.button-container {
+.hero-video__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    rgba(6, 38, 70, 0.75),
+    rgba(12, 60, 110, 0.55),
+    rgba(40, 90, 180, 0.4)
+  );
+  z-index: 1;
+}
+
+.hero-video__content {
   position: relative;
   z-index: 2;
+  max-width: 1100px;
+  width: 90%;
+  color: white;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  align-items: center;
+}
+
+.hero-kicker {
+  display: inline-block;
+  padding: 0.35rem 1.1rem;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.3);
+  backdrop-filter: blur(4px);
+  letter-spacing: 0.18em;
+  font-size: 0.72rem;
+  color: #f0f7ff;
+}
+
+.hero-title {
+  font-family: "Playfair Display", serif;
+  font-weight: 600;
+  font-size: clamp(2.6rem, 4.6vw, 4rem);
+  line-height: 1.15;
+}
+
+.hero-subtitle {
+  max-width: 620px;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: rgba(240, 245, 255, 0.92);
 }
 
 
-/* ===== SECCIÓN QUIÉNES SOMOS ===== */
-.hero {
-  width: 100%;
-  min-height: 100vh;
+/* ==========================================================
+   SECCIONES (todas misma altura)
+========================================================== */
+
+.section--about,
+.section--info {
+  height: calc(100vh - var(--nav-height));
   display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #2670b4; /* Fondo */
-  padding: 60px 0;
-  margin-top: -70px;
+  flex-direction: column;
+  justify-content: center; /* centra contenido */
+  position: relative;
+  padding: 0; /* FIX: antes tenías padding-top que rompía todo */
 }
 
-.overlay {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 3rem;
-  max-width: 1200px;
+
+/* ==========================================================
+   CONTENIDO DE SECCIONES
+========================================================== */
+
+.section-inner {
+  max-width: 1150px;
   width: 90%;
   margin: 0 auto;
-  background: none; /* Quitamos el fondo oscuro */
-  box-shadow: none;
-  padding: 0;
 }
 
-/* IMAGEN Y TEXTO */
-.hero-image img {
-  width: 600px;
-  height: auto;
-  border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-  object-fit: cover;
+.section--about {
+  background: #f5f7fb;
 }
 
-.hero-text {
-  flex: 1;
-  color: #ffffff;
-  text-align: left;
+.section--about .section-inner {
+  background: #ffffff;
+  border-radius: 22px;
+  padding: 3rem 2.8rem;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.1);
 }
 
-.hero-text h1 {
-  font-size: 2.2rem;
+.section-grid {
+  display: grid;
+  grid-template-columns: minmax(0,1.1fr) minmax(0,1fr);
+  gap: 3rem;
+}
+
+.section-media img {
+  width: 100%;
+  border-radius: 18px;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.18);
+}
+
+.section-kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-bottom: 0.6rem;
+}
+
+.section-text h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 2.3rem;
   font-weight: 700;
   margin-bottom: 1rem;
-  color: #ffffff;
+  color: #0f172a;
+  position: relative;
 }
 
-.hero-text p {
-  font-size: 1.1rem;
-  line-height: 1.6;
+.section-text h2::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: #3f7fe5;
+  border-radius: 2px;
+}
+
+.section-text p {
+  font-size: 1rem;
+  line-height: 1.85;
+  color: #475569;
   margin-bottom: 1rem;
 }
 
-/* RESPONSIVO */
-@media (max-width: 900px) {
-  .overlay {
-    flex-direction: column;
-    text-align: center;
-    gap: 2rem;
-  }
-
-  .hero-image img {
-    width: 90%;
-  }
-
-  .hero-text {
-    text-align: center;
-  }
+.section-list {
+  padding: 0;
+  list-style: none;
 }
 
+.section-list li {
+  position: relative;
+  padding-left: 1.4rem;
+  margin-bottom: 0.55rem;
+}
+
+.section-list li::before {
+  content: "";
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  left: 0;
+  top: 0.55rem;
+  background: #3f7fe5;
+  border-radius: 50%;
+}
+
+
+/* ==========================================================
+   FLECHA — SIEMPRE VISIBLE
+========================================================== */
+
+.scroll-next {
+  position: absolute;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: pointer;
+  z-index: 10;
+}
+
+.scroll-next span {
+  width: 22px;
+  height: 22px;
+  display: block;
+  
+  border-right: 3px solid rgba(0,0,0,0.45);
+  border-bottom: 3px solid rgba(0,0,0,0.45);
+
+  transform: rotate(45deg);
+  animation: arrowBounce 1.4s infinite ease-in-out;
+}
+
+@keyframes arrowBounce {
+  0%   { transform: translateY(0) rotate(45deg); opacity: 0.4; }
+  50%  { transform: translateY(6px) rotate(45deg); opacity: 1; }
+  100% { transform: translateY(12px) rotate(45deg); opacity: 0.4; }
+}
+
+/* ==========================================================
+   INFO
+========================================================== */
+
+.section--info {
+  background: #eef4ff;
+}
+
+.section-grid--two {
+  grid-template-columns: repeat(2, minmax(0,1fr));
+}
+
+.info-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 2.4rem;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+}
+
+.info-card h3 {
+  font-family: "Playfair Display", serif;
+  font-size: 1.45rem;
+  margin-bottom: 0.8rem;
+}
+
+.info-text {
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.contact-lines p {
+  margin-bottom: 0.4rem;
+}
+
+
+/* ==========================================================
+   RESPONSIVE
+========================================================== */
+
+@media (max-width: 900px) {
+  .section-grid,
+  .section-grid--two {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-title {
+    font-size: 2.2rem;
+  }
+}

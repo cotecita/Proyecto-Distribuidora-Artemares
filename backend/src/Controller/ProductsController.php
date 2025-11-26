@@ -2,6 +2,8 @@
 declare(strict_types=1);
 
 namespace App\Controller;
+use Cake\Log\Log;
+
 
 /**
  * Products Controller
@@ -47,11 +49,19 @@ class ProductsController extends AppController
         if (!empty($categoryFilter)) {
             $query->where(['Products.category_id' => $categoryFilter]);
         }
+        /*
 
-        //Permitir ordenamiento dinámico
+        if (!$this->request->getQuery('sort') && !$this->request->getQuery('direction')) {
+            $this->request = $this->request->withQueryParams(
+                array_merge($this->request->getQueryParams(), ['sort' => 'id', 'direction' => 'asc'])
+            );
+        }*/
+
+        //permitir ordenamiento dinámico
         $this->paginate = [
             'limit' => 20,
-            'order' => ['CAST(Products.id AS INTEGER)' => 'asc'], // orden por defecto   
+            'order' => ['Products.id' => 'asc'], // orden por defecto   
+            /*
             'sortableFields' => [
                 'id',
                 'name',
@@ -59,7 +69,7 @@ class ProductsController extends AppController
                 'category_id',
                 'modified',
                 'created'
-            ]
+            ]*/
         ];
 
         $products = $this->paginate($query);

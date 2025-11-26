@@ -17,8 +17,8 @@ class CategoriesController extends AppController
      */
     public function index()
     {
-        $query = $this->Categories->find()
-        ->order(['Categories.id' => 'asc']);
+        $query = $this->Categories->find();
+        #->order(['Categories.id' => 'asc']);
 
         // búsqueda por nombre
         $search = $this->request->getQuery('search');
@@ -26,6 +26,11 @@ class CategoriesController extends AppController
             //  ILIKE si BBDD es PostgreSQL
             $query->where(['Categories.name ILIKE' => "%$search%"]);
         }
+        $this->paginate = [
+            'limit' => 20,
+            'order' => ['Categories.id' => 'asc'], // orden por defecto   
+            
+        ];
         $categories = $this->paginate($query);
 
         $this->set(compact('categories', 'search'));

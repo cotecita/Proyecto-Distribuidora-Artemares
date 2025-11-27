@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 namespace App\Controller;
+use Cake\I18n\FrozenTime;
 
 /**
  * Dashboard Controller
@@ -84,6 +85,27 @@ class DashboardController extends AppController
             ->order(['date' => 'ASC'])
             ->all();
 
+        // 10. ventas totales por producto últimos 7 días
+        $sevenDaysAgo = (new FrozenTime())->subDays(7);
+
+        $salesLast7DaysByProduct = $ordersProductsTable->find()
+            ->select([
+                'product_id',
+                'total_quantity' => 'SUM(OrdersProducts.quantity)',
+                'Products__name' => 'Products.name'
+            ])
+            ->matching('Orders', function ($q) use ($sevenDaysAgo) {
+                return $q->where([
+                    'Orders.status' => 'closed',
+                    'Orders.created >=' => $sevenDaysAgo
+                ]);
+            })
+            ->matching('Products')
+            ->group(['OrdersProducts.product_id', 'Products.name'])
+            ->order(['total_quantity' => 'DESC'])
+            ->limit(5)
+            ->all();
+
         $this->set(compact(
             'totalProducts',
             'totalCategories',
@@ -93,7 +115,10 @@ class DashboardController extends AppController
             'recentOrders',
             'alerts',
             'quickAccess',
-            'salesEvolution'
+            'salesEvolution',
+            'salesLast7DaysByProduct'
         ));
     }
+
+
 }

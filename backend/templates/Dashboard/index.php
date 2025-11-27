@@ -188,4 +188,61 @@
         <?php endif; ?>
     </div>
 </div>
-</script>
+
+<!-- Ventas Totales por Producto - Últimos 7 Días -->
+<div class="card mb-4">
+    <div class="card-header">
+        <h5 class="mb-0">Ventas Totales por Producto (Últimos 7 Días)</h5>
+    </div>
+    <div class="card-body">
+        <?php if (!empty($salesLast7DaysByProduct)): ?>
+            <canvas id="salesByProductChart" width="800" height="400"></canvas>
+
+            <!-- Chart.js desde CDN -->
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script>
+            const ctxProducts = document.getElementById('salesByProductChart').getContext('2d');
+
+            const productLabels = [
+                <?php foreach ($salesLast7DaysByProduct as $item): ?>
+                    "<?= h($item->_matchingData['Products']->name) ?>",
+                <?php endforeach; ?>
+            ];
+
+            const productData = [
+                <?php foreach ($salesLast7DaysByProduct as $item): ?>
+                    <?= $item->total_quantity ?>,
+                <?php endforeach; ?>
+            ];
+
+            new Chart(ctxProducts, {
+                type: 'bar',
+                data: {
+                    labels: productLabels,
+                    datasets: [{
+                        label: 'Cantidad Vendida',
+                        data: productData,
+                        backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                        title: { display: true, text: 'Ventas Totales por Producto (Últimos 7 Días)' }
+                    },
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+            </script>
+        <?php else: ?>
+            <p class="text-muted mb-0">No hay ventas registradas en los últimos 7 días.</p>
+        <?php endif; ?>
+    </div>
+</div>
+
+

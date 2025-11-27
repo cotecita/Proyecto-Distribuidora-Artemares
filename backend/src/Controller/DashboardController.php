@@ -105,6 +105,64 @@ class DashboardController extends AppController
             ->order(['total_quantity' => 'DESC'])
             ->limit(5)
             ->all();
+        
+        //11. Ventas totales por producto últimos 30 días (solo pedidos cerrados, top 5)
+        $thirtyDaysAgo = (new FrozenTime())->subDays(30);
+
+        $salesLast30DaysTop5 = $ordersProductsTable->find()
+            ->select([
+                'product_id',
+                'total_quantity' => 'SUM(OrdersProducts.quantity)',
+                'Products__name' => 'Products.name'
+            ])
+            ->matching('Orders', function ($q) use ($thirtyDaysAgo) {
+                return $q->where([
+                    'Orders.status' => 'closed',
+                    'Orders.created >=' => $thirtyDaysAgo
+                ]);
+            })
+            ->matching('Products')
+            ->group(['OrdersProducts.product_id', 'Products.name'])
+            ->order(['total_quantity' => 'DESC'])
+            ->limit(5)
+            ->all();
+
+        // 12. ventas totales por categoría últimos 7 días
+        $salesLast7DaysByCategory = $ordersProductsTable->find()
+            ->select([
+                'category_id' => 'Products.category_id',
+                'total_quantity' => 'SUM(OrdersProducts.quantity)',
+                'Categories__name' => 'Categories.name'
+            ])
+            ->matching('Orders', function ($q) use ($sevenDaysAgo) {
+                return $q->where([
+                    'Orders.status' => 'closed',
+                    'Orders.created >=' => $sevenDaysAgo
+                ]);
+            })
+            ->matching('Products.Categories') 
+            ->group(['Products.category_id', 'Categories.name'])
+            ->order(['total_quantity' => 'DESC'])
+            ->limit(5)
+            ->all();
+        #12. ventas totales por categoría últimos 30 días
+        $salesLast30DaysByCategory = $ordersProductsTable->find()
+        ->select([
+            'category_id' => 'Products.category_id',
+            'total_quantity' => 'SUM(OrdersProducts.quantity)',
+            'Categories__name' => 'Categories.name'
+        ])
+        ->matching('Orders', function ($q) use ($thirtyDaysAgo) {
+            return $q->where([
+                'Orders.status' => 'closed',
+                'Orders.created >=' => $thirtyDaysAgo
+            ]);
+        })
+        ->matching('Products.Categories')
+        ->group(['Products.category_id', 'Categories.name'])
+        ->order(['total_quantity' => 'DESC'])
+        ->limit(5)
+        ->all();
 
         $this->set(compact(
             'totalProducts',
@@ -116,7 +174,10 @@ class DashboardController extends AppController
             'alerts',
             'quickAccess',
             'salesEvolution',
-            'salesLast7DaysByProduct'
+            'salesLast7DaysByProduct',
+            'salesLast30DaysTop5',
+            'salesLast7DaysByCategory',
+            'salesLast30DaysByCategory'
         ));
     }
 

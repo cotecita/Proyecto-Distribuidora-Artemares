@@ -4,20 +4,24 @@
  * @var \App\Model\Entity\Product[]|\Cake\Collection\CollectionInterface $products
  */
 
-// Detectar columna ordenada y dirección
+// Parámetros actuales del paginador
 $params = $this->Paginator->params();
 $sort = $params['sort'] ?? null;
 $direction = $params['direction'] ?? null;
 
-
+/**
+ * Devuelve el ícono correcto según el estado del ordenamiento.
+ * - Si no es la columna ordenada: ícono neutral.
+ * - Si es la columna ordenada: flecha ascendente o descendente.
+ */
 function sortIcon($field, $currentSort, $direction) {
     if ($field !== $currentSort) {
-        return '';
+        return ' <i class="bi bi-arrow-down-up sort-neutral"></i>';
     }
 
     return $direction === 'asc'
-        ? ' <i class="bi bi-caret-up-fill"></i>'
-        : ' <i class="bi bi-caret-down-fill"></i>';
+        ? ' <i class="bi bi-arrow-up"></i>'
+        : ' <i class="bi bi-arrow-down"></i>';
 }
 ?>
 
@@ -154,10 +158,25 @@ function sortIcon($field, $currentSort, $direction) {
 
     th {
         white-space: nowrap;
+        cursor: pointer;
+    }
+
+    th i {
+        font-size: 0.82rem;
+        margin-left: 4px;
     }
 
     td, th {
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+
+    .sort-neutral {
+        opacity: 0.45;
+        transition: opacity .15s ease-in-out;
+    }
+
+    th:hover .sort-neutral {
+        opacity: 0.9;
     }
 </style>

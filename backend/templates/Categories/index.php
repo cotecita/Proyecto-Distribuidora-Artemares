@@ -1,23 +1,29 @@
 <?php
 /**
  * Vista: Gestión de Categorías
- * Estilo Artemares — coherente con Products
  */
 
-// Detectar sort activo (compatible con tu versión de CakePHP)
+// Parámetros del paginador
 $params = $this->Paginator->params();
 $sort = $params['sort'] ?? null;
 $direction = $params['direction'] ?? null;
 
+/**
+ * Retorna el ícono de ordenamiento correspondiente.
+ * - Columna no ordenada: flecha neutral.
+ * - Columna ordenada: flecha ascendente o descendente.
+ */
 function sortIcon($field, $currentSort, $direction) {
     if ($field !== $currentSort) {
-        return '';
+        return ' <i class="bi bi-arrow-down-up sort-neutral"></i>';
     }
+
     return $direction === 'asc'
-        ? ' <i class="bi bi-caret-up-fill"></i>'
-        : ' <i class="bi bi-caret-down-fill"></i>';
+        ? ' <i class="bi bi-arrow-up"></i>'
+        : ' <i class="bi bi-arrow-down"></i>';
 }
 ?>
+
 <div class="container-fluid px-4">
     <div class="d-flex justify-content-between align-items-center mt-3 mb-4">
         <h2 class="fw-semibold text-dark">Gestión de Categorías</h2>
@@ -67,41 +73,41 @@ function sortIcon($field, $currentSort, $direction) {
                                 <td><?= h($category->name) ?></td>
 
                                 <td class="text-center">
-                                  <div class="d-flex justify-content-center gap-2">
-                                      <?= $this->Html->link(
-                                          '<i class="bi bi-eye"></i>',
-                                          ['action' => 'view', $category->id],
-                                          [
-                                              'class' => 'btn btn-outline-primary btn-sm rounded shadow-sm',
-                                              'escape' => false,
-                                              'title' => 'Ver',
-                                              'style' => 'border-width:1.5px;'
-                                          ]
-                                      ) ?>
+                                    <div class="d-flex justify-content-center gap-2">
+                                        <?= $this->Html->link(
+                                            '<i class="bi bi-eye"></i>',
+                                            ['action' => 'view', $category->id],
+                                            [
+                                                'class' => 'btn btn-outline-primary btn-sm rounded shadow-sm',
+                                                'escape' => false,
+                                                'title' => 'Ver',
+                                                'style' => 'border-width:1.5px;'
+                                            ]
+                                        ) ?>
 
-                                      <?= $this->Html->link(
-                                          '<i class="bi bi-pencil"></i>',
-                                          ['action' => 'edit', $category->id],
-                                          [
-                                              'class' => 'btn btn-outline-warning btn-sm rounded shadow-sm',
-                                              'escape' => false,
-                                              'title' => 'Editar',
-                                              'style' => 'border-width:1.5px;'
-                                          ]
-                                      ) ?>
+                                        <?= $this->Html->link(
+                                            '<i class="bi bi-pencil"></i>',
+                                            ['action' => 'edit', $category->id],
+                                            [
+                                                'class' => 'btn btn-outline-warning btn-sm rounded shadow-sm',
+                                                'escape' => false,
+                                                'title' => 'Editar',
+                                                'style' => 'border-width:1.5px;'
+                                            ]
+                                        ) ?>
 
-                                      <?= $this->Form->postLink(
-                                          '<i class="bi bi-trash"></i>',
-                                          ['action' => 'delete', $category->id],
-                                          [
-                                              'confirm' => '¿Seguro que deseas eliminar esta categoría?',
-                                              'class' => 'btn btn-outline-danger btn-sm rounded shadow-sm',
-                                              'escape' => false,
-                                              'title' => 'Eliminar',
-                                              'style' => 'border-width:1.5px;'
-                                          ]
-                                      ) ?>
-                                  </div>
+                                        <?= $this->Form->postLink(
+                                            '<i class="bi bi-trash"></i>',
+                                            ['action' => 'delete', $category->id],
+                                            [
+                                                'confirm' => '¿Seguro que deseas eliminar esta categoría?',
+                                                'class' => 'btn btn-outline-danger btn-sm rounded shadow-sm',
+                                                'escape' => false,
+                                                'title' => 'Eliminar',
+                                                'style' => 'border-width:1.5px;'
+                                            ]
+                                        ) ?>
+                                    </div>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -115,6 +121,7 @@ function sortIcon($field, $currentSort, $direction) {
                     <?= $this->Paginator->numbers(['class' => 'pagination pagination-sm d-inline-flex']) ?>
                     <?= $this->Paginator->next('Siguiente >', ['class' => 'btn btn-outline-secondary btn-sm']) ?>
                 </div>
+
                 <p class="text-muted mb-0 small">
                     Página <?= $this->Paginator->counter('{{page}} de {{pages}}') ?>
                 </p>
@@ -131,11 +138,25 @@ function sortIcon($field, $currentSort, $direction) {
 
     th {
         white-space: nowrap;
+        cursor: pointer;
+    }
+
+    th i {
+        font-size: 0.82rem;
+        margin-left: 4px;
     }
 
     td, th {
         overflow: hidden;
         text-overflow: ellipsis;
     }
-</style>
 
+    .sort-neutral {
+        opacity: 0.45;
+        transition: opacity .15s ease-in-out;
+    }
+
+    th:hover .sort-neutral {
+        opacity: 0.9;
+    }
+</style>

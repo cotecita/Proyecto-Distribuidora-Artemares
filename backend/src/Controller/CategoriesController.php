@@ -26,11 +26,17 @@ class CategoriesController extends AppController
             //  ILIKE si BBDD es PostgreSQL
             $query->where(['Categories.name ILIKE' => "%$search%"]);
         }
+        $order = [];
+
+        if (!$this->request->getQuery('sort')) {
+            $order = ['categories.id' => 'asc'];
+        }
+
         $this->paginate = [
             'limit' => 20,
-            'order' => ['Categories.id' => 'asc'], // orden por defecto   
-            
+            'order' => $order
         ];
+
         $categories = $this->paginate($query);
 
         $this->set(compact('categories', 'search'));

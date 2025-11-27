@@ -7,18 +7,24 @@
 
 use Cake\Utility\Text;
 
-// Detectar sort activo
+// Parámetros del paginador
 $params = $this->Paginator->params();
 $sort = $params['sort'] ?? null;
 $direction = $params['direction'] ?? null;
 
+/**
+ * Retorna el ícono de ordenamiento según el estado actual.
+ * - Columna no ordenada: ícono neutral.
+ * - Columna ordenada: flecha ascendente o descendente.
+ */
 function sortIcon($field, $currentSort, $direction) {
     if ($field !== $currentSort) {
-        return '';
+        return ' <i class="bi bi-arrow-down-up sort-neutral"></i>';
     }
+
     return $direction === 'asc'
-        ? ' <i class="bi bi-caret-up-fill"></i>'
-        : ' <i class="bi bi-caret-down-fill"></i>';
+        ? ' <i class="bi bi-arrow-up"></i>'
+        : ' <i class="bi bi-arrow-down"></i>';
 }
 ?>
 
@@ -50,7 +56,6 @@ function sortIcon($field, $currentSort, $direction) {
                 <table class="table table-hover align-middle">
                     <thead style="background: linear-gradient(90deg, #009FE3 0%, #4CC3FF 100%); color: #fff;">
                         <tr>
-
                             <th>
                                 <?= $this->Paginator->sort('name', 'Nombre') ?>
                                 <?= sortIcon('name', $sort, $direction) ?>
@@ -67,6 +72,7 @@ function sortIcon($field, $currentSort, $direction) {
 
                                 <td class="text-center">
                                     <div class="d-flex justify-content-center gap-2">
+
                                         <?= $this->Html->link(
                                             '<i class="bi bi-eye"></i>',
                                             ['action' => 'view', $recipe->id],
@@ -97,6 +103,7 @@ function sortIcon($field, $currentSort, $direction) {
                                                 'title' => 'Eliminar'
                                             ]
                                         ) ?>
+
                                     </div>
                                 </td>
                             </tr>
@@ -128,10 +135,25 @@ function sortIcon($field, $currentSort, $direction) {
 
     th {
         white-space: nowrap;
+        cursor: pointer;
+    }
+
+    th i {
+        font-size: 0.82rem;
+        margin-left: 4px;
     }
 
     td, th {
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+
+    .sort-neutral {
+        opacity: 0.45;
+        transition: opacity .15s ease-in-out;
+    }
+
+    th:hover .sort-neutral {
+        opacity: 0.9;
     }
 </style>

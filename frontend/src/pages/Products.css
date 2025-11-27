@@ -47,6 +47,8 @@
   flex-direction: column;
   align-items: flex-end;
   gap: 4px;
+  cursor: pointer;
+  user-select: none;
 }
 
 .cart-label {
@@ -165,6 +167,27 @@
   font-weight: 500;
 }
 
+/* Variantes por categoría (sutil) */
+.tag--pescados {
+  background: #dbeafe;
+  color: #1e3a8a;
+}
+
+.tag--moluscos {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.tag--crustáceos {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.tag--otros {
+  background: #e5e7eb;
+  color: #111827;
+}
+
 /* ========= CONTROLES RÁPIDOS ========= */
 
 .product-actions {
@@ -215,11 +238,11 @@
 }
 
 .add-cart-btn.primary {
-  background: #2563eb;
+  background: #0f172a;
 }
 
 .add-cart-btn:hover {
-  background: #1d4ed8;
+  background: #0f172a;
   transform: translateY(-1px);
 }
 
@@ -356,6 +379,198 @@
   margin-bottom: 4px;
 }
 
+/* ========= PANEL LATERAL DEL CARRITO ========= */
+
+.cart-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  display: flex;
+  justify-content: flex-end;
+  z-index: 3100;
+}
+
+.cart-panel {
+  width: min(380px, 100%);
+  height: 100%;
+  background: #ffffff;
+  box-shadow: -10px 0 40px rgba(15, 23, 42, 0.35);
+  display: flex;
+  flex-direction: column;
+  padding: 18px 18px 20px;
+}
+
+.cart-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.cart-panel-header h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 1.4rem;
+  margin: 0;
+  color: #0f172a;
+}
+
+.close-btn--cart {
+  position: static;
+  font-size: 1.5rem;
+  padding: 0;
+}
+
+/* Cuerpo del carrito */
+
+.cart-panel-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 2px 8px 0;
+}
+
+.cart-empty {
+  font-size: 0.95rem;
+  color: #64748b;
+}
+
+.cart-items-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cart-item {
+  display: flex;
+  gap: 10px;
+  border-radius: 14px;
+  padding: 8px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+.cart-item-image img {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.cart-item-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cart-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cart-item-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.cart-item-remove {
+  border: none;
+  background: transparent;
+  font-size: 0.78rem;
+  color: #ef4444;
+  cursor: pointer;
+  padding: 0;
+}
+
+.cart-item-meta {
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+.cart-item-price {
+  font-weight: 500;
+}
+
+.cart-item-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.qty-control--small {
+  border-radius: 999px;
+  padding: 0 6px;
+}
+
+.qty-control--small button {
+  padding: 2px 8px;
+}
+
+.cart-item-qty {
+  display: inline-block;
+  min-width: 22px;
+  text-align: center;
+  font-size: 0.85rem;
+}
+
+.cart-item-subtotal {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+/* Footer del carrito */
+
+.cart-panel-footer {
+  padding-top: 10px;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cart-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.98rem;
+  color: #0f172a;
+}
+
+.cart-total-row strong {
+  font-size: 1.05rem;
+}
+
+.cart-checkout-btn {
+  margin-top: 4px;
+  width: 100%;
+  border-radius: 999px;
+  border: none;
+  padding: 9px 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: #2563eb;
+  color: #e5f0ff;
+  transition: background 0.18s ease, transform 0.18s ease;
+}
+
+.cart-checkout-btn:hover:enabled {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.cart-checkout-btn:disabled {
+  background: #cbd5e1;
+  color: #64748b;
+  cursor: not-allowed;
+}
+
 /* ========= RESPONSIVE ========= */
 
 @media (max-width: 900px) {
@@ -384,6 +599,10 @@
   }
 
   .filter-select {
+    width: 100%;
+  }
+
+  .cart-panel {
     width: 100%;
   }
 }

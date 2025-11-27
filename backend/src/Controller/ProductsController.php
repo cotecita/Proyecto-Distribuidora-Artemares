@@ -61,15 +61,12 @@ class ProductsController extends AppController
         $this->paginate = [
             'limit' => 20,
             'order' => ['Products.id' => 'asc'], // orden por defecto   
-            /*
             'sortableFields' => [
-                'id',
+                'Products.id',
                 'name',
                 'price',
-                'category_id',
-                'modified',
-                'created'
-            ]*/
+                'Categories.name'
+            ]
         ];
 
         $products = $this->paginate($query);

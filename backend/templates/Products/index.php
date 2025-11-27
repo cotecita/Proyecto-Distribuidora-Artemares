@@ -77,8 +77,8 @@ function sortIcon($field, $currentSort, $direction) {
                             </th>
 
                             <th>
-                                <?= $this->Paginator->sort('category_id', 'Categoría') ?>
-                                <?= sortIcon('category_id', $sort, $direction) ?>
+                                <?= $this->Paginator->sort('Categories.name', 'Categoría') ?>
+                                <?= sortIcon('Categories.name', $sort, $direction) ?>
                             </th>
 
                             <th class="text-center">Acciones</th>

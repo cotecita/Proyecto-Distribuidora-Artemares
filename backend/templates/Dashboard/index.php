@@ -233,7 +233,7 @@
                             responsive: true,
                             plugins: {
                                 legend: { display: false },
-                                title: { display: true, text: 'Ventas Totales por Producto (Últimos 7 Días)' }
+                                title: { display: true, text: 'Top 5 productos' }
                             },
                             scales: {
                                 x: { beginAtZero: true }
@@ -291,7 +291,7 @@
                             responsive: true,
                             plugins: {
                                 legend: { display: false },
-                                title: { display: true, text: 'Ventas Totales por Producto (Últimos 30 Días)' }
+                                title: { display: true, text: 'Top 5 productos' }
                             },
                             scales: {
                                 x: { beginAtZero: true }
@@ -349,7 +349,7 @@
                             responsive: true,
                             plugins: {
                                 legend: { display: false },
-                                title: { display: true, text: 'Ventas Totales por Categoría (Últimos 7 Días)' }
+                                title: { display: true, text: 'Top 5 categorías' }
                             },
                             scales: {
                                 x: { beginAtZero: true }
@@ -407,7 +407,7 @@
                                 legend: { display: false },
                                 title: { 
                                     display: true, 
-                                    text: 'Ventas Totales por Categoría (Últimos 30 Días)' 
+                                    text: 'Top 5 categorías' 
                                 }
                             },
                             scales: {

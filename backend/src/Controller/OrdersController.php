@@ -113,7 +113,11 @@ class OrdersController extends AppController
         }
 
         // --- Datos para la vista ---
-        $products = $this->Orders->Products->find('all')->toArray();
+        #$products = $this->Orders->Products->find('all')->toArray();
+        $products = $this->Orders->Products->find()
+            ->order(['Products.name' => 'ASC'])
+            ->all()
+            ->toArray();
         $statuses = [
             'in_process' => 'En proceso',
             'closed' => 'Cerrado',
@@ -133,22 +137,7 @@ class OrdersController extends AppController
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    /*
-    public function edit($id = null)
-    {
-        $order = $this->Orders->get($id, contain: ['Products']);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $order = $this->Orders->patchEntity($order, $this->request->getData());
-            if ($this->Orders->save($order)) {
-                $this->Flash->success(__('The order has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The order could not be saved. Please, try again.'));
-        }
-        $products = $this->Orders->Products->find('list', limit: 200)->all();
-        $this->set(compact('order', 'products'));
-    }*/
+    
     public function edit($id = null)
     {
         $order = $this->Orders->get($id, [
@@ -188,8 +177,11 @@ class OrdersController extends AppController
             $this->Flash->error(__('No se pudo actualizar el pedido. Por favor, intenta nuevamente.'));
         }
 
-        $products = $this->Orders->Products->find('all')->toArray();
-
+        #$products = $this->Orders->Products->find('all')->toArray();
+        $products = $this->Orders->Products->find()
+            ->order(['Products.name' => 'ASC'])
+            ->all()
+            ->toArray();
         $statuses = [
             'in_process' => 'En proceso',
             'closed' => 'Cerrado',

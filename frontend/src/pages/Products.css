@@ -1,0 +1,608 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+  /* Fallback por si no está definido globalmente */
+  --nav-height: 102px;
+}
+
+.products-page {
+  min-height: 100vh;
+  padding-top: var(--nav-height);
+  padding-bottom: 40px;
+  background: #f3f6fd;
+  font-family: "Inter", sans-serif;
+}
+
+/* ========= HEADER ========= */
+
+.products-header {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 32px 16px 8px;
+}
+
+.products-header-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 18px;
+}
+
+.products-header h1 {
+  font-family: "Playfair Display", serif;
+  font-size: 2.4rem;
+  color: #0f172a;
+  margin: 0;
+}
+
+.header-subtitle {
+  margin-top: 6px;
+  font-size: 0.98rem;
+  color: #64748b;
+}
+
+.cart-summary {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.cart-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: #64748b;
+}
+
+.cart-pill {
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: #0f172a;
+  color: #e5f0ff;
+  font-size: 0.8rem;
+}
+
+/* ========= FILTROS ========= */
+
+.products-filters {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 4px;
+  flex-wrap: wrap;
+}
+
+.search-input {
+  flex: 1;
+  min-width: 220px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid #cbd5e1;
+  font-size: 0.95rem;
+  outline: none;
+  background: #ffffff;
+}
+
+.search-input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.15);
+}
+
+.filter-select {
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid #cbd5e1;
+  font-size: 0.95rem;
+  background: #ffffff;
+  outline: none;
+}
+
+/* ========= GRID DE PRODUCTOS ========= */
+
+.products-grid {
+  max-width: 1140px;
+  margin: 26px auto 0;
+  padding: 0 16px 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 22px;
+}
+
+.product-card {
+  background: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-card:hover {
+  box-shadow: 0 16px 45px rgba(15, 23, 42, 0.12);
+}
+
+.product-thumb img {
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+}
+
+.product-body {
+  padding: 14px 16px 10px;
+}
+
+.product-body h3 {
+  font-size: 1.08rem;
+  margin: 0 0 4px;
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.product-price {
+  font-size: 0.98rem;
+  color: #1d4ed8;
+  margin: 0 0 6px;
+  font-weight: 600;
+}
+
+.product-price .unit {
+  font-size: 0.8rem;
+  color: #64748b;
+  font-weight: 400;
+}
+
+.tag {
+  display: inline-block;
+  background: #dbeafe;
+  color: #1e3a8a;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* Variantes por categoría (sutil) */
+.tag--pescados {
+  background: #dbeafe;
+  color: #1e3a8a;
+}
+
+.tag--moluscos {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.tag--crustáceos {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.tag--otros {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+/* ========= CONTROLES RÁPIDOS ========= */
+
+.product-actions {
+  border-top: 1px solid #e2e8f0;
+  padding: 10px 14px 12px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.qty-control {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid #cbd5e1;
+  overflow: hidden;
+  background: #f8fafc;
+}
+
+.qty-control button {
+  border: none;
+  background: transparent;
+  padding: 4px 10px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.qty-control input {
+  width: 40px;
+  text-align: center;
+  border: none;
+  background: transparent;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.add-cart-btn {
+  flex: 1;
+  border-radius: 999px;
+  border: none;
+  padding: 7px 10px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  background: #0f172a;
+  color: #e5f0ff;
+  transition: background 0.18s ease, transform 0.18s ease;
+}
+
+.add-cart-btn.primary {
+  background: #0f172a;
+}
+
+.add-cart-btn:hover {
+  background: #0f172a;
+  transform: translateY(-1px);
+}
+
+/* ========= MODAL DETALLE ========= */
+
+.product-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+}
+
+.modal-content {
+  background: #ffffff;
+  border-radius: 26px;
+  max-width: 900px;
+  width: 92%;
+  padding: 24px 26px 26px;
+  box-shadow: 0 22px 65px rgba(15, 23, 42, 0.35);
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  border: none;
+  background: transparent;
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: #64748b;
+}
+
+.close-btn:hover {
+  color: #0f172a;
+}
+
+.modal-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.2fr);
+  gap: 24px;
+}
+
+.modal-image img {
+  width: 100%;
+  border-radius: 18px;
+  object-fit: cover;
+  max-height: 360px;
+}
+
+.modal-info h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 2rem;
+  margin: 0 0 4px;
+  color: #0f172a;
+}
+
+.modal-price {
+  font-size: 1.1rem;
+  margin: 4px 0 10px;
+  color: #1d4ed8;
+  font-weight: 600;
+}
+
+.modal-price span {
+  font-size: 0.9rem;
+  color: #64748b;
+  font-weight: 400;
+}
+
+.modal-description {
+  font-size: 0.95rem;
+  color: #475569;
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+/* Nutrición */
+
+.nutrition-block h3 {
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #64748b;
+  margin-bottom: 8px;
+}
+
+.nutrition-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px 16px;
+  margin-bottom: 14px;
+}
+
+.nutrition-grid span {
+  display: block;
+  font-size: 0.78rem;
+  color: #94a3b8;
+}
+
+.nutrition-grid strong {
+  font-size: 0.88rem;
+  color: #0f172a;
+}
+
+/* Acciones en modal */
+
+.modal-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+/* Recetas asociadas */
+
+.recipes-block h3 {
+  font-size: 0.98rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.recipes-block ul {
+  padding-left: 18px;
+  margin: 0;
+}
+
+.recipes-block li {
+  font-size: 0.9rem;
+  color: #475569;
+  margin-bottom: 4px;
+}
+
+/* ========= PANEL LATERAL DEL CARRITO ========= */
+
+.cart-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  display: flex;
+  justify-content: flex-end;
+  z-index: 3100;
+}
+
+.cart-panel {
+  width: min(380px, 100%);
+  height: 100%;
+  background: #ffffff;
+  box-shadow: -10px 0 40px rgba(15, 23, 42, 0.35);
+  display: flex;
+  flex-direction: column;
+  padding: 18px 18px 20px;
+}
+
+.cart-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.cart-panel-header h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 1.4rem;
+  margin: 0;
+  color: #0f172a;
+}
+
+.close-btn--cart {
+  position: static;
+  font-size: 1.5rem;
+  padding: 0;
+}
+
+/* Cuerpo del carrito */
+
+.cart-panel-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 2px 8px 0;
+}
+
+.cart-empty {
+  font-size: 0.95rem;
+  color: #64748b;
+}
+
+.cart-items-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cart-item {
+  display: flex;
+  gap: 10px;
+  border-radius: 14px;
+  padding: 8px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+.cart-item-image img {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.cart-item-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cart-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cart-item-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.cart-item-remove {
+  border: none;
+  background: transparent;
+  font-size: 0.78rem;
+  color: #ef4444;
+  cursor: pointer;
+  padding: 0;
+}
+
+.cart-item-meta {
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+.cart-item-price {
+  font-weight: 500;
+}
+
+.cart-item-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.qty-control--small {
+  border-radius: 999px;
+  padding: 0 6px;
+}
+
+.qty-control--small button {
+  padding: 2px 8px;
+}
+
+.cart-item-qty {
+  display: inline-block;
+  min-width: 22px;
+  text-align: center;
+  font-size: 0.85rem;
+}
+
+.cart-item-subtotal {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+/* Footer del carrito */
+
+.cart-panel-footer {
+  padding-top: 10px;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cart-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.98rem;
+  color: #0f172a;
+}
+
+.cart-total-row strong {
+  font-size: 1.05rem;
+}
+
+.cart-checkout-btn {
+  margin-top: 4px;
+  width: 100%;
+  border-radius: 999px;
+  border: none;
+  padding: 9px 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: #2563eb;
+  color: #e5f0ff;
+  transition: background 0.18s ease, transform 0.18s ease;
+}
+
+.cart-checkout-btn:hover:enabled {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.cart-checkout-btn:disabled {
+  background: #cbd5e1;
+  color: #64748b;
+  cursor: not-allowed;
+}
+
+/* ========= RESPONSIVE ========= */
+
+@media (max-width: 900px) {
+  .products-header-main {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cart-summary {
+    align-items: flex-start;
+  }
+
+  .modal-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-image img {
+    max-height: 260px;
+  }
+}
+
+@media (max-width: 600px) {
+  .products-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-select {
+    width: 100%;
+  }
+
+  .cart-panel {
+    width: 100%;
+  }
+}

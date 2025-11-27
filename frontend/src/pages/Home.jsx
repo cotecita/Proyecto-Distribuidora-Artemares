@@ -1,69 +1,161 @@
+// src/pages/Home.jsx
 import { motion } from "framer-motion";
 import "./Home.css";
-import { useRef } from "react";
 import { Button } from "../components/Button";
 
 export default function Home() {
-  const aboutRef = useRef(null);
+  // Scroll simple: baja hasta el inicio de la sección (sin offset)
+  const scrollToSection = (id) => {
+    const el = document.getElementById(id);
+    if (!el) return;
 
-  const scrollToAbout = () => {
-    const offset = 53; // para controlar cuánto se mueve
-    const y =
-      aboutRef.current.getBoundingClientRect().top + window.scrollY - offset;
-    window.scrollTo({ top: y, behavior: "smooth" });
+    const navbar = document.querySelector(".navbar");
+    const navHeight = 101;
+
+    const y = el.offsetTop - navHeight;
+
+    window.scrollTo({
+      top: y,
+      behavior: "smooth",
+    });
   };
 
   return (
     <>
-      <section className="video-hero">
-        <video className="background-video" autoPlay loop muted playsInline>
+      {/* ================= HERO ================= */}
+      <section className="hero-video">
+        <video className="hero-video__bg" autoPlay loop muted playsInline>
           <source src="/videos/video-3.mp4" type="video/mp4" />
         </video>
 
+        <div className="hero-video__overlay" />
+
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          className="hero-video__content"
+          initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2 }}
-          className="button-container"
+          transition={{ duration: 1, ease: "easeOut" }}
         >
-          <Button
-            buttonStyle="btn--primary"
-            buttonSize="btn--medium"
-            onClick={scrollToAbout}
-          >
-            Saber más
-          </Button>
+          <span className="hero-kicker">CALIDAD · FRESCURA · CONFIANZA</span>
+
+          <h1 className="hero-title">
+            Productos del mar seleccionados
+            <br />
+            para tu cocina
+          </h1>
+
+          <p className="hero-subtitle">
+            Frescura garantizada, trazabilidad completa y entregas confiables
+            para restaurantes, hoteles y hogares.
+          </p>
+
+          <div className="hero-cta">
+            <Button
+              buttonStyle="btn--primary"
+              buttonSize="btn--medium"
+              onClick={() => scrollToSection("about")}
+            >
+              Conoce más
+            </Button>
+          </div>
         </motion.div>
       </section>
 
-      <section ref={aboutRef} className="hero">
+      {/* ================= QUIÉNES SOMOS ================= */}
+      <section id="about" className="section section--about">
         <motion.div
-          className="overlay"
-          initial={{ opacity: 0, y: 50 }}
+          className="section-inner section-grid"
+          initial={{ opacity: 0, y: 35 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true }}
         >
-          <div className="hero-image">
-            <img src="/images/Mariscos1.jpg" alt="Productos del mar" />
+          <div className="section-media">
+            <img
+              src="/images/Mariscos1.jpg"
+              alt="Productos del mar de Artemares"
+            />
           </div>
 
-          <div className="hero-text">
-            <h1>¿Quiénes somos?</h1>
+          <div className="section-text">
+            <p className="section-kicker">Nuestra empresa</p>
+            <h2>Distribuidora Artemares</h2>
+
             <p>
-              En <strong>Distribuidora Artemares</strong> nos especializamos en
-              la venta y distribución de productos del mar, ofreciendo mariscos
-              y pescados de la más alta calidad a restaurantes, hoteles y
-              hogares. Nuestro compromiso es garantizar frescura, sabor y un
-              servicio responsable con el medio ambiente.
+              Nos especializamos en la distribución de pescados y mariscos
+              frescos, trabajando con proveedores locales y asegurando una
+              cadena de frío rigurosa en cada etapa.
             </p>
+
             <p>
-              Desde nuestras costas, trabajamos cada día para acercar el océano
-              a tu mesa, impulsando la pesca local y fomentando la
-              sostenibilidad marina.
+              Somos reconocidos por nuestra puntualidad, comunicación directa y
+              servicio personalizado.
             </p>
+
+            <ul className="section-list">
+              <li>Selección profesional de productos del mar.</li>
+              <li>Cadena de frío garantizada.</li>
+              <li>Atención rápida y cercana.</li>
+            </ul>
           </div>
         </motion.div>
+
+        {/* Flecha para seguir a INFO (misma animación de scroll que el botón) */}
+        <div className="scroll-next" onClick={() => scrollToSection("info")}>
+          <span></span>
+        </div>
+      </section>
+
+      {/* ================= INFO ================= */}
+      <section id="info" className="section section--info">
+        <div className="section-inner section-grid section-grid--two">
+          <motion.div
+            className="info-card"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            viewport={{ once: true }}
+          >
+            <p className="section-kicker">¿Dónde nos encuentras?</p>
+            <h3>Nuestra ubicación</h3>
+            <p className="info-text">
+              Operamos desde <strong>Penco, Región del Biobío</strong>, con
+              entregas programadas para restaurantes y hogares.
+            </p>
+            <p className="info-text">
+              También realizamos abastecimiento continuo para clientes
+              frecuentes.
+            </p>
+          </motion.div>
+
+          <motion.div
+            className="info-card"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
+            viewport={{ once: true }}
+          >
+            <p className="section-kicker">Contáctanos</p>
+            <h3>Comunícate con nosotros</h3>
+
+            <div className="contact-lines">
+              <p>
+                <strong>Teléfono:</strong> +56 9 1234 5678
+              </p>
+              <p>
+                <strong>Correo:</strong> contacto@mariscos.cl
+              </p>
+              <p>
+                <strong>Horario:</strong> Lunes a sábado · 09:00 a 19:00
+              </p>
+            </div>
+
+            <p className="info-text">
+              Resolvemos tus consultas rápidamente y coordinamos tu pedido sin
+              complicaciones.
+            </p>
+          </motion.div>
+        </div>
       </section>
     </>
   );

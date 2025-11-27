@@ -54,7 +54,8 @@ class DashboardController extends AppController
         // 5. pedidos en proceso
         $pendingOrders = $ordersTable->find()
             ->where(['status' => 'in_process'])
-            ->order(['created' => 'DESC']);
+            ->order(['created' => 'DESC'])
+            ->all();
 
         // 6. 5 pedidos mas recientes
         $recentOrders = $ordersTable->find()

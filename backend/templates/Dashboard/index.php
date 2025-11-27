@@ -26,7 +26,6 @@
             </div>
         </div>
     </div>
-
     <!-- Pedidos Pendientes -->
     <div class="col-md-4">
         <div class="card text-white bg-warning mb-3">
@@ -47,25 +46,61 @@
     <?php endforeach; ?>
 </div>
 
-<!-- Alertas de pedidos pendientes -->
+
+<!-- Pedidos Pendientes -->
 <h2 class="mb-3">Pedidos Pendientes</h2>
-<ul class="list-group mb-4">
-    <?php 
-        // mapear estados
-        $statusLabels = [
-            'pending' => 'Pendiente',
-            'in_process' => 'En proceso',
-            'closed' => 'Cerrado',
-            'cancelled' => 'Cancelado',
-            'completed' => 'Completado'
-        ];
-    ?>
-    <?php foreach ($alerts as $order): ?>
-        <li class="list-group-item list-group-item-warning">
-            Pedido #<?= $order->id ?> - <?= $statusLabels[$order->status] ?? ucfirst($order->status) ?> - <?= $order->created->format('d-m-Y') ?>
-        </li>
-    <?php endforeach; ?>
-</ul>
+
+<?php if ($pendingOrders->isEmpty()): ?>
+    <p class="text-muted">No hay pedidos pendientes.</p>
+<?php else: ?>
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Pedido</th>
+                    <th>Estado</th>
+                    <th>Fecha de Creación</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($pendingOrders as $order): ?>
+                    <tr>
+                        <td><?= $order->id ?></td>
+                        <td>
+                            <span class="badge bg-info px-3 py-2">En Proceso</span>
+                        </td>
+                        <td><?= $order->created->format('d-m-Y') ?></td>
+                        <td>
+                            <?= $this->Html->link(
+                                '<i class="bi bi-eye"></i>',
+                                ['controller' => 'Orders', 'action' => 'view', $order->id],
+                                ['class' => 'btn btn-outline-primary btn-sm rounded shadow-sm', 'escape' => false, 'title' => 'Ver', 'style' => 'border-width:1.5px;']
+                            ) ?>
+                            <?= $this->Html->link(
+                                '<i class="bi bi-pencil"></i>',
+                                ['controller' => 'Orders', 'action' => 'edit', $order->id],
+                                ['class' => 'btn btn-outline-warning btn-sm rounded shadow-sm', 'escape' => false, 'title' => 'Editar', 'style' => 'border-width:1.5px;']
+                            ) ?>
+                            <?= $this->Form->postLink(
+                                '<i class="bi bi-trash"></i>',
+                                ['controller' => 'Orders', 'action' => 'delete', $order->id],
+                                [
+                                    'confirm' => '¿Seguro que deseas eliminar este pedido?',
+                                    'class' => 'btn btn-outline-danger btn-sm rounded shadow-sm',
+                                    'escape' => false,
+                                    'title' => 'Eliminar',
+                                    'style' => 'border-width:1.5px;'
+                                ]
+                            ) ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+<?php endif; ?>
+
 
 <!-- Productos más vendidos -->
 <h2 class="mb-3">Productos más vendidos</h2>

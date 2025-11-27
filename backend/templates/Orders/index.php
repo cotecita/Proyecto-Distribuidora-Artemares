@@ -107,9 +107,7 @@ function sortIcon($field, $currentSort, $direction) {
                                 <td>
                                     <?php
                                         $labels = [
-                                            'pending'    => ['label' => 'Pendiente',  'class' => 'warning'],
                                             'in_process' => ['label' => 'En Proceso', 'class' => 'info'],
-                                            'completed'  => ['label' => 'Completado', 'class' => 'success'],
                                             'cancelled'  => ['label' => 'Cancelado',  'class' => 'danger'],
                                             'closed'     => ['label' => 'Cerrado',    'class' => 'success'],
                                         ];

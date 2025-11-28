@@ -167,62 +167,6 @@
     </table>
 </div>
 
-
-
-<!-- Evolución de ventas -->
-<div class="card mb-4">
-    <div class="card-header">
-        <h5 class="mb-0">Evolución de Ventas</h5>
-    </div>
-    <div class="card-body">
-        <?php if (!empty($salesEvolution)): ?>
-            <canvas id="salesChart" width="800" height="400"></canvas>
-
-            <!-- Chart.js desde CDN -->
-            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-            <script>
-            const ctx = document.getElementById('salesChart').getContext('2d');
-
-            const labels = [
-                <?php foreach ($salesEvolution as $item): ?>
-                    "<?= !empty($item->date) ? (new \DateTime($item->date))->format('d-m-Y') : '' ?>",
-                <?php endforeach; ?>
-            ];
-
-            const data = [
-                <?php foreach ($salesEvolution as $item): ?>
-                    <?= $item->total_quantity ?? 0 ?>,
-                <?php endforeach; ?>
-            ];
-
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Cantidad Vendida',
-                        data: data,
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        fill: true,
-                        tension: 0.3
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: { position: 'top' },
-                        title: { display: true, text: 'Evolución de Ventas' }
-                    },
-                    scales: { y: { beginAtZero: true } }
-                }
-            });
-            </script>
-        <?php else: ?>
-            <p class="text-muted mb-0">No hay ventas registradas para mostrar la evolución.</p>
-        <?php endif; ?>
-    </div>
-</div>
 <div class="row mb-4">
     <!-- Ventas Totales por Producto - Últimos 7 Días -->
      <div class="col-md-6">
@@ -456,5 +400,60 @@
                 <?php endif; ?>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- Evolución de ventas -->
+<div class="card mb-4">
+    <div class="card-header">
+        <h5 class="mb-0">Evolución de Ventas</h5>
+    </div>
+    <div class="card-body">
+        <?php if (!empty($salesEvolution)): ?>
+            <canvas id="salesChart" width="800" height="400"></canvas>
+
+            <!-- Chart.js desde CDN -->
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script>
+            const ctx = document.getElementById('salesChart').getContext('2d');
+
+            const labels = [
+                <?php foreach ($salesEvolution as $item): ?>
+                    "<?= !empty($item->date) ? (new \DateTime($item->date))->format('d-m-Y') : '' ?>",
+                <?php endforeach; ?>
+            ];
+
+            const data = [
+                <?php foreach ($salesEvolution as $item): ?>
+                    <?= $item->total_quantity ?? 0 ?>,
+                <?php endforeach; ?>
+            ];
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Cantidad Vendida',
+                        data: data,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'top' },
+                        title: { display: true, text: 'Evolución de Ventas' }
+                    },
+                    scales: { y: { beginAtZero: true } }
+                }
+            });
+            </script>
+        <?php else: ?>
+            <p class="text-muted mb-0">No hay ventas registradas para mostrar la evolución.</p>
+        <?php endif; ?>
     </div>
 </div>

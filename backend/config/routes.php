@@ -80,6 +80,11 @@ return function (RouteBuilder $routes): void {
         $builder->fallbacks();
     });
 
+    $routes->prefix('Api', function (RouteBuilder $builder) { 
+        $builder->setExtensions(['json']); // Solo el index de Products 
+        $builder->resources('Products', [ 'only' => ['index'] ]); 
+    });
+
     /*
      * If you need a different set of middleware or none at all,
      * open new scope and define routes there.

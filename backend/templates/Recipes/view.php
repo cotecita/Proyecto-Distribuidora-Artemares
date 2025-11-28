@@ -88,7 +88,7 @@
 
 <!-- Productos asociados -->
 <?php if (!empty($recipe->products)): ?>
-    <div class="card border-0 shadow-sm">
+    <div class="card border-0 shadow-sm mt-4">
         <div class="card-header bg-white border-0 pb-2">
             <h5 class="fw-semibold text-dark mb-0">
                 <i class="bi bi-box-seam me-2 text-primary"></i> Productos relacionados con esta receta
@@ -109,6 +109,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Nombre</th>
+                            <th>Ver</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -116,6 +117,18 @@
                             <tr>
                                 <td><?= h($product->id) ?></td>
                                 <td><?= h($product->name) ?></td>
+                                <td>
+                                    <?= $this->Html->link(
+                                        '<i class="bi bi-eye"></i>',
+                                        ['controller' => 'Products', 'action' => 'view', $product->id],
+                                        [
+                                            'class' => 'btn btn-outline-primary btn-sm rounded shadow-sm',
+                                            'escape' => false,
+                                            'title' => 'Ver',
+                                            'style' => 'border-width:1.5px;'
+                                        ]
+                                    ) ?>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>

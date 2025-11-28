@@ -62,9 +62,6 @@ class DashboardController extends AppController
             ->order(['created' => 'DESC'])
             ->limit(5);
 
-        // 7. alerta pedidos pendientes: in process
-        $alerts = $pendingOrders;
-
         // 8. accesos rápidos
         $quickAccess = [
             ['label' => 'Agregar Producto', 'url' => ['controller' => 'Products', 'action' => 'add']],
@@ -73,14 +70,15 @@ class DashboardController extends AppController
             ['label' => 'Ver Categorías', 'url' => ['controller' => 'Categories', 'action' => 'index']],
         ];
 
+        $sevenDays = (new FrozenTime())->subDays(7);
         // 9. Evolución de ventas por fecha
         $salesEvolution = $ordersProductsTable->find()
             ->select([
                 'date' => 'DATE(OrdersProducts.created)',
                 'total_quantity' => 'SUM(OrdersProducts.quantity)'
             ])
-            ->matching('Orders', function ($q) {
-                return $q->where(['Orders.status' => 'closed']);
+            ->matching('Orders', function ($q) use ($sevenDays) {
+                return $q->where(['Orders.status' => 'closed', 'Orders.created >=' => $sevenDays]);
             })
             ->group('date')
             ->order(['date' => 'ASC'])
@@ -172,7 +170,6 @@ class DashboardController extends AppController
             'productsByCategory',
             'pendingOrders',
             'recentOrders',
-            'alerts',
             'quickAccess',
             'salesEvolution',
             'salesLast7DaysByProduct',

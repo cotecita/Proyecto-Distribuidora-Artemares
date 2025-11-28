@@ -31,7 +31,7 @@
         <div class="card text-white bg-warning mb-3">
             <div class="card-body">
                 <h5 class="card-title">Pedidos Pendientes</h5>
-                <p class="card-text fs-3"><?= $alerts->count() ?></p>
+                <p class="card-text fs-3"><?= $pendingOrders->count() ?></p>
             </div>
         </div>
     </div>

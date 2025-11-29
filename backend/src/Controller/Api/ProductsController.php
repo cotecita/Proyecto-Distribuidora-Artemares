@@ -7,24 +7,22 @@ use App\Controller\AppController;
 
 class ProductsController extends AppController
 {
-    public function initialize(): void
-    {
-        parent::initialize();
-        $this->request->allowMethod(['get']); 
-        $this->viewBuilder()->setClassName('Json');
-    }
-
     public function index()
     {
+        // solo permitir GET
+        $this->request->allowMethod(['get']);
 
-        $products = $this->Products->find('all')
-            ->contain(['Categories']) 
-            ->toArray();
+        //obtener datos
+        $products = $this->Products
+            ->find()
+            ->contain(['Categories'])
+            ->all();
 
-        $this->set([
-            'products' => $products,
-            '_serialize' => ['products']
-        ]);
+        // devolver json manual
+        $response = $this->getResponse()
+            ->withType('application/json')
+            ->withStringBody(json_encode(['products' => $products], JSON_UNESCAPED_UNICODE));
+
+        return $response;
     }
 }
-

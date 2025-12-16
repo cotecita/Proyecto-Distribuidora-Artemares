@@ -19,7 +19,7 @@
 
     <style>
         /* ===============================================================
-           ESTILOS BASE (mismo diseño original, solo con correcciones)
+           ESTILOS BASE
            =============================================================== */
 
         html, body {

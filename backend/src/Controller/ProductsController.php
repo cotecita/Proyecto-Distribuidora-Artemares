@@ -195,69 +195,94 @@ class ProductsController extends AppController
         $recipes = $this->Products->Recipes->find('list', limit: 200)->all();
         $this->set(compact('product', 'categories', 'orders', 'recipes'));
     }*/
-    public function edit($id = null)
-    {
-        // Obtenemos el producto incluyendo relaciones
-       $product = $this->Products->get($id, contain: ['Orders', 'Recipes', 'ProductImages', 'NutritionalInformations']);
+public function edit($id = null)
+{
+    $product = $this->Products->get($id, contain: [
+        'Orders',
+        'Recipes',
+        'ProductImages',
+        'NutritionalInformations'
+    ]);
 
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $data = $this->request->getData();
+    if ($this->request->is(['patch', 'post', 'put'])) {
+        $data = $this->request->getData();
 
-            // Asignamos datos básicos al producto
-            $product = $this->Products->patchEntity($product, $data, ['associated' => ['NutritionalInformations', 'ProductImages']]);
+        // ⚠️ NO incluir ProductImages aquí
+        $product = $this->Products->patchEntity($product, $data, [
+            'associated' => ['NutritionalInformations']
+        ]);
 
-            // Procesar nueva imagen si se subió
-            $imageFile = $data['image_file'] ?? null;
-            if ($imageFile && $imageFile->getError() === UPLOAD_ERR_OK) {
-                // Leemos los bytes del archivo
-                $imageContent = file_get_contents($imageFile->getStream()->getMetadata('uri'));
-                $mimeType = $imageFile->getClientMediaType();
+        $imageFile = $data['image_file'] ?? null;
 
-                // Generar versiones small, medium, large
-                $imageSmall = $this->resizeImage($imageContent, 100, 100);
-                $imageMedium = $this->resizeImage($imageContent, 300, 300);
-                $imageLarge = $this->resizeImage($imageContent, 800, 800);
+        // -------------------------
+        // 1️⃣ REEMPLAZO / CREACIÓN
+        // -------------------------
+        if ($imageFile && $imageFile->getError() === UPLOAD_ERR_OK) {
 
-                if ($product->product_image) {
-                    // Actualizar campos si ya existe
-                    $product->product_image->image_small = $imageSmall;
-                    $product->product_image->image_medium = $imageMedium;
-                    $product->product_image->image_large = $imageLarge;
-                    $product->product_image->mime_type_small = $mimeType;
-                    $product->product_image->mime_type_medium = $mimeType;
-                    $product->product_image->mime_type_large = $mimeType;
-                } else {
-                    // Crear nueva entidad si no existe
-                    $product->product_image = $this->Products->ProductImages->newEntity([
-                        'image_small' => $imageSmall,
-                        'image_medium' => $imageMedium,
-                        'image_large' => $imageLarge,
-                        'mime_type_small' => $mimeType,
-                        'mime_type_medium' => $mimeType,
-                        'mime_type_large' => $mimeType,
-                    ]);
-                }
+            $imageContent = $imageFile->getStream()->getContents();
+            $mimeType = $imageFile->getClientMediaType();
+
+            $imageSmall  = $this->resizeImage($imageContent, 100, 100);
+            $imageMedium = $this->resizeImage($imageContent, 300, 300);
+            $imageLarge  = $this->resizeImage($imageContent, 800, 800);
+
+            if ($product->product_image) {
+                // Actualizar campos si ya existe
+                $product->product_image->image_small = $imageSmall;
+                $product->product_image->image_medium = $imageMedium;
+                $product->product_image->image_large = $imageLarge;
+                $product->product_image->mime_type_small = $mimeType;
+                $product->product_image->mime_type_medium = $mimeType;
+                $product->product_image->mime_type_large = $mimeType;
+
+                // CLAVE: forzar persistencia
+                $this->Products->ProductImages->save($product->product_image);
+            } else {
+                // crear nueva
+                $product->product_image = $this->Products->ProductImages->newEntity([
+                    'product_id' => $product->id,
+                    'image_small' => $imageSmall,
+                    'image_medium' => $imageMedium,
+                    'image_large' => $imageLarge,
+                    'mime_type_small' => $mimeType,
+                    'mime_type_medium' => $mimeType,
+                    'mime_type_large' => $mimeType,
+                ]);
             }
-
-            // Quitar imagen si se marcó el checkbox
-            if (!empty($data['remove_image']) && $product->product_image) {
-                $this->Products->ProductImages->delete($product->product_image);
-                $product->product_image = null;
-            }
-
-            // Guardar producto con imagen asociada
-            if ($this->Products->save($product, ['associated' => ['NutritionalInformations', 'ProductImages']])) {
-                $this->Flash->success(__('El producto ha sido actualizado con éxito.'));
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('El producto no pudo ser actualizado. Intente nuevamente.'));
         }
 
-        $categories = $this->Products->Categories->find('list', limit: 200)->all();
-        $orders = $this->Products->Orders->find('list', limit: 200)->all();
-        $recipes = $this->Products->Recipes->find('list', limit: 200)->all();
-        $this->set(compact('product', 'categories', 'orders', 'recipes'));
+        // -------------------------
+        // ELIMINAR (solo si NO hay imagen nueva)
+        // -------------------------
+        if (
+            (!$imageFile || $imageFile->getError() !== UPLOAD_ERR_OK)
+            && !empty($data['remove_image'])
+            && $product->product_image
+        ) {
+            $this->Products->ProductImages->delete($product->product_image);
+            $product->product_image = null;
+        }
+
+        // -------------------------
+        // GUARDAR
+        // -------------------------
+        if ($this->Products->save($product, [
+            'associated' => ['NutritionalInformations', 'ProductImages']
+        ])) {
+            $this->Flash->success(__('El producto ha sido actualizado con éxito.'));
+            return $this->redirect(['action' => 'index']);
+        }
+
+        $this->Flash->error(__('El producto no pudo ser actualizado. Intente nuevamente.'));
     }
+
+    $categories = $this->Products->Categories->find('list')->all();
+    $orders = $this->Products->Orders->find('list')->all();
+    $recipes = $this->Products->Recipes->find('list')->all();
+
+    $this->set(compact('product', 'categories', 'orders', 'recipes'));
+}
+
 
 
     /**

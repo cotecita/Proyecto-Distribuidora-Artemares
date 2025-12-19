@@ -1,91 +1,122 @@
-import { useState, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import "./Recipes.css";
 
-/* ========================================================================= */
-/* ======================  RECETAS HARDCODEADAS ============================ */
-/* ========================================================================= */
+/* ======================================================
+   Utils
+====================================================== */
 
-const RECIPES = [
-  {
-    id: 1,
-    name: "Salmón a la mantequilla",
-    description: "Receta rápida y llena de sabor para realzar el salmón fresco.",
-    preparation:
-      "Derrite mantequilla en una sartén caliente, agrega ajo picado, sal y pimienta. Sella el salmón por 3–4 minutos por lado. Finaliza con jugo de limón y perejil.",
-    images: {
-      small: "/images/recipes/salmon-small.jpg",
-      medium: "/images/recipes/salmon-medium.jpg",
-    },
-    ingredients: [1, 4], 
-  },
-  {
-    id: 2,
-    name: "Camarones al pil pil",
-    description: "Clásico chileno ideal para picoteos o entradas calientes.",
-    preparation:
-      "En aceite caliente agrega ajo laminado y ají. Incorpora los camarones y cocina 2–3 minutos. Finaliza con perejil y sal.",
-    images: {
-      small: "/images/recipes/camaron-small.jpg",
-      medium: "/images/recipes/camaron-medium.jpg",
-    },
-    ingredients: [2],
-  },
-  {
-    id: 3,
-    name: "Cazuela marina",
-    description: "Preparación tradicional con pescado blanco y mariscos.",
-    preparation:
-      "Hierve papas, zanahoria y zapallo. Agrega merluza y mariscos. Sazona con cilantro, orégano y comino. Cocina a fuego lento por 10 minutos.",
-    images: {
-      small: "/images/recipes/cazuela-small.jpg",
-      medium: "/images/recipes/cazuela-medium.jpg",
-    },
-    ingredients: [3, 4],
-  },
-];
+function normalizeText(text = "") {
+  return text
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+}
 
-/* ========================================================================= */
-/* ============================  COMPONENTE  ================================ */
-/* ========================================================================= */
+/**
+ * Mapea receta desde la API al formato frontend
+ */
+function mapApiRecipeToFrontend(r) {
+  return {
+    id: r.id,
+    name: r.name,
+    description: r.description ?? "",
+
+    // ingredientes como texto o array de strings
+    ingredients:
+      typeof r.ingredients === "string" && r.ingredients.trim() !== ""
+        ? r.ingredients
+            .split(",")
+            .map(i => i.trim())
+            .join(", ")
+        : "",
+
+
+    // productos relacionados reales
+    products: r.products ?? [],
+
+    images: r.images ?? {
+      small: null,
+      medium: null,
+      large: null,
+    },
+  };
+}
+
+
+/* ======================================================
+   Component
+====================================================== */
 
 export default function Recipes({ products = [], openProductModal }) {
+  const [recipes, setRecipes] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("Todos");
   const [selectedRecipe, setSelectedRecipe] = useState(null);
 
-  const normalize = (t) =>
-    t.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  /* ======================================================
+     Fetch API
+  ====================================================== */
 
-  /* ================= FILTRADO ================= */
+  useEffect(() => {
+    const fetchRecipes = async () => {
+      try {
+        setLoading(true);
+
+        const res = await fetch("http://localhost:8765/api/recipes.json");
+        if (!res.ok) throw new Error("Error API recetas");
+
+        const json = await res.json();
+        const mapped = json.recipes.map(mapApiRecipeToFrontend);
+
+        setRecipes(mapped);
+      } catch (err) {
+        console.error("Error cargando recetas:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRecipes();
+  }, []);
+
+  /* ======================================================
+     Filtros
+  ====================================================== */
 
   const filteredRecipes = useMemo(() => {
-    const s = normalize(search);
+    const s = normalizeText(search);
 
-    return RECIPES.filter((r) => {
-      const matchesSearch = normalize(r.name).includes(s);
+    return recipes.filter((r) => {
+      const matchesSearch = normalizeText(r.name).includes(s);
+
       const matchesFilter =
-        filter === "Todos" || r.ingredients.includes(Number(filter));
+        filter === "Todos" ||
+        r.products.some((p) => String(p.id) === String(filter));
 
       return matchesSearch && matchesFilter;
     });
-  }, [search, filter]);
+  }, [search, filter, recipes]);
 
-  /* ========================================================================= */
-  /* ============================  RENDER  =================================== */
-  /* ========================================================================= */
+  /* ======================================================
+     Render
+  ====================================================== */
 
   return (
     <div className="recipes-page">
-
-      {/* ========================== HEADER ========================== */}
+      {/* ================= HEADER ================= */}
 
       <div className="recipes-header">
-        <h1>Recetas Artemares</h1>
-        <p className="subtitle">
-          Aprende a preparar platos deliciosos usando nuestros productos del mar.
-        </p>
-
+        <div className="recipes-header-main">
+          <div>
+          <h1>Recetas Artemares</h1>
+              <p className="subtitle">
+               Aprende a preparar platos deliciosos usando nuestros productos del mar.
+              </p>
+            </div>
+        </div>
         <div className="recipes-filters">
           <input
             type="text"
@@ -93,42 +124,46 @@ export default function Recipes({ products = [], openProductModal }) {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-
-          <select value={filter} onChange={(e) => setFilter(e.target.value)}>
-            <option value="Todos">Todos los ingredientes</option>
-
-            {products.map((p) => (
-              <option key={p.id} value={p.id}>
-                {p.name}
-              </option>
-            ))}
-          </select>
         </div>
       </div>
 
-      {/* ========================== GRID ============================= */}
+      {/* ================= GRID ================= */}
 
-      <div className="recipes-grid">
-        {filteredRecipes.map((r) => (
-          <motion.div
-            key={r.id}
-            className="recipe-card"
-            whileHover={{ y: -4, scale: 1.01 }}
-            transition={{ duration: 0.2 }}
-            onClick={() => setSelectedRecipe(r)}
-          >
-            <img src={r.images.small} alt={r.name} />
+      {loading ? (
+        <div className="grid-loader">
+          Cargando recetas…
+        </div>
+      ) : (
+        <div className="recipes-grid">
+          {filteredRecipes.map((r) => (
+            <motion.div
+              key={r.id}
+              className="recipe-card"
+              whileHover={{ y: -4, scale: 1.01 }}
+              transition={{ duration: 0.2 }}
+              onClick={() => setSelectedRecipe(r)}
+            >
+              {/* 🔥 CONTENEDOR DE IMAGEN */}
+              <div className="recipe-image">
+                <img
+                  src={r.images?.medium || "/images/placeholder-recipe.jpg"}
+                  alt={r.name}
+                  loading="lazy"
+                />
+              </div>
 
-            <div className="recipe-body">
-              <h3>{r.name}</h3>
-              <p className="recipe-desc">{r.description}</p>
-              <button className="recipe-btn">Ver receta</button>
-            </div>
-          </motion.div>
-        ))}
-      </div>
+              <div className="recipe-body">
+                <h3>{r.name}</h3>
+              </div>
+              <div className="recipe-actions">
+                  <button className="recipe-btn">Ver receta</button>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      )}
 
-      {/* ========================== MODAL ============================ */}
+      {/* ================= MODAL ================= */}
 
       <AnimatePresence>
         {selectedRecipe && (
@@ -147,7 +182,6 @@ export default function Recipes({ products = [], openProductModal }) {
               transition={{ duration: 0.25 }}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* BOTÓN CERRAR */}
               <button
                 className="recipe-close-btn"
                 onClick={() => setSelectedRecipe(null)}
@@ -156,85 +190,58 @@ export default function Recipes({ products = [], openProductModal }) {
               </button>
 
               <div className="recipe-modal-layout">
-
                 {/* IMAGEN */}
                 <div className="recipe-modal-image">
                   <img
                     src={
-                      selectedRecipe.images.medium ||
-                      selectedRecipe.images.small
+                      selectedRecipe.images?.large ||
+                      selectedRecipe.images?.medium ||
+                      selectedRecipe.images?.small
                     }
                     alt={selectedRecipe.name}
                   />
                 </div>
 
-                {/* CONTENIDO */}
+                {/* INFO */}
                 <div className="recipe-modal-info">
-                  <h2>{selectedRecipe.name}</h2>
+
+                  <h2 className="recipe-title">{selectedRecipe.name}</h2>
+
                   <p className="recipe-detail-desc">
                     {selectedRecipe.description}
                   </p>
 
-                  {/* ========== INGREDIENTES ========== */}
+                  {/* INGREDIENTES TEXTO */}
+                  {selectedRecipe.ingredients && (
+                    <div className="recipe-section">
+                      <h3 className="recipe-section-title">Ingredientes</h3>
+                      <p className="recipe-ingredients-text">
+                        {selectedRecipe.ingredients}
+                      </p>
+                    </div>
+                  )}
 
-                  <div className="recipe-ingredientes-block">
-                    <h3>Ingredientes</h3>
+                  {/* PRODUCTOS RELACIONADOS */}
+                  {selectedRecipe.products?.length > 0 && (
+                    <div className="recipe-section">
+                      <h3 className="recipe-section-title">Productos relacionados</h3>
 
-                    <ul className="ingredients-list">
-                      {selectedRecipe.ingredients.map((prodId) => {
-                        const p = products.find((x) => x.id === prodId);
-
-                        return (
-                          <li key={prodId}>
-                            <div className="ingredient-info">
-                              <span className="ingredient-name">
-                                {p?.name ?? "Producto no disponible"}
-                              </span>
-
-                              {p ? (
-                                <span className="ingredient-tag available">
-                                  ✔ Disponible
-                                </span>
-                              ) : (
-                                <span className="ingredient-tag not-available">
-                                  ✕ No disponible
-                                </span>
-                              )}
-                            </div>
-
-                            {p && (
-                              <button
-                                className="ingredient-btn"
-                                onClick={() => {
-                                  setSelectedRecipe(null);
-                                  openProductModal(p);
-                                }}
-                              >
-                                Ver producto
-                              </button>
-                            )}
+                      <ul className="related-products-list">
+                        {selectedRecipe.products.map((p) => (
+                          <li key={p.id} className="related-product-item">
+                            <span className="related-product-name">{p.name}</span>
                           </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
-
-                  {/* ========== PREPARACIÓN ========== */}
-
-                  <div className="recipe-preparation-block">
-                    <h3>Preparación</h3>
-                    <p className="preparation-text">
-                      {selectedRecipe.preparation}
-                    </p>
-                  </div>
-
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
               </div>
-
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
+
     </div>
   );
 }

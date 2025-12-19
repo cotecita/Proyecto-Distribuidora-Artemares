@@ -108,60 +108,89 @@ class RecipesController extends AppController
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
-        $recipe = $this->Recipes->get($id, contain: ['Products']);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $data = $this->request->getData();
-            #$recipe = $this->Recipes->patchEntity($recipe, $data);
-             $recipe = $this->Recipes->patchEntity($recipe, $data, [
-                'associated' => ['Products', 'RecipeImages']
-            ]);
-            $imageFile = $data['image_file'] ?? null;
+public function edit($id = null)
+{
+    $recipe = $this->Recipes->get($id, contain: [
+        'Products',
+        'RecipeImages'
+    ]);
 
-            if ($imageFile && $imageFile->getError() === UPLOAD_ERR_OK) {
-                $imageContent = file_get_contents($imageFile->getStream()->getMetadata('uri'));
-                $mimeType = $imageFile->getClientMediaType();
+    if ($this->request->is(['patch', 'post', 'put'])) {
+        $data = $this->request->getData();
 
-                $imageSmall = $this->resizeImage($imageContent, 100, 100);
-                $imageMedium = $this->resizeImage($imageContent, 300, 300);
-                $imageLarge = $this->resizeImage($imageContent, 800, 800);
+        //  NO incluir RecipeImages aquí
+        $recipe = $this->Recipes->patchEntity($recipe, $data, [
+            'associated' => ['Products']
+        ]);
 
-                if ($recipe->recipe_image) {
-                    $recipe->recipe_image->image_small = $imageSmall;
-                    $recipe->recipe_image->image_medium = $imageMedium;
-                    $recipe->recipe_image->image_large = $imageLarge;
-                    $recipe->recipe_image->mime_type_small = $mimeType;
-                    $recipe->recipe_image->mime_type_medium = $mimeType;
-                    $recipe->recipe_image->mime_type_large = $mimeType;
-                } else {
-                    $recipe->recipe_image = $this->Recipes->RecipeImages->newEntity([
-                        'image_small' => $imageSmall,
-                        'image_medium' => $imageMedium,
-                        'image_large' => $imageLarge,
-                        'mime_type_small' => $mimeType,
-                        'mime_type_medium' => $mimeType,
-                        'mime_type_large' => $mimeType,
-                    ]);
-                }
+        $imageFile = $data['image_file'] ?? null;
+
+        // -------------------------
+        //  REEMPLAZAR / CREAR IMAGEN
+        // -------------------------
+        if ($imageFile && $imageFile->getError() === UPLOAD_ERR_OK) {
+
+            $imageContent = $imageFile->getStream()->getContents();
+            $mimeType = $imageFile->getClientMediaType();
+
+            $imageSmall  = $this->resizeImage($imageContent, 100, 100);
+            $imageMedium = $this->resizeImage($imageContent, 300, 300);
+            $imageLarge  = $this->resizeImage($imageContent, 800, 800);
+
+            if ($recipe->recipe_image) {
+                // actualizar existente
+                $recipe->recipe_image->image_small = $imageSmall;
+                $recipe->recipe_image->image_medium = $imageMedium;
+                $recipe->recipe_image->image_large = $imageLarge;
+                $recipe->recipe_image->mime_type_small = $mimeType;
+                $recipe->recipe_image->mime_type_medium = $mimeType;
+                $recipe->recipe_image->mime_type_large = $mimeType;
+
+                //  CLAVE: forzar persistencia
+                $this->Recipes->RecipeImages->save($recipe->recipe_image);
+
+            } else {
+                // crear nueva
+                $recipe->recipe_image = $this->Recipes->RecipeImages->newEntity([
+                    'recipe_id' => $recipe->id,
+                    'image_small' => $imageSmall,
+                    'image_medium' => $imageMedium,
+                    'image_large' => $imageLarge,
+                    'mime_type_small' => $mimeType,
+                    'mime_type_medium' => $mimeType,
+                    'mime_type_large' => $mimeType,
+                ]);
             }
-
-            // Quitar imagen si se marcó el checkbox
-            if (!empty($data['remove_image']) && $recipe->recipe_image) {
-                $this->Recipes->RecipeImages->delete($recipe->recipe_image);
-                $recipe->recipe_image = null;
-            }
-
-            if ($this->Recipes->save($recipe, ['associated' => ['RecipeImages', 'Products']])) {
-                $this->Flash->success(__('La receta ha sido actualizada con éxito.'));
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('La receta no pudo ser actualizada. Intente nuevamente.'));
         }
 
-        $products = $this->Recipes->Products->find('list', limit: 200)->all();
-        $this->set(compact('recipe', 'products'));
+        // -------------------------
+        // ELIMINAR IMAGEN (solo si NO hay imagen nueva)
+        // -------------------------
+        if (
+            (!$imageFile || $imageFile->getError() !== UPLOAD_ERR_OK)
+            && !empty($data['remove_image'])
+            && $recipe->recipe_image
+        ) {
+            $this->Recipes->RecipeImages->delete($recipe->recipe_image);
+            $recipe->recipe_image = null;
+        }
+
+        // -------------------------
+        // GUARDAR RECETA
+        // -------------------------
+        if ($this->Recipes->save($recipe, [
+            'associated' => ['Products', 'RecipeImages']
+        ])) {
+            $this->Flash->success(__('La receta ha sido actualizada con éxito.'));
+            return $this->redirect(['action' => 'index']);
+        }
+
+        $this->Flash->error(__('La receta no pudo ser actualizada. Intente nuevamente.'));
     }
+
+    $products = $this->Recipes->Products->find('list', limit: 200)->all();
+    $this->set(compact('recipe', 'products'));
+}
 
     #funcion para guardar imagenes con sus respectivas dimensiones
     private function resizeImage(string $binaryData, int $width, int $height): string

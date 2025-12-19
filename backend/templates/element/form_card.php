@@ -23,6 +23,7 @@ $labels = [
     // --- Recetas ---
     'ingredients' => 'Ingredientes',
     'products._ids' => 'Productos relacionados',
+    'products-ids' => 'Productos relacionados',
     'image_file' => 'Imagen asociada',
 
     // --- Información nutricional ---
@@ -95,11 +96,23 @@ $labels = [
                 // ----------------------------
                 // SOPORTE PARA CAMPOS ANIDADOS
                 // ----------------------------
-                if (strpos($field, '.') !== false) {
+                if (str_ends_with($field, '._ids')) {
 
-                    $parts = explode('.', $field); // ej: nutritional_information.calories
-                    $entityName = $parts[0]; // nutritional_information
-                    $realField  = $parts[1]; // calories
+                    $label = $labels[$field] ?? 'Seleccionar';
+
+                    $options = [
+                        'type' => 'select',
+                        'multiple' => true,
+                        'options' => $categories ?? [],
+                        'class' => 'select-multiple',
+                        'label' => $label
+                    ];
+                }
+                else if (strpos($field, '.') !== false) {
+
+                    $parts = explode('.', $field);
+                    $entityName = $parts[0];
+                    $realField  = $parts[1];
 
                     $label = $labels[$realField] ?? ucfirst(str_replace('_', ' ', $realField));
 
@@ -109,16 +122,12 @@ $labels = [
                         'name' => "{$entityName}[{$realField}]"
                     ];
 
-                    // Cargar valor actual si existe
                     if (!empty($entity->{$entityName}) && isset($entity->{$entityName}->{$realField})) {
                         $options['value'] = $entity->{$entityName}->{$realField};
                     }
 
                 } else {
 
-                    // ----------------------------
-                    // CAMPOS NO ANIDADOS (NORMALES)
-                    // ----------------------------
                     $label = $labels[$field] ?? ucfirst(str_replace('_',' ', $field));
 
                     $options = [
@@ -126,24 +135,14 @@ $labels = [
                         'label' => $label
                     ];
 
-                    // Textareas
                     if (str_contains($field, 'description') || str_contains($field, 'ingredients')) {
                         $options['type'] = 'textarea';
                         $options['rows'] = 4;
 
-                    // Select múltiple
-                    } elseif (str_ends_with($field, '._ids')) {
-                        $options['type'] = 'select';
-                        $options['multiple'] = true;
-                        $options['options'] = $categories ?? [];
-                        $options['class'] = 'select-multiple';
-
-                    // Categorías
                     } elseif (str_contains($field, 'category')) {
                         $options['options'] = $categories ?? [];
                         $options['empty'] = 'Selecciona una categoría';
 
-                    // Imagen
                     } elseif (str_contains($field, 'image') || $field === 'image_file') {
 
                         $options['type'] = 'file';
@@ -165,23 +164,32 @@ $labels = [
 
         <?php endforeach; ?>
 
-        <!-- Imagen actual -->
-        <?php if (!empty($entity->product_image?->image_medium) || !empty($entity->recipe_image?->image_medium)): ?>
+        <!-- ================== IMAGEN ACTUAL (CORREGIDA) ================== -->
+        <?php
+            $image = $entity->product_image->image_medium
+                ?? $entity->recipe_image->image_medium
+                ?? null;
+
+            if (is_resource($image)) {
+                $imageData = base64_encode(stream_get_contents($image));
+            } elseif (is_string($image)) {
+                $imageData = base64_encode($image);
+            } else {
+                $imageData = null;
+            }
+
+            $mimeType = $entity->product_image->mime_type_medium
+                ?? $entity->recipe_image->mime_type_medium
+                ?? 'image/jpeg';
+        ?>
+
+        <?php if ($imageData): ?>
             <div class="col-md-6">
                 <label class="form-label fw-semibold text-secondary">Imagen actual</label>
 
                 <div class="border rounded p-2 bg-light text-center">
                     <img
-                        src="data:<?= h(
-                            $entity->product_image->mime_type_medium
-                            ?? $entity->recipe_image->mime_type_medium
-                            ?? 'image/jpeg'
-                        ) ?>;base64,<?= base64_encode(
-                            stream_get_contents(
-                                $entity->product_image->image_medium
-                                ?? $entity->recipe_image->image_medium
-                            )
-                        ) ?>"
+                        src="data:<?= h($mimeType) ?>;base64,<?= $imageData ?>"
                         class="img-fluid rounded"
                         style="max-width:100%;height:auto;"
                     />
@@ -192,7 +200,9 @@ $labels = [
                         'class' => 'form-check-input',
                         'id' => 'removeImage'
                     ]) ?>
-                    <label for="removeImage" class="form-check-label text-muted">Eliminar imagen actual</label>
+                    <label for="removeImage" class="form-check-label text-muted">
+                        Eliminar imagen actual
+                    </label>
                 </div>
             </div>
         <?php endif; ?>

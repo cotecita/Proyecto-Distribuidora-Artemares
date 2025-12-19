@@ -15,16 +15,16 @@ export default function Footer() {
         <div className="footer-section">
           <h4 className="footer-subtitle">Contacto</h4>
           <ul className="footer-list">
-            <li><span>📞</span> +56 9 1234 5678</li>
-            <li><span>✉️</span> contacto@mariscos.cl</li>
+            <li><span>📞</span> +56 9 5439 9106</li>
             <li><span>⏰</span> Lunes a sábado — 09:00 a 19:00</li>
           </ul>
         </div>
 
         <div className="footer-section">
-          <h4 className="footer-subtitle">Ubicación</h4>
+          <h4 className="footer-subtitle">Ubicación y cobertura</h4>
           <ul className="footer-list">
-            <li><span>📍</span> Penco, Región del Biobío</li>
+            <li><span>📍</span> Sargento Candelaria 60, Penco – Biobío</li>
+            <li><span>🚚</span> Tomé, Penco, Lirquén y Concepción</li>
           </ul>
         </div>
 

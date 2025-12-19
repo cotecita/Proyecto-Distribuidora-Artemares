@@ -83,6 +83,7 @@ return function (RouteBuilder $routes): void {
     $routes->prefix('Api', function (RouteBuilder $builder) { 
         $builder->setExtensions(['json']); // Solo el index de Products 
         $builder->resources('Products', [ 'only' => ['index'] ]); 
+        $builder->resources('Recipes', ['only' => ['index']]);
     });
 
     /*

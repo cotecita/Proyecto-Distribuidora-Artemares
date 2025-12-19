@@ -9,20 +9,94 @@ class ProductsController extends AppController
 {
     public function index()
     {
-        // solo permitir GET
         $this->request->allowMethod(['get']);
 
-        //obtener datos
         $products = $this->Products
             ->find()
-            ->contain(['Categories'])
+            ->contain([
+                'Categories',
+                'ProductImages',
+                'NutritionalInformations',
+                'Recipes'
+            ])
+            ->order(['Products.name' => 'ASC'])
             ->all();
 
-        // devolver json manual
-        $response = $this->getResponse()
-            ->withType('application/json')
-            ->withStringBody(json_encode(['products' => $products], JSON_UNESCAPED_UNICODE));
+        $data = [];
 
-        return $response;
+        foreach ($products as $product) {
+
+            $image = $product->product_image ?? null;
+            $nutrition = $product->nutritional_information ?? null;
+
+            $data[] = [
+                'id' => $product->id,
+                'name' => $product->name,
+                'description' => $product->description,
+                'price' => (int)$product->price,
+                'unit' => $product->unit,
+
+                // Categoría
+                'category' => $product->category ? [
+                    'name' => $product->category->name,
+                ] : null,
+
+                // Imágenes
+                'images' => $image ? [
+                    'small' => $this->imageBase64(
+                        $image->image_small,
+                        $image->mime_type_small
+                    ),
+                    'medium' => $this->imageBase64(
+                        $image->image_medium,
+                        $image->mime_type_medium
+                    ),
+                    'large' => $this->imageBase64(
+                        $image->image_large,
+                        $image->mime_type_large
+                    ),
+                ] : null,
+
+                // Info nutricional
+                'nutrition' => $nutrition ? [
+                    'calories' => $nutrition->calories,
+                    'protein' => $nutrition->protein,
+                    'carbs' => $nutrition->carbohydrates,
+                    'fat' => $nutrition->total_fat,
+                    'sodium' => $nutrition->sodium,
+                ] : null,
+
+                // Recetas relacionadas (solo nombres)
+                'recipes' => $product->recipes
+                    ? array_map(
+                        fn($r) => ['name' => $r->name],
+                        $product->recipes
+                    )
+                    : [],
+            ];
+        }
+
+        return $this->response
+            ->withType('application/json')
+            ->withStringBody(json_encode([
+                'products' => $data
+            ], JSON_UNESCAPED_UNICODE));
+    }
+
+    private function imageBase64($binary, ?string $mime): ?string
+    {
+        if (!$binary || !$mime) {
+            return null;
+        }
+
+        if (is_resource($binary)) {
+            $binary = stream_get_contents($binary);
+        }
+
+        if (!is_string($binary)) {
+            return null;
+        }
+
+        return 'data:' . $mime . ';base64,' . base64_encode($binary);
     }
 }

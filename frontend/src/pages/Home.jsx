@@ -119,11 +119,11 @@ export default function Home() {
             <p className="section-kicker">¿Dónde nos encuentras?</p>
             <h3>Nuestra ubicación</h3>
             <p className="info-text">
-              Operamos desde <strong>Penco, Región del Biobío</strong>, con
+              Operamos desde <strong>Penco, Región del Biobío</strong> especificamente en <strong>Sargento Candelaria 60</strong>, con
               entregas programadas para restaurantes y hogares.
             </p>
             <p className="info-text">
-              También realizamos abastecimiento continuo para clientes
+              Asimismo, ofrecemos abastecimiento continuo para clientes
               frecuentes.
             </p>
           </motion.div>
@@ -140,10 +140,10 @@ export default function Home() {
 
             <div className="contact-lines">
               <p>
-                <strong>Teléfono:</strong> +56 9 1234 5678
+                <strong>Teléfono:</strong> +56 9 5439 9106
               </p>
               <p>
-                <strong>Correo:</strong> contacto@mariscos.cl
+                <strong>Cobertura:</strong> Tomé, Penco, Lirquén y Concepción.
               </p>
               <p>
                 <strong>Horario:</strong> Lunes a sábado · 09:00 a 19:00

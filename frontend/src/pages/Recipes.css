@@ -11,11 +11,9 @@
 .recipes-page {
   min-height: 100vh;
   padding-top: var(--nav-height);
-  padding-bottom: 60px;
-  background: #f3f6fd; /* igual que Products */
+  padding-bottom: 40px;
+  background: #f3f6fd;
   font-family: "Inter", sans-serif;
-  max-width: 1150px;
-  margin: 0 auto;
 }
 
 /* ========================================================================= */
@@ -26,7 +24,14 @@
   max-width: 1140px;
   margin: 0 auto;
   padding: 32px 16px 8px;
-  text-align: left; /* CONSISTENTE con products */
+}
+
+.recipes-header-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 18px;
 }
 
 .recipes-header h1 {
@@ -45,26 +50,26 @@
 /* =================== FILTERS =================== */
 
 .recipes-filters {
-  margin-top: 18px;
   display: flex;
   gap: 12px;
+  align-items: center;
   flex-wrap: wrap;
 }
 
-.recipes-filters input,
-.recipes-filters select {
-  flex: 1;
-  min-width: 220px;
+.recipes-filters input {
   padding: 10px 14px;
   border-radius: 12px;
   border: 1px solid #cbd5e1;
   font-size: 0.95rem;
-  outline: none;
   background: #ffffff;
 }
+.recipes-filters input {
+    flex: 1;
+  min-width: 220px;
+}
 
-.recipes-filters input:focus,
-.recipes-filters select:focus {
+.recipes-filters input:focus{
+  outline: none;
   border-color: #2563eb;
   box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.15);
 }
@@ -74,11 +79,12 @@
 /* ========================================================================= */
 
 .recipes-grid {
-  margin-top: 30px;
+  max-width: 1140px;
+  margin: 26px auto 0;
   padding: 0 16px 16px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 26px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 22px;
 }
 
 /* ========================================================================= */
@@ -86,14 +92,15 @@
 /* ========================================================================= */
 
 .recipe-card {
-  background: #ffffff;
-  border-radius: 22px; /* igual a products */
-  overflow: hidden;
-  box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08); /* igual a products */
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+background: #ffffff;
+    border-radius: 20px;
+    height: 100%;
+    overflow: hidden;
+    box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .recipe-card:hover {
@@ -101,26 +108,31 @@
   transform: translateY(-4px);
 }
 
-.recipe-card img {
+.recipe-image {
   width: 100%;
-  height: 170px;
+  aspect-ratio: 4 / 3;   /* puedes cambiarlo */
+  overflow: hidden;
+  background: #f1f5f9;
+}
+
+.recipe-image img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   display: block;
 }
 
 /* BODY */
 .recipe-body {
-  padding: 16px 18px 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  padding: 14px 16px 10px;
+  flex: 1;
 }
 
 .recipe-body h3 {
-  font-size: 1.12rem;
-  font-weight: 600;
+  font-size: 1.08rem;
+  margin: 0 0 4px;
   color: #0f172a;
-  margin: 0;
+  font-weight: 600;
 }
 
 .recipe-desc {
@@ -131,19 +143,27 @@
 
 /* ========= BOTÓN "VER RECETA" (igual a add-cart-btn) ========= */
 
+.recipe-actions {
+  margin-top: auto; /* 🔥 empuja hacia abajo */
+  border-top: 1px solid #e2e8f0;
+  padding: 10px 14px 12px;
+  display: flex;
+  justify-content: center; /* ⬅️ centrado horizontal */
+}
+
+
 .recipe-btn {
-  padding: 9px 14px;
+  width: 100%;
+  max-width: 160px; /* 🔥 todos iguales */
   border-radius: 999px;
   border: none;
+  padding: 8px 12px;
   font-size: 0.85rem;
-  font-weight: 600;
+  background: #0f172a;
+  color: #fff;
   cursor: pointer;
-  background: #0f172a; /* mismo color que botón de productos */
-  color: #ffffff;
-  transition: background 0.18s ease, transform 0.18s ease;
-  align-self: flex-start;
-  margin-top: auto; /* coloca el botón en el mismo lugar visual que products */
 }
+
 
 .recipe-btn:hover {
   background: #1e293b;
@@ -157,162 +177,182 @@
 .recipe-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.55);
-  backdrop-filter: blur(2px);
+  background: rgba(15, 23, 42, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
   z-index: 3000;
 }
 
 .recipe-modal {
   background: #ffffff;
   border-radius: 26px;
-  max-width: 900px; /* igual que product modal */
-  width: 92%;
-  padding: 24px 26px 26px;
-  box-shadow: 0 22px 65px rgba(15, 23, 42, 0.35); /* mismo shadow */
+  width: 900px;
+  max-width: 92vw;
+
+  height: 520px;          /* 🔥 ALTURA FIJA */
+  max-height: 85vh;       /* seguridad en pantallas chicas */
+
+  padding: 26px;
+  box-shadow: 0 22px 65px rgba(15, 23, 42, 0.35);
   position: relative;
+
+  display: flex;
+  flex-direction: column;
 }
 
-/* Close button */
+
+/* Botón cerrar (idéntico a productos) */
 .recipe-close-btn {
   position: absolute;
-  top: 12px;
+  top: 14px;
   right: 18px;
-  border: none;
-  background: transparent;
   font-size: 1.6rem;
+  background: transparent;
+  border: none;
   cursor: pointer;
-  color: #64748b;
-  transition: 0.2s ease;
-}
-.recipe-close-btn:hover {
-  color: #1e293b;
 }
 
-/* Layout */
+.recipe-close-btn:hover {
+  color: #0f172a;
+}
+
+/* ===================== LAYOUT ===================== */
+
 .recipe-modal-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.2fr);
-  gap: 24px;
+  grid-template-columns: 1.1fr 1.2fr;
+  gap: 36px;
+
+  flex: 1;                /* 🔥 ocupa toda la altura */
+  overflow: hidden;       /* evita que rompa el modal */
 }
 
-/* Imagen */
+
+/* ===================== IMAGEN ===================== */
+
+.recipe-modal-image {
+  height: 100%;
+  max-height: 100%;
+  overflow: hidden;
+}
+
 .recipe-modal-image img {
   width: 100%;
-  max-height: 360px;
-  object-fit: cover;
+  height: 100%;
+  object-fit: cover;   /* 🔥 consistente */
   border-radius: 18px;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
 }
 
-/* Textos */
-.recipe-modal-info h2 {
-  font-family: "Playfair Display", serif;
-  font-size: 2rem;
-  margin: 0 0 10px;
-  color: #0f172a;
+
+
+/* ===================== INFO ===================== */
+
+.recipe-modal-info {
+  padding-top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px; /* CLAVE */
 }
+
+
+.recipe-modal-header h2 {
+  margin: 0;
+  padding-right: 8px;
+  align-items: start;
+  font-size: 1.6rem;
+  line-height: 1.2;
+
+  /* 🔥 evita choque */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.recipe-title {
+  padding-right: 8px; /* 🔥 deja espacio para la X */
+}
+
 
 .recipe-detail-desc {
-  font-size: 0.95rem;
-  color: #475569;
-  line-height: 1.6;
-  margin-bottom: 18px;
-}
-
-/* ========================================================================= */
-/* ============================ INGREDIENTES =============================== */
-/* ========================================================================= */
-
-.recipe-ingredientes-block h3,
-.recipe-preparation-block h3 {
-  font-size: 0.98rem;
-  font-weight: 700;
-  color: #0f172a;
   margin-bottom: 8px;
 }
 
-.ingredients-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
 
-.ingredients-list li {
-  padding: 12px 0;
+/* ===================== INGREDIENTES (TEXTO) ===================== */
+
+.recipe-ingredientes-block {
+  padding-top: 14px;
+  padding-bottom: 14px;
+  border-top: 1px solid #e2e8f0;
   border-bottom: 1px solid #e2e8f0;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
 }
 
-.ingredient-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.recipe-ingredientes-block h3 {
+  margin-bottom: 6px;
 }
 
-.ingredient-name {
-  font-size: 0.95rem;
-  font-weight: 500;
+.recipe-ingredientes-block p {
+  margin: 0;
+  line-height: 1.8;
+}
+
+
+/* ===================== PRODUCTOS RELACIONADOS ===================== */
+.related-products-block {
+  margin-top: 22px;
+}
+
+.related-products-block ul {
+  margin-top: 8px;
+  padding-left: 5px;
+  list-style: none;
+  list-style-position: inside;
+}
+
+.related-products-block li {
+  padding: 6px 0;
+  font-size: 0.92rem;
   color: #1e293b;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-/* Tags */
-.ingredient-tag {
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 0.78rem;
+.related-products-block li::before {
+  content: "•";
+  color: #2563eb;
+  font-size: 1.2rem;
+  line-height: 1;
 }
 
-.ingredient-tag.available {
-  background: #d1fae5;
-  color: #047857;
+.related-products-list{
+  list-style-position: inside;
 }
 
-.ingredient-tag.not-available {
-  background: #fee2e2;
-  color: #b91c1c;
+/* ======================================================
+   LOADER
+====================================================== */
+.grid-loader {
+  grid-column: 1 / -1;      /* ocupa todo el ancho del grid */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 0;
+  font-size: 1rem;
+  color: #000000;
 }
 
-/* Botón ver producto */
-.ingredient-btn {
-  align-self: flex-start;
-  padding: 6px 12px;
-  font-size: 0.78rem;
-  border-radius: 999px;
-  background: #2563eb;
-  color: #ffffff;
-  border: none;
-  cursor: pointer;
-}
-.ingredient-btn:hover {
-  background: #1d4ed8;
-}
-
-/* ========================================================================= */
-/* ============================ PREPARACIÓN ================================ */
-/* ========================================================================= */
-
-.preparation-text {
-  font-size: 0.95rem;
-  color: #475569;
-  line-height: 1.7;
-}
-
-/* ========================================================================= */
-/* ============================ RESPONSIVE =================================*/
-/* ========================================================================= */
+/* ===================== RESPONSIVE ===================== */
 
 @media (max-width: 900px) {
   .recipe-modal-layout {
-    grid-template-columns: 1fr;
+    gap: 32px; /* antes 24px */
   }
+
 
   .recipe-modal-image img {
     max-height: 260px;
   }
 }
+

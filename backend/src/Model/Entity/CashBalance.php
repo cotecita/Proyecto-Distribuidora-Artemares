@@ -36,5 +36,6 @@ class CashBalance extends Entity
         'balance_date' => true,
         'created' => true,
         'modified' => true,
+        'status' =>true,
     ];
 }

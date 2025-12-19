@@ -56,7 +56,6 @@ class CashBalancesTable extends Table
     {
         $validator
             ->decimal('expected_amount')
-            ->requirePresence('expected_amount', 'create')
             ->notEmptyString('expected_amount');
 
         $validator
@@ -68,6 +67,12 @@ class CashBalancesTable extends Table
             ->decimal('difference')
             ->requirePresence('difference', 'create')
             ->notEmptyString('difference');
+        
+        $validator
+            ->scalar('status')
+            ->requirePresence('status', 'create')
+            ->notEmptyString('status')
+            ->inList('status', ['OK', 'MISMATCH']);
 
         $validator
             ->scalar('description')

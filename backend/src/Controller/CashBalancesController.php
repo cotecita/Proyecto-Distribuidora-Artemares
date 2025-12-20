@@ -164,5 +164,12 @@ class CashBalancesController extends AppController
         ));
     }
 
+    public function view($id = null)
+    {
+        $cashBalance = $this->CashBalances->get($id);
+
+        $this->set(compact('cashBalance'));
+    }
+
     
 }

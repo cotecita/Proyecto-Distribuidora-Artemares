@@ -50,6 +50,7 @@
                             <th class="text-start">Monto actual</th>
                             <th class="text-start">Diferencia</th>
                             <th class="text-start">Estado</th>
+                            <th class="text-center">Acciones</th>
                         </tr>
                     </thead>
 
@@ -96,6 +97,21 @@
                                             Pendiente
                                         </span>
                                     <?php endif; ?>
+                                </td>
+
+                                <td class="text-center">
+                                    <div class="d-flex justify-content-center gap-2">
+                                        <?= $this->Html->link(
+                                            '<i class="bi bi-eye"></i>',
+                                            ['action' => 'view', $cashBalance->id],
+                                            [
+                                                'class' => 'btn btn-outline-primary btn-sm rounded shadow-sm',
+                                                'escape' => false,
+                                                'title' => 'Ver detalle',
+                                                'style' => 'border-width:1.5px;'
+                                            ]
+                                        ) ?>
+                                    </div>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

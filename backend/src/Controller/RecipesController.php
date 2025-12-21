@@ -29,7 +29,7 @@ class RecipesController extends AppController
         // Paginación + ordenamiento dinámico habilitado
         $this->paginate = [
             'limit' => 20,
-            'order' => ['Recipes.modified' => 'asc'], // orden por defecto
+            'order' => ['Recipes.name' => 'asc'], // orden por defecto
             /*'sortableFields' => ['id', 'name', 'modified', 'created']*/
         ];
 

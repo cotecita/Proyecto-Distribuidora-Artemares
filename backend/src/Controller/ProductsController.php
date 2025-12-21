@@ -60,9 +60,9 @@ class ProductsController extends AppController
         //permitir ordenamiento dinámico
         $this->paginate = [
             'limit' => 20,
-            'order' => ['Products.id' => 'asc'], // orden por defecto   
+            'order' => ['name' => 'asc'], // orden por defecto   
             'sortableFields' => [
-                'Products.id',
+                #'Products.id',
                 'name',
                 'price',
                 'Categories.name'

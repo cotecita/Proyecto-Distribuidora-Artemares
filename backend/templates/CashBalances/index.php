@@ -111,6 +111,29 @@
                                                 'style' => 'border-width:1.5px;'
                                             ]
                                         ) ?>
+
+                                        <?= $this->Html->link(
+                                            '<i class="bi bi-pencil"></i>',
+                                            ['action' => 'edit', $cashBalance->id],
+                                            [
+                                                'class' => 'btn btn-outline-warning btn-sm rounded shadow-sm',
+                                                'escape' => false,
+                                                'title' => 'Editar',
+                                                'style' => 'border-width:1.5px;'
+                                            ]
+                                        ) ?>        
+
+                                        <?= $this->Form->postLink(
+                                            '<i class="bi bi-trash"></i>',
+                                            ['action' => 'delete', $cashBalance->id],
+                                            [
+                                                'confirm' => '¿Seguro que deseas eliminar esta cuadratura de caja?',
+                                                'class' => 'btn btn-outline-danger btn-sm rounded shadow-sm',
+                                                'escape' => false,
+                                                'title' => 'Eliminar',
+                                                'style' => 'border-width:1.5px;'
+                                            ]
+                                        ) ?>
                                     </div>
                                 </td>
                             </tr>

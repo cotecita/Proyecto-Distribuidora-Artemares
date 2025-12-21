@@ -171,5 +171,52 @@ class CashBalancesController extends AppController
         $this->set(compact('cashBalance'));
     }
 
+    public function delete($id = null)
+    {
+        $this->request->allowMethod(['post', 'delete']);
+        $cashBalance = $this->CashBalances->get($id);
+        if ($this->CashBalances->delete($cashBalance)) {
+            $this->Flash->success(__('The cash balance has been deleted.'));
+        } else {
+            $this->Flash->error(__('The cash balance could not be deleted. Please, try again.'));
+        }
+
+        return $this->redirect(['action' => 'index']);
+    }
+
+    public function edit($id = null)
+    {
+        $cashBalance = $this->CashBalances->get($id);
+
+        if ($this->request->is(['patch', 'post', 'put'])) {
+
+            // solo permitimos editar monto real y descripción
+            $cashBalance = $this->CashBalances->patchEntity(
+                $cashBalance,
+                $this->request->getData(),
+                [
+                    'fields' => ['actual_amount', 'description']
+                ]
+            );
+
+            //recalcular diferencia
+            $cashBalance->difference =
+                $cashBalance->actual_amount - $cashBalance->expected_amount;
+
+            // recalcular estado
+            $cashBalance->status =
+                ($cashBalance->difference == 0) ? 'OK' : 'MISMATCH';
+
+            if ($this->CashBalances->save($cashBalance)) {
+                $this->Flash->success('La cuadratura fue actualizada correctamente.');
+                return $this->redirect(['action' => 'view', $id]);
+            }
+
+            $this->Flash->error('No se pudo actualizar la cuadratura.');
+        }
+
+        $this->set(compact('cashBalance'));
+    }
+
     
 }

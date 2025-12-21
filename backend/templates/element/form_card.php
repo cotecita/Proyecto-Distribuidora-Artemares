@@ -40,6 +40,10 @@ $labels = [
     'email' => 'Correo electrónico',
     'username' => 'Usuario',
     'password' => 'Contraseña',
+    
+    // --- Cuadratura de caja
+    'actual_amount'=>'Monto actual',
+    'description'=>'Descripción',
 ];
 ?>
 

@@ -5,6 +5,13 @@
 ?>
 
 <h1 class="mb-4">Dashboard</h1>
+<a href="/reports/sales-by-product.csv" class="btn btn-outline-primary">
+    Exportar CSV
+</a>
+
+<a href="/reports/sales-by-product.xlsx" class="btn btn-outline-success">
+    Exportar Excel
+</a>
 
 <div class="row mb-4">
     <!-- Total de Productos -->

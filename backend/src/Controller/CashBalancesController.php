@@ -14,64 +14,81 @@ class CashBalancesController extends AppController
     public function add()
     {
         $cashBalance = $this->CashBalances->newEmptyEntity();
+        $calculatedExpected = 0;
 
-        //  Calcular expected_amount SIEMPRE (GET y POST)
-        $ordersTable = $this->fetchTable('Orders');
-        $orders = $ordersTable->find('closedToday')->all();
+        if ($this->request->is(['post', 'put'])) {
 
-        $expectedAmount = 0;
-        foreach ($orders as $order) {
-            foreach ($order->products as $product) {
-                $expectedAmount +=
-                    $product->price * $product->_joinData->quantity;
+            $data = $this->request->getData();
+            $balanceDate = new FrozenDate($data['balance_date']);
+            $today = FrozenDate::today();
+
+            // validación fecha
+            if ($balanceDate > $today) {
+                $this->Flash->error(
+                    'La fecha de la cuadratura no puede ser mayor a hoy.'
+                );
+                return;
             }
-        }
 
-        // Para mostrar en la vista
-        $cashBalance->expected_amount = $expectedAmount;
+            // buscar pedidos cerrados de ESA fecha
+            $ordersTable = $this->fetchTable('Orders');
+            $orders = $ordersTable
+                ->find('closedByDate', ['date' => $balanceDate])
+                ->all();
 
-        if ($this->request->is('post')) {
+            // calcular expected automático
+            foreach ($orders as $order) {
+                foreach ($order->products as $product) {
+                    $calculatedExpected +=
+                        $product->price * $product->_joinData->quantity;
+                }
+            }
 
-            //  Datos ingresados por el usuario
-            $cashBalance = $this->CashBalances->patchEntity(
-                $cashBalance,
-                $this->request->getData()
-            );
+            // Patch entity (incluye expected_amount si viene del form)
+            $cashBalance = $this->CashBalances->patchEntity($cashBalance, $data);
 
-            //  Reasignar expected_amount (seguridad)
-            $cashBalance->expected_amount = $expectedAmount;
-
-            //  Calcular diferencia
-            $cashBalance->difference =
-                $cashBalance->actual_amount - $expectedAmount;
-
-            // Calcular estado 
-            if ($cashBalance->difference == 0) {
-                $cashBalance->status = 'OK';
+            // expected_amount: manual > automático
+            if (
+                isset($data['expected_amount']) &&
+                $data['expected_amount'] !== '' &&
+                $data['expected_amount'] !== null
+            ) {
+                $cashBalance->expected_amount = (float)$data['expected_amount'];
             } else {
-                $cashBalance->status = 'MISMATCH';
+                $cashBalance->expected_amount = $calculatedExpected;
             }
-            if (!$this->CashBalances->save($cashBalance)) {
-                debug($cashBalance->getErrors());
-                die;
-            }
-            //  Guardar
+
+            // otras asignaciones
+            $cashBalance->balance_date = $balanceDate;
+
+            $cashBalance->difference =
+                $cashBalance->actual_amount - $cashBalance->expected_amount;
+
+            $cashBalance->status =
+                ($cashBalance->difference == 0) ? 'OK' : 'MISMATCH';
+
             try {
                 if ($this->CashBalances->save($cashBalance)) {
-                    $this->Flash->success('Cash balance saved successfully.');
+                    $this->Flash->success(
+                        'La cuadratura fue guardada correctamente.'
+                    );
                     return $this->redirect(['action' => 'index']);
                 }
             } catch (\PDOException $e) {
                 $this->Flash->error(
-                    'A cash balance for this date already exists.'
+                    'Ya existe una cuadratura para esta fecha.'
                 );
             }
 
-            $this->Flash->error('The cash balance could not be saved.');
+            $this->Flash->error(
+                'No se pudo guardar la cuadratura.'
+            );
         }
 
-        $this->set(compact('cashBalance', 'expectedAmount'));
+        // Para mostrar el cálculo en la vista (GET)
+        $this->set(compact('cashBalance', 'calculatedExpected'));
     }
+
 
     public function index()
     {
@@ -190,16 +207,20 @@ class CashBalancesController extends AppController
 
         if ($this->request->is(['patch', 'post', 'put'])) {
 
-            // solo permitimos editar monto real y descripción
+            // Permitimos editar expected_amount, actual_amount y description
             $cashBalance = $this->CashBalances->patchEntity(
                 $cashBalance,
                 $this->request->getData(),
                 [
-                    'fields' => ['actual_amount', 'description']
+                    'fields' => [
+                        'expected_amount',
+                        'actual_amount',
+                        'description'
+                    ]
                 ]
             );
 
-            //recalcular diferencia
+            // recalcular diferencia
             $cashBalance->difference =
                 $cashBalance->actual_amount - $cashBalance->expected_amount;
 
@@ -208,15 +229,53 @@ class CashBalancesController extends AppController
                 ($cashBalance->difference == 0) ? 'OK' : 'MISMATCH';
 
             if ($this->CashBalances->save($cashBalance)) {
-                $this->Flash->success('La cuadratura fue actualizada correctamente.');
+                $this->Flash->success(
+                    'La cuadratura fue actualizada correctamente.'
+                );
                 return $this->redirect(['action' => 'view', $id]);
             }
 
-            $this->Flash->error('No se pudo actualizar la cuadratura.');
+            $this->Flash->error(
+                'No se pudo actualizar la cuadratura.'
+            );
         }
 
         $this->set(compact('cashBalance'));
     }
 
+    public function expectedAmountByDate()
+    {
+        $this->request->allowMethod(['get']);
+        $this->autoRender = false;
+
+        $dateString = $this->request->getQuery('date');
+        if (!$dateString) {
+            return $this->response
+                ->withType('application/json')
+                ->withStringBody(json_encode(['expectedAmount' => 0]));
+        }
+
+        $date = new FrozenDate($dateString);
+
+        $ordersTable = $this->fetchTable('Orders');
+        $orders = $ordersTable
+            ->find('closedByDate', ['date' => $date])
+            ->all();
+
+        $expectedAmount = 0;
+
+        foreach ($orders as $order) {
+            foreach ($order->products as $product) {
+                $expectedAmount +=
+                    $product->price * $product->_joinData->quantity;
+            }
+        }
+
+        return $this->response
+            ->withType('application/json')
+            ->withStringBody(json_encode([
+                'expectedAmount' => $expectedAmount
+            ]));
+    }
     
 }

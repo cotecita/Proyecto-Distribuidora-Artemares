@@ -42,6 +42,7 @@ $labels = [
     'password' => 'Contraseña',
     
     // --- Cuadratura de caja
+    'expected_amount'=>'Monto esperado',
     'actual_amount'=>'Monto actual',
     'description'=>'Descripción',
 ];

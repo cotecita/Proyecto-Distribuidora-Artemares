@@ -29,7 +29,7 @@ class CategoriesController extends AppController
         $order = [];
 
         if (!$this->request->getQuery('sort')) {
-            $order = ['categories.id' => 'asc'];
+            $order = ['id' => 'asc'];
         }
 
         $this->paginate = [

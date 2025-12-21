@@ -36,7 +36,7 @@ class OrdersController extends AppController
         // --- Configurar paginación con orden dinámico ---
         $this->paginate = [
             'limit' => 20,
-            'order' => ['Orders.id' => 'DESC'],   // Orden por defecto
+            'order' => ['id' => 'desc'],   // Orden por defecto
             /*'sortableFields' => ['id', 'status', 'created', 'modified']*/
         ];
 

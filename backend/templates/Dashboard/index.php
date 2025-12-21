@@ -103,7 +103,7 @@
 
 
 <!-- Productos más vendidos -->
-<h2 class="mb-3">Productos más vendidos</h2>
+<h2 class="mb-3">Productos 5 más vendidos (histórico)</h2>
 <div class="table-responsive mb-4">
     <table class="table table-striped table-bordered">
         <thead class="table-dark">

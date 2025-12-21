@@ -176,8 +176,10 @@
 }
 
 .product-price .unit {
-  font-size: 0.8rem;
-  color: #64748b;
+  font-size: 0.98rem;
+  color: #1d4ed8;
+  margin-bottom: 6px;
+  font-weight: 600;
 }
 
 .tag {
@@ -203,24 +205,44 @@
 }
 
 .qty-control {
-  display: inline-flex;
+  flex: 1;
+  display: flex;
   border-radius: 999px;
   border: 1px solid #cbd5e1;
   overflow: hidden;
 }
 
 .qty-control button {
+  flex: 0 0 40px;
+  border-radius: 999px;
   border: none;
-  background: transparent;
-  padding: 4px 10px;
+  padding: 7px 10px;
+  font-size: 0.85rem;
   cursor: pointer;
 }
 
+
 .qty-control input {
-  width: 40px;
-  text-align: center;
+  width: 40px; 
+  text-align: center; 
   border: none;
+  flex: 1;
 }
+
+.qty-control.small {
+  flex: 0 0 auto;
+  height: 34px;
+}
+
+.qty-control.small button {
+  padding: 0 10px;
+}
+
+.qty-control.small input {
+  width: 32px;
+}
+
+
 
 .add-cart-btn {
   flex: 1;
@@ -401,10 +423,88 @@
 
 .cart-panel {
   width: min(380px, 100%);
+  height: 100%;
   background: #ffffff;
-  padding: 18px;
+  display: flex;
+  flex-direction: column;
   box-shadow: -10px 0 40px rgba(15, 23, 42, 0.35);
 }
+/* HEADER */
+.cart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 18px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.cart-header h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.cart-close {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+/* BODY */
+.cart-body {
+  flex: 1;
+  padding: 16px 18px;
+  overflow-y: auto;
+}
+
+.cart-empty {
+  text-align: center;
+  color: #64748b;
+  margin-top: 40px;
+}
+
+.cart-empty span {
+  font-size: 0.85rem;
+}
+/* ITEMS */
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.cart-item-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-item-name {
+  font-weight: 500;
+}
+
+.cart-item-price {
+  font-size: 0.8rem;
+  color: #64748b;
+}
+/* FOOTER */
+.cart-footer {
+  padding: 16px 18px;
+  border-top: 1px solid #e2e8f0;
+  background: #ffffff;
+}
+
+.cart-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 1rem;
+}
+
+
+
 
 
 /* ======================================================
@@ -448,4 +548,71 @@
   .cart-panel {
     width: 100%;
   }
+}
+
+.whatsapp-btn {
+  width: 100%;
+  border-radius: 999px;
+  border: none;
+  padding: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: #7ee7a0;
+  color: #064e3b;
+  cursor: pointer;
+}
+
+.whatsapp-btn:hover {
+  background: #1ebe5d;
+}
+
+.whatsapp-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ================================
+   Quitar flechas del input number
+================================ */
+
+/* Chrome, Edge, Safari */
+.qty-control input[type="number"]::-webkit-inner-spin-button,
+.qty-control input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.qty-control input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* ===============================
+   BOTÓN FLOTANTE PEDIDO
+================================ */
+
+.floating-cart-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 2500;
+
+  background: #0f172a;
+  color: #ffffff;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 18px;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #e1dede;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.35);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.floating-cart-btn:hover {
+  transform: translateY(-2px);
 }

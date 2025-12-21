@@ -35,6 +35,7 @@ class ProductsController extends AppController
                 'description' => $product->description,
                 'price' => (int)$product->price,
                 'unit' => $product->unit,
+                'unit_quantity' => (float)$product->unit_quantity,
 
                 // Categoría
                 'category' => $product->category ? [

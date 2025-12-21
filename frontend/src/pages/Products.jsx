@@ -25,6 +25,7 @@ function mapApiProductToFrontend(p) {
     category: p.category?.name ?? "Sin categoría",
     price: Number(p.price),
     unit: p.unit ?? "kg",
+    unitQuantity: Number(p.unit_quantity) || 1,
 
     // Imágenes desde la API
     images: p.images ?? {
@@ -43,7 +44,6 @@ function mapApiProductToFrontend(p) {
       : [],
   };
 }
-
 
 /* ======================================================
    Component
@@ -105,11 +105,14 @@ export default function Products() {
   };
 
   const handleAddToCart = (productId) => {
-    const qty = quantities[productId] ?? 1;
-
     setCart((prev) => ({
       ...prev,
-      [productId]: (prev[productId] ?? 0) + qty,
+      [productId]: 1,
+    }));
+
+    setQuantities((prev) => ({
+      ...prev,
+      [productId]: 1,
     }));
   };
 
@@ -162,12 +165,42 @@ export default function Products() {
   const filteredProducts = useMemo(() => {
     const normSearch = normalizeText(search);
     return products.filter((p) => {
-      const matchesCategory =
-        category === "Todos" || p.category === category;
+      const matchesCategory = category === "Todos" || p.category === category;
       const matchesSearch = normalizeText(p.name).includes(normSearch);
       return matchesCategory && matchesSearch;
     });
   }, [search, category, products]);
+
+  /* ======================================================
+     Whatsapp Message
+  ====================================================== */
+  const generateWhatsappMessage = () => {
+    if (cartItems.length === 0) return "";
+
+    let message = "Hola, quisiera hacer el siguiente pedido:\n\n";
+
+    cartItems.forEach(({ product, quantity }) => {
+      message += `• ${product.name} / ${product.unitQuantity} ${product.unit} — Cantidad = ${quantity}\n`;
+    });
+
+    message += `\nTotal estimado: $${cartTotal.toLocaleString("es-CL")}`;
+    message += `\n\nGracias`;
+
+    return encodeURIComponent(message);
+  };
+
+const handleSendWhatsapp = () => {
+  if (cartItems.length === 0) return;
+
+  const phoneNumber = "56994142079";
+  const message = generateWhatsappMessage();
+
+  window.open(
+    `https://wa.me/${phoneNumber}?text=${message}`,
+    "_blank"
+  );
+};
+
 
   /* ======================================================
      Render
@@ -182,15 +215,6 @@ export default function Products() {
             <p className="header-subtitle">
               Explora nuestro catálogo y agrega productos a tu carrito.
             </p>
-          </div>
-
-          <div
-            className="cart-summary"
-            role="button"
-            onClick={() => setIsCartOpen(true)}
-          >
-            <span className="cart-label">Carrito</span>
-            <span className="cart-pill">{totalItemsInCart} ítems</span>
           </div>
         </div>
 
@@ -220,16 +244,13 @@ export default function Products() {
 
       {/* GRID */}
       {loading ? (
-        <div className="grid-loader">
-            Cargando productos...
-        </div>
+        <div className="grid-loader">Cargando productos...</div>
       ) : (
         <div className="products-grid">
           {filteredProducts.map((product) => {
             const qty = quantities[product.id] ?? 1;
             const thumbSrc =
-              product.images?.medium ||
-              "/images/placeholder-product.jpg";
+              product.images?.medium || "/images/placeholder-product.jpg";
 
             return (
               <motion.div
@@ -245,8 +266,11 @@ export default function Products() {
                 <div className="product-body">
                   <h3>{product.name}</h3>
                   <p className="product-price">
-                    ${product.price.toLocaleString("es-CL")}{" "}
-                    <span className="unit">/ {product.unit}</span>
+                    ${product.price.toLocaleString("es-CL")}
+                    <span className="unit">
+                      {" "}
+                      / {product.unitQuantity} {product.unit}
+                    </span>
                   </p>
                   <span className="tag">{product.category}</span>
                 </div>
@@ -255,29 +279,37 @@ export default function Products() {
                   className="product-actions"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <div className="qty-control">
-                    <button onClick={() => handleChangeQuantity(product.id, -1)}>
-                      -
-                    </button>
-                    <input
-                      type="number"
-                      min="1"
-                      value={qty}
-                      onChange={(e) =>
-                        handleSetQuantity(product.id, e.target.value)
-                      }
-                    />
-                    <button onClick={() => handleChangeQuantity(product.id, 1)}>
-                      +
-                    </button>
-                  </div>
+                  {cart[product.id] ? (
+                    /* ===== YA EN PEDIDO ===== */
+                    <div className="qty-control">
+                      <button
+                        onClick={() => handleUpdateCartItem(product.id, -1)}
+                      >
+                        -
+                      </button>
 
-                  <button
-                    className="add-cart-btn"
-                    onClick={() => handleAddToCart(product.id)}
-                  >
-                    Agregar
-                  </button>
+                      <input
+                        type="number"
+                        min="1"
+                        value={cart[product.id]}
+                        readOnly
+                      />
+
+                      <button
+                        onClick={() => handleUpdateCartItem(product.id, 1)}
+                      >
+                        +
+                      </button>
+                    </div>
+                  ) : (
+                    /* ===== NO ESTÁ EN PEDIDO ===== */
+                    <button
+                      className="add-cart-btn"
+                      onClick={() => handleAddToCart(product.id)}
+                    >
+                      Agregar
+                    </button>
+                  )}
                 </div>
               </motion.div>
             );
@@ -327,9 +359,7 @@ export default function Products() {
                 <div className="modal-info">
                   {/* Categoría */}
                   {selectedProduct.category && (
-                    <span className="tag">
-                      {selectedProduct.category}
-                    </span>
+                    <span className="tag">{selectedProduct.category}</span>
                   )}
 
                   <h2>{selectedProduct.name}</h2>
@@ -337,7 +367,10 @@ export default function Products() {
                   {/* Precio */}
                   <p className="modal-price">
                     ${selectedProduct.price.toLocaleString("es-CL")}
-                    <span> / {selectedProduct.unit}</span>
+                    <span>
+                      {" "}
+                      / {selectedProduct.unitQuantity} {selectedProduct.unit}
+                    </span>
                   </p>
 
                   {/* Descripción */}
@@ -374,18 +407,14 @@ export default function Products() {
                         {selectedProduct.nutrition.carbs != null && (
                           <div>
                             <span>Carbohidratos</span>
-                            <strong>
-                              {selectedProduct.nutrition.carbs} g
-                            </strong>
+                            <strong>{selectedProduct.nutrition.carbs} g</strong>
                           </div>
                         )}
 
                         {selectedProduct.nutrition.fat != null && (
                           <div>
                             <span>Grasas</span>
-                            <strong>
-                              {selectedProduct.nutrition.fat} g
-                            </strong>
+                            <strong>{selectedProduct.nutrition.fat} g</strong>
                           </div>
                         )}
 
@@ -403,47 +432,40 @@ export default function Products() {
 
                   {/* ================= ACCIONES ================= */}
                   <div className="modal-actions">
-                    <div className="qty-control">
+                    {cart[selectedProduct.id] ? (
+                      /* ===== YA EN PEDIDO ===== */
+                      <div className="qty-control">
+                        <button
+                          onClick={() =>
+                            handleUpdateCartItem(selectedProduct.id, -1)
+                          }
+                        >
+                          −
+                        </button>
+
+                        <input
+                          type="number"
+                          value={cart[selectedProduct.id]}
+                          readOnly
+                        />
+
+                        <button
+                          onClick={() =>
+                            handleUpdateCartItem(selectedProduct.id, 1)
+                          }
+                        >
+                          +
+                        </button>
+                      </div>
+                    ) : (
+                      /* ===== NO ESTÁ EN PEDIDO ===== */
                       <button
-                        onClick={() =>
-                          handleChangeQuantity(selectedProduct.id, -1)
-                        }
+                        className="add-cart-btn primary"
+                        onClick={() => handleAddToCart(selectedProduct.id)}
                       >
-                        -
+                        Agregar al carrito
                       </button>
-
-                      <input
-                        type="number"
-                        min="1"
-                        value={quantities[selectedProduct.id] ?? 1}
-                        onChange={(e) =>
-                          handleSetQuantity(
-                            selectedProduct.id,
-                            e.target.value
-                          )
-                        }
-                      />
-
-                      <button
-                        onClick={() =>
-                          handleChangeQuantity(selectedProduct.id, 1)
-                        }
-                      >
-                        +
-                      </button>
-                    </div>
-
-                    <button
-                      className="add-cart-btn primary"
-                      onClick={() =>
-                        handleAddToCart(
-                          selectedProduct.id,
-                          quantities[selectedProduct.id] ?? 1
-                        )
-                      }
-                    >
-                      Agregar al carrito
-                    </button>
+                    )}
                   </div>
 
                   {/* ================= RECETAS ================= */}
@@ -464,8 +486,6 @@ export default function Products() {
         )}
       </AnimatePresence>
 
-
-
       {/* CARRITO */}
       <AnimatePresence>
         {isCartOpen && (
@@ -477,23 +497,82 @@ export default function Products() {
               className="cart-panel"
               onClick={(e) => e.stopPropagation()}
             >
-              <h2>Tu carrito</h2>
+              {/* HEADER */}
+              <div className="cart-header">
+                <h2>Tu pedido</h2>
+                <button
+                  className="cart-close"
+                  onClick={() => setIsCartOpen(false)}
+                >
+                  ✕
+                </button>
+              </div>
 
-              {cartItems.length === 0 ? (
-                <p>Carrito vacío</p>
-              ) : (
-                cartItems.map(({ product, quantity }) => (
-                  <div key={product.id}>
-                    {product.name} x {quantity}
+              {/* BODY */}
+              <div className="cart-body">
+                {cartItems.length === 0 ? (
+                  <div className="cart-empty">
+                    <p>Pedido vacío</p>
+                    <span>Agrega productos para comenzar</span>
                   </div>
-                ))
-              )}
+                ) : (
+                  cartItems.map(({ product, quantity }) => (
+                    <div className="cart-item" key={product.id}>
+                      <div className="cart-item-info">
+                        <span className="cart-item-name">{product.name}</span>
+                        <span className="cart-item-price">
+                          ${product.price.toLocaleString("es-CL")} /{" "} {product.unitQuantity} {product.unit}
+                        </span>
+                      </div>
 
-              <strong>Total: ${cartTotal.toLocaleString("es-CL")}</strong>
+                      <div className="qty-control small">
+                        <button
+                          onClick={() => handleUpdateCartItem(product.id, -1)}
+                        >
+                          −
+                        </button>
+
+                        <input type="number" value={quantity} readOnly />
+
+                        <button
+                          onClick={() => handleUpdateCartItem(product.id, 1)}
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+
+              {/* FOOTER */}
+              <div className="cart-footer">
+                <div className="cart-total">
+                  <span>Total</span>
+                  <strong>${cartTotal.toLocaleString("es-CL")}</strong>
+                </div>
+
+                <button
+                  className="whatsapp-btn"
+                  onClick={handleSendWhatsapp}
+                  disabled={cartItems.length === 0}
+                >
+                  Enviar pedido por WhatsApp
+                </button>
+              </div>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
+      {/* ===== BOTÓN FLOTANTE DE PEDIDO ===== */}
+      {!isCartOpen && (
+        <button
+          className="floating-cart-btn"
+          onClick={() => setIsCartOpen(true)}
+        >
+          🛒 Pedido ({totalItemsInCart})
+        </button>
+      )}
     </div>
   );
 }

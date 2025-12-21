@@ -8,6 +8,22 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   z-index: 1000;
   padding: 1rem 1rem; 
+  transform: translateY(0);
+  opacity: 1;
+
+  transition:
+    transform 2s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 1s ease;
+
+  will-change: transform, opacity;
+}
+
+
+/* Cuando se oculta */
+.navbar--hidden {
+  transform: translateY(-70%);
+  opacity: 0;
+  pointer-events: none;
 }
 
 .navbar-content {

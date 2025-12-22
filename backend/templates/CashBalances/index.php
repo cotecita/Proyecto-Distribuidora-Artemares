@@ -142,6 +142,21 @@
 
                 </table>
 
+                <div class="d-flex justify-content-between align-items-center mt-4">
+
+                    <nav>
+                        <ul class="pagination pagination-sm mb-0">
+                            <?= $this->Paginator->prev() ?>
+                            <?= $this->Paginator->numbers() ?>
+                            <?= $this->Paginator->next() ?>
+                        </ul>
+                    </nav>
+
+                    <p class="text-muted mb-0 small">
+                        Página <?= $this->Paginator->counter('{{page}} de {{pages}}') ?>
+                    </p>
+                </div>
+
             </div>
         </div>
     </div>

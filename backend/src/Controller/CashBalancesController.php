@@ -92,10 +92,14 @@ class CashBalancesController extends AppController
 
     public function index()
     {
-        $cashBalances = $this->CashBalances
-            ->find()
-            ->order(['balance_date' => 'DESC'])
-            ->all();
+        $this->paginate = [
+            'limit' => 10,
+            'order' => [
+                'balance_date' => 'DESC',
+            ],
+        ];
+
+        $cashBalances = $this->paginate($this->CashBalances);
         
         // Últimos 7 días
         $startDate = FrozenDate::today()->subDays(6);

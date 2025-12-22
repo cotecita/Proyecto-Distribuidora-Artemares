@@ -37,5 +37,20 @@ class AppView extends View
      */
     public function initialize(): void
     {
+        parent::initialize();
+
+        // Templates personalizados del Paginator (Bootstrap)
+        $this->Paginator->setTemplates([
+            'prevActive'   => '<li class="page-item"><a class="page-link" href="{{url}}">&lt; Anterior</a></li>',
+            'prevDisabled' => '<li class="page-item disabled"><span class="page-link">&lt; Anterior</span></li>',
+
+            'nextActive'   => '<li class="page-item"><a class="page-link" href="{{url}}">Siguiente &gt;</a></li>',
+            'nextDisabled' => '<li class="page-item disabled"><span class="page-link">Siguiente &gt;</span></li>',
+
+            'number'       => '<li class="page-item"><a class="page-link" href="{{url}}">{{text}}</a></li>',
+            'current'      => '<li class="page-item active"><span class="page-link">{{text}}</span></li>',
+
+            'ellipsis'     => '<li class="page-item disabled"><span class="page-link">…</span></li>',
+        ]);
     }
 }

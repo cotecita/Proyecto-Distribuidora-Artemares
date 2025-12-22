@@ -70,7 +70,10 @@ class ProductsController extends AppController
                 // Recetas relacionadas (solo nombres)
                 'recipes' => $product->recipes
                     ? array_map(
-                        fn($r) => ['name' => $r->name],
+                        fn($r) => [
+                            'id' => $r->id,
+                            'name' => $r->name
+                        ],
                         $product->recipes
                     )
                     : [],

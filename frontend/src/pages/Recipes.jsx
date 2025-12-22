@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import "./Recipes.css";
+import { useNavigate, useParams } from "react-router-dom";
 
 /* ======================================================
    Utils
@@ -56,6 +57,10 @@ export default function Recipes({ products = [], openProductModal }) {
   const [filter, setFilter] = useState("Todos");
   const [selectedRecipe, setSelectedRecipe] = useState(null);
 
+  const navigate = useNavigate();
+  const { id } = useParams();
+
+
   /* ======================================================
      Fetch API
   ====================================================== */
@@ -81,6 +86,19 @@ export default function Recipes({ products = [], openProductModal }) {
 
     fetchRecipes();
   }, []);
+
+  useEffect(() => {
+    if (!id) return;
+    if (recipes.length === 0) return;
+
+    const recipe = recipes.find(
+      (r) => Number(r.id) === Number(id)
+    );
+
+    if (recipe) {
+      setSelectedRecipe(recipe);
+    }
+  }, [id, recipes]);
 
   /* ======================================================
      Filtros
@@ -141,7 +159,7 @@ export default function Recipes({ products = [], openProductModal }) {
               className="recipe-card"
               whileHover={{ y: -4, scale: 1.01 }}
               transition={{ duration: 0.2 }}
-              onClick={() => setSelectedRecipe(r)}
+              onClick={() => navigate(`/recetas/${r.id}`)}
             >
               {/* 🔥 CONTENEDOR DE IMAGEN */}
               <div className="recipe-image">
@@ -172,7 +190,11 @@ export default function Recipes({ products = [], openProductModal }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setSelectedRecipe(null)}
+            onClick={() => {
+              setSelectedRecipe(null);
+              navigate("/recetas");
+            }}
+
           >
             <motion.div
               className="recipe-modal"
@@ -184,7 +206,11 @@ export default function Recipes({ products = [], openProductModal }) {
             >
               <button
                 className="recipe-close-btn"
-                onClick={() => setSelectedRecipe(null)}
+                onClick={() => {
+                  setSelectedRecipe(null);
+                  navigate("/recetas");
+                }}
+
               >
                 ✕
               </button>
@@ -228,8 +254,15 @@ export default function Recipes({ products = [], openProductModal }) {
 
                       <ul className="related-products-list">
                         {selectedRecipe.products.map((p) => (
-                          <li key={p.id} className="related-product-item">
-                            <span className="related-product-name">{p.name}</span>
+                          <li
+                            key={p.id}
+                            className="related-product-item-product-link"
+                            onClick={() => {
+                              setSelectedRecipe(null);
+                              navigate(`/productos/${p.id}`);
+                            }}
+                          >
+                            {p.name}
                           </li>
                         ))}
                       </ul>

@@ -330,6 +330,29 @@ background: #ffffff;
   list-style-position: inside;
 }
 
+.related-product-item-product-link{
+  align-items: center;
+  gap: 6px;
+
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+
+  color: #2563eb;
+  padding: 4px 6px;
+  border-radius: 6px;
+
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease,
+    transform 0.15s ease;
+}  
+
 /* ======================================================
    LOADER
 ====================================================== */

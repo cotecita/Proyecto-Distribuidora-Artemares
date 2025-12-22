@@ -372,6 +372,43 @@
   white-space: nowrap; /* evita que se achique */
 }
 
+.recipes-block {
+  margin-top: 18px;
+  list-style-position: inside;
+  padding-top: 14px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.recipes-block h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #0f172a;
+}
+
+.recipe-link {
+  align-items: center;
+  gap: 6px;
+
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+
+  color: #2563eb;
+  padding: 4px 6px;
+  border-radius: 6px;
+
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease,
+    transform 0.15s ease;
+}
+
 
 /* Nutrición */
 

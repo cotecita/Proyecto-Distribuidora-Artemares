@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import "./Products.css";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate, useParams } from "react-router-dom";
+
 
 /* ======================================================
    Utils
@@ -39,6 +41,7 @@ function mapApiProductToFrontend(p) {
 
     recipes: Array.isArray(p.recipes)
       ? p.recipes.map((r) => ({
+          id: r.id,
           name: r.name,
         }))
       : [],
@@ -60,6 +63,9 @@ export default function Products() {
   const [quantities, setQuantities] = useState({});
   const [cart, setCart] = useState({});
   const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const navigate = useNavigate();
+  const { id } = useParams();
 
   /* ======================================================
      Fetch API
@@ -86,6 +92,20 @@ export default function Products() {
 
     fetchProducts();
   }, []);
+
+  useEffect(() => {
+    if (!id) return;
+    if (products.length === 0) return;
+
+    const product = products.find(
+      (p) => Number(p.id) === Number(id)
+    );
+
+    if (product) {
+      setSelectedProduct(product);
+    }
+  }, [id, products]);
+
 
   /* ======================================================
      Carrito
@@ -127,12 +147,6 @@ export default function Products() {
     });
   };
 
-  const handleRemoveFromCart = (productId) => {
-    setCart((prev) => {
-      const { [productId]: _, ...rest } = prev;
-      return rest;
-    });
-  };
 
   /* ======================================================
      Computed
@@ -257,7 +271,7 @@ const handleSendWhatsapp = () => {
                 key={product.id}
                 className="product-card"
                 whileHover={{ y: -4, scale: 1.01 }}
-                onClick={() => setSelectedProduct(product)}
+                onClick={() => navigate(`/productos/${product.id}`)}
               >
                 <div className="product-thumb">
                   <img src={thumbSrc} alt={product.name} loading="lazy" />
@@ -325,7 +339,11 @@ const handleSendWhatsapp = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setSelectedProduct(null)}
+            onClick={() => {
+              setSelectedProduct(null);
+              navigate("/productos");
+            }}
+
           >
             <motion.div
               className="modal-content"
@@ -337,7 +355,10 @@ const handleSendWhatsapp = () => {
             >
               <button
                 className="close-btn"
-                onClick={() => setSelectedProduct(null)}
+                onClick={() => {
+                  setSelectedProduct(null);
+                  navigate("/productos");
+                }}
               >
                 ✕
               </button>
@@ -473,8 +494,14 @@ const handleSendWhatsapp = () => {
                     <div className="recipes-block">
                       <h3>Recetas sugeridas</h3>
                       <ul>
-                        {selectedProduct.recipes.map((r, i) => (
-                          <li key={i}>{r.name}</li>
+                        {selectedProduct.recipes.map((r) => (
+                          <li
+                            key={r.id}
+                            className="recipe-link"
+                            onClick={() => navigate(`/recetas/${r.id}`)}
+                          >
+                            {r.name}
+                          </li>
                         ))}
                       </ul>
                     </div>

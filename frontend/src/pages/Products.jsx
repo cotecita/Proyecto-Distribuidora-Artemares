@@ -484,7 +484,7 @@ const handleSendWhatsapp = () => {
                         className="add-cart-btn primary"
                         onClick={() => handleAddToCart(selectedProduct.id)}
                       >
-                        Agregar al carrito
+                        Agregar al pedido
                       </button>
                     )}
                   </div>

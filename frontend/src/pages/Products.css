@@ -557,35 +557,9 @@
   color: #000000;
 }
 
-
-
 /* ======================================================
-   RESPONSIVE
+    BOTÓN WHATSAPP
 ====================================================== */
-
-@media (max-width: 900px) {
-  .products-header-main {
-    flex-direction: column;
-  }
-
-  .modal-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .modal-image img {
-    max-height: 260px;
-  }
-}
-
-@media (max-width: 600px) {
-  .products-filters {
-    flex-direction: column;
-  }
-
-  .cart-panel {
-    width: 100%;
-  }
-}
 
 .whatsapp-btn {
   width: 100%;
@@ -652,4 +626,171 @@
 
 .floating-cart-btn:hover {
   transform: translateY(-2px);
+}
+
+/* ======================================================
+   RESPONSIVE — TABLET
+====================================================== */
+
+@media (max-width: 900px) {
+
+  /* HEADER */
+  .products-header-main {
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .products-header h1 {
+    font-size: 2rem;
+  }
+
+  /* MODAL → una columna */
+  .modal-layout {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .modal-image img {
+    max-height: 280px;
+  }
+
+  /* Nutrición */
+  .nutrition-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 20px;
+  }
+}
+
+
+/* ======================================================
+   RESPONSIVE — MOBILE
+====================================================== */
+
+@media (max-width: 600px) {
+
+  /* ================= FILTROS ================= */
+
+  .products-filters {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .search-input,
+  .filter-select {
+    width: 100%;
+  }
+
+  /* ================= GRID PRODUCTOS ================= */
+
+  .products-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  /* ================= MODAL ================= */
+
+  .product-modal {
+    align-items: flex-start;     /* 🔥 NO centrar vertical */
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .modal-content {
+    height: auto;               /* 🔥 deja crecer */
+    max-height: 94vh;
+    padding: 18px;
+    overflow-y: auto;           /* 🔥 scroll real */
+    border-radius: 22px;
+  }
+
+  .modal-layout {
+    display: flex;              /* deja de ser grid */
+    flex-direction: column;
+    gap: 18px;
+    overflow: visible;
+  }
+
+  .close-btn {
+    top: 12px;
+    right: 14px;
+    font-size: 1.4rem;
+  }
+
+  /* ================= IMAGEN ================= */
+
+  .modal-image {
+    width: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .modal-image img {
+    width: 100%;
+    height: auto;
+    max-height: 220px;
+    object-fit: cover;
+  }
+
+  /* ================= INFO ================= */
+
+  .modal-info h2 {
+    font-size: 1.6rem;
+    line-height: 1.2;
+  }
+
+  .modal-price {
+    font-size: 1.05rem;
+  }
+
+  .modal-description {
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  /* ================= ACCIONES ================= */
+
+  .modal-actions {
+    position: sticky;           /* 🔥 botón siempre visible */
+    bottom: 0;
+    background: #ffffff;
+    padding-top: 10px;
+    padding-bottom: 8px;
+    z-index: 2;
+
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .modal-actions .add-cart-btn {
+    width: 100%;
+  }
+
+  /* ================= NUTRICIÓN ================= */
+
+  .nutrition-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 16px;
+  }
+
+  /* ================= RECETAS ================= */
+
+  .recipes-block {
+    margin-bottom: 16px;
+  }
+
+  /* ================= CARRITO ================= */
+
+  .cart-panel {
+    width: 100%;
+  }
+
+  /* ================= BOTÓN FLOTANTE ================= */
+
+  .floating-cart-btn {
+    right: 16px;
+    bottom: 16px;
+    padding: 10px 14px;
+    font-size: 0.8rem;
+  }
 }

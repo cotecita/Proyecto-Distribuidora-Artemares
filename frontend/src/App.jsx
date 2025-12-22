@@ -4,10 +4,11 @@ import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Products from "./pages/Products";
 import Recipes from "./pages/Recipes";
+import ScrollToTop from "./components/ScrollToTop"; // NUEVO
 
 function AppContent() {
   const location = useLocation();
-  const hideFooter = location.pathname === "/"; // ⬅️ OCULTA FOOTER SOLO EN HOME
+  const hideFooter = location.pathname === "/"; // Footer oculto solo en Home
 
   return (
     <div className="app-container">
@@ -23,7 +24,7 @@ function AppContent() {
         </Routes>
       </main>
 
-      {!hideFooter && <Footer />} {/* Footer solo si NO estamos en Home */}
+      {!hideFooter && <Footer />}
     </div>
   );
 }
@@ -31,6 +32,7 @@ function AppContent() {
 export default function App() {
   return (
     <Router>
+      <ScrollToTop />  
       <AppContent />
     </Router>
   );

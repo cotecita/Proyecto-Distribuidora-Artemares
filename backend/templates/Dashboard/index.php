@@ -5,14 +5,6 @@
 ?>
 
 <h1 class="mb-4">Dashboard</h1>
-<a href="/reports/sales-by-product.csv" class="btn btn-outline-primary">
-    Exportar CSV
-</a>
-
-<a href="/reports/sales-by-product.xlsx" class="btn btn-outline-success">
-    Exportar Excel
-</a>
-
 <div class="row mb-4">
     <!-- Total de Productos -->
     <div class="col-md-4">
@@ -178,8 +170,14 @@
     <!-- Ventas Totales por Producto - Últimos 7 Días -->
      <div class="col-md-6">
         <div class="card mb-4">
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Ventas Totales por Producto (Últimos 7 Días)</h5>
+
+                <a href="/reports/sales-by-product.xlsx"
+                class="btn btn-outline-success btn-sm">
+                    <i class="bi bi-file-earmark-excel"></i>
+                    Exportar Excel
+                </a>
             </div>
             <div class="card-body">
                 <?php if (!empty($salesLast7DaysByProduct)): ?>
@@ -236,8 +234,14 @@
     <!-- Ventas Totales por Producto - Últimos 30 Días -->
     <div class="col-md-6">
         <div class="card mb-4">
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Ventas Totales por Producto (Últimos 30 Días)</h5>
+
+                <a href="/reports/sales-by-product-month.xlsx"
+                class="btn btn-outline-success btn-sm">
+                    <i class="bi bi-file-earmark-excel"></i>
+                    Exportar Excel
+                </a>
             </div>
             <div class="card-body">
                 <?php if (!empty($salesLast30DaysTop5)): ?>

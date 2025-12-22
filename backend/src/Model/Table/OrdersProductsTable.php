@@ -105,12 +105,12 @@ class OrdersProductsTable extends Table
             ->innerJoinWith('Orders', function ($q) use ($from) {
                 return $q->where([
                     'Orders.status' => 'closed',
-                    'Orders.created >=' => $from
+                    'Orders.modified >=' => $from
                 ]);
             })
             ->innerJoinWith('Products')
             ->group(['Products.id', 'Products.name'])
-            ->orderDesc('total_amount')
+            ->orderAsc('Products.name')
             ->enableHydration(false)
             ->toArray();
     }

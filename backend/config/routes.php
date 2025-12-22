@@ -91,6 +91,11 @@ return function (RouteBuilder $routes): void {
         ['controller' => 'Reports', 'action' => 'salesByProduct']
     )->setExtensions(['csv', 'xlsx']);
 
+    $routes->connect(
+        '/reports/sales-by-product-month',
+        ['controller' => 'Reports', 'action' => 'salesByProduct30']
+    )->setExtensions(['csv', 'xlsx']);
+
 
     /*
      * If you need a different set of middleware or none at all,

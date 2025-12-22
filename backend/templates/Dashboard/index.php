@@ -82,7 +82,8 @@
         </div>
     </div>
 </div>
-<!-- Accesos rápidos -->
+
+<!-- Accesos rápidos 
 <h2 class="mb-3">Accesos Rápidos</h2>
 <div class="mb-4">
     <?php foreach ($quickAccess as $link): ?>
@@ -90,8 +91,21 @@
             <?= h($link['label']) ?>
         </a>
     <?php endforeach; ?>
-</div>
+</div>  -->
 
+<!-- Accesos rápidos -->
+<h2 class="mb-3">Accesos Rápidos</h2>
+<div class="mb-4">
+    <?php foreach ($quickAccess as $link): ?>
+        <a
+            class="btn btn-outline-primary me-2 mb-2 d-inline-flex align-items-center gap-2"
+            href="<?= $this->Url->build($link['url']) ?>"
+        >
+            <i class="bi-lightning-charge"></i>
+            <?= h($link['label']) ?>
+        </a>
+    <?php endforeach; ?>
+</div>
 
 <!-- Pedidos Pendientes -->
 <h2 class="mb-3">Pedidos Pendientes</h2>
@@ -515,3 +529,7 @@
         <?php endif; ?>
     </div>
 </div>
+
+<style>
+    
+</style>

@@ -74,10 +74,12 @@ class DashboardController extends AppController
 
         // 8. accesos rápidos
         $quickAccess = [
-            ['label' => 'Agregar Producto', 'url' => ['controller' => 'Products', 'action' => 'add']],
-            ['label' => 'Agregar Pedido', 'url' => ['controller' => 'Orders', 'action' => 'add']],
-            ['label' => 'Ver Pedidos', 'url' => ['controller' => 'Orders', 'action' => 'index']],
-            ['label' => 'Ver Categorías', 'url' => ['controller' => 'Categories', 'action' => 'index']],
+            ['label' => 'Añadir Producto', 'url' => ['controller' => 'Products', 'action' => 'add']],
+            ['label' => 'Añadir Pedido', 'url' => ['controller' => 'Orders', 'action' => 'add']],
+            ['label' => 'Añadir cuadratura', 'url' => ['controller' => 'CashBalances', 'action' => 'add']],
+            ['label' => 'Añadir receta', 'url' => ['controller' => 'Recipes', 'action' => 'add']],
+            ['label' => 'Añadir categoría', 'url' => ['controller' => 'Categories', 'action' => 'add']]
+            //['label' => 'Ver Categorías', 'url' => ['controller' => 'Categories', 'action' => 'index']],
         ];
 
         $sevenDays = (new FrozenTime())->subDays(7);

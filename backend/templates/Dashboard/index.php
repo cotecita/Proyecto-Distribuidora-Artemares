@@ -4,34 +4,80 @@
  */
 ?>
 
-<h1 class="mb-4">Dashboard</h1>
-
-<div class="row mb-4">
-    <!-- Total de Productos -->
-    <div class="col-md-4">
-        <div class="card text-white bg-primary mb-3">
-            <div class="card-body">
-                <h5 class="card-title">Total de Productos</h5>
-                <p class="card-text fs-3"><?= $totalProducts ?></p>
+<h1 class="mb-4">Tablero</h1>
+<div class="row">
+    <!-- Total Productos -->
+    <div class="col-md-3">
+        <div class="card shadow-sm border-start border-4 border-primary mb-3">
+            <div class="card-body d-flex align-items-center">
+                <div class="me-3 fs-2 text-primary">
+                    <i class="bi bi-box-seam"></i>
+                </div>
+                <div>
+                    <div class="text-uppercase small text-muted">
+                        Total de Productos
+                    </div>
+                    <div class="fs-2 fw-bold">
+                        <?= $totalProducts ?>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Total de Categorías -->
-    <div class="col-md-4">
-        <div class="card text-white bg-success mb-3">
-            <div class="card-body">
-                <h5 class="card-title">Total de Categorías</h5>
-                <p class="card-text fs-3"><?= $totalCategories ?></p>
+    <!-- Total Categorías -->
+    <div class="col-md-3">
+        <div class="card shadow-sm border-start border-4 border-success mb-3">
+            <div class="card-body d-flex align-items-center">
+                <div class="me-3 fs-2 text-success">
+                    <i class="bi bi-tags"></i>
+                </div>
+                <div>
+                    <div class="text-uppercase small text-muted">
+                        Total de Categorías
+                    </div>
+                    <div class="fs-2 fw-bold">
+                        <?= $totalCategories ?>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
     <!-- Pedidos Pendientes -->
-    <div class="col-md-4">
-        <div class="card text-white bg-warning mb-3">
-            <div class="card-body">
-                <h5 class="card-title">Pedidos Pendientes</h5>
-                <p class="card-text fs-3"><?= $pendingOrders->count() ?></p>
+    <div class="col-md-3">
+        <div class="card shadow-sm border-start border-4 border-warning mb-3">
+            <div class="card-body d-flex align-items-center">
+                <div class="me-3 fs-2 text-warning">
+                    <i class="bi bi-clock-history"></i>
+                </div>
+                <div>
+                    <div class="text-uppercase small text-muted">
+                        Pedidos Pendientes
+                    </div>
+                    <div class="fs-2 fw-bold text-warning">
+                        <?= $pendingOrders->count() ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pedidos Cerrados Hoy -->
+    <div class="col-md-3">
+        <div class="card shadow-sm border-start border-4 border-info mb-3">
+            <div class="card-body d-flex align-items-center">
+                <div class="me-3 fs-2 text-info">
+                    <i class="bi bi-check-circle"></i>
+                </div>
+                <div>
+                    <div class="text-uppercase small text-muted">
+                        Pedidos cerrados hoy
+                    </div>
+                    <div class="fs-2 fw-bold">
+                        <?= $closedOrdersToday ?>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -171,8 +217,14 @@
     <!-- Ventas Totales por Producto - Últimos 7 Días -->
      <div class="col-md-6">
         <div class="card mb-4">
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Ventas Totales por Producto (Últimos 7 Días)</h5>
+
+                <a href="/reports/sales-by-product.xlsx"
+                class="btn btn-outline-success btn-sm">
+                    <i class="bi bi-file-earmark-excel"></i>
+                    Exportar Excel
+                </a>
             </div>
             <div class="card-body">
                 <?php if (!empty($salesLast7DaysByProduct)): ?>
@@ -229,8 +281,14 @@
     <!-- Ventas Totales por Producto - Últimos 30 Días -->
     <div class="col-md-6">
         <div class="card mb-4">
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Ventas Totales por Producto (Últimos 30 Días)</h5>
+
+                <a href="/reports/sales-by-product-month.xlsx"
+                class="btn btn-outline-success btn-sm">
+                    <i class="bi bi-file-earmark-excel"></i>
+                    Exportar Excel
+                </a>
             </div>
             <div class="card-body">
                 <?php if (!empty($salesLast30DaysTop5)): ?>

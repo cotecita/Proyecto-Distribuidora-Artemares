@@ -8,7 +8,7 @@
 <?= $this->element('form_card', [
     'form' => $this->Form,
     'entity' => $cashBalance,
-    'fields' => ['actual_amount', 'description'],
+    'fields' => ['expected_amount','actual_amount', 'description'],
     'title' => 'Editar Cuadratura de caja',
     'icon' => 'bi-pencil-square',
     'actionLabel' => 'Actualizar',

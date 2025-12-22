@@ -24,6 +24,7 @@ class DashboardController extends AppController
         // 2. total de categorías
         $totalCategories = $categoriesTable->find()->count();
 
+
         // 3. top 5 productos mas vendidos
         $productsMostSold = $ordersProductsTable->find()
             ->select([
@@ -39,7 +40,16 @@ class DashboardController extends AppController
             ->order(['total_quantity' => 'DESC'])
             ->limit(5)
             ->all();
-
+        //pedidos marcados como closed del día actual
+        $todayStart = FrozenTime::today()->startOfDay();
+        $todayEnd = FrozenTime::today()->endOfDay();
+        $closedOrdersToday = $ordersTable->find()
+            ->where([
+                'Orders.status' => 'closed',
+                'Orders.modified >=' => $todayStart,
+                'Orders.modified <=' => $todayEnd,
+            ])
+            ->count();
         // 4. productos por categoria
         $productsByCategory = $categoriesTable->find()
             ->select([
@@ -175,7 +185,8 @@ class DashboardController extends AppController
             'salesLast7DaysByProduct',
             'salesLast30DaysTop5',
             'salesLast7DaysByCategory',
-            'salesLast30DaysByCategory'
+            'salesLast30DaysByCategory',
+            'closedOrdersToday'
         ));
     }
 

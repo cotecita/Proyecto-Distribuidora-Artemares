@@ -56,7 +56,7 @@ class CashBalancesTable extends Table
     {
         $validator
             ->decimal('expected_amount')
-            ->notEmptyString('expected_amount');
+            ->allowEmptyString('expected_amount');
 
         $validator
             ->decimal('actual_amount')
@@ -95,7 +95,8 @@ class CashBalancesTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->isUnique(['balance_date']), ['errorField' => 'balance_date']);
+        $rules->add($rules->isUnique(['balance_date']), ['errorField' => 'balance_date', 
+            'message' => 'Ya existe una cuadratura de caja para esta fecha.']);
 
         return $rules;
     }

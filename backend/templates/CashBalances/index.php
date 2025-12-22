@@ -11,7 +11,7 @@
     <div class="d-flex justify-content-between align-items-center mt-3 mb-4">
         <div class="d-flex gap-2">
             <?= $this->Html->link(
-                '<i class="bi bi-plus-circle me-1"></i> Cuadratura del día',
+                '<i class="bi bi-plus-circle me-1"></i> Añadir cuadratura',
                 ['action' => 'add'],
                 ['class' => 'btn btn-primary shadow-sm', 'escape' => false]
             ) ?>

@@ -7,6 +7,8 @@ use Cake\ORM\Query\SelectQuery;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\I18n\FrozenDate;
+use DateTimeInterface;
 
 /**
  * OrdersProducts Model
@@ -87,5 +89,29 @@ class OrdersProductsTable extends Table
         $rules->add($rules->existsIn(['product_id'], 'Products'), ['errorField' => 'product_id']);
 
         return $rules;
+    }
+
+    //obtener ventas por producto
+    public function getSalesByProduct(DateTimeInterface $from): array
+    {
+        return $this->find()
+            ->select([
+                'product_name' => 'Products.name',
+                'total_quantity' => $this->find()->func()->sum('OrdersProducts.quantity'),
+                'total_amount' => $this->find()->func()->sum(
+                    'OrdersProducts.quantity * Products.price'
+                )
+            ])
+            ->innerJoinWith('Orders', function ($q) use ($from) {
+                return $q->where([
+                    'Orders.status' => 'closed',
+                    'Orders.modified >=' => $from
+                ]);
+            })
+            ->innerJoinWith('Products')
+            ->group(['Products.id', 'Products.name'])
+            ->orderAsc('Products.name')
+            ->enableHydration(false)
+            ->toArray();
     }
 }

@@ -80,7 +80,27 @@ class OrdersTable extends Table
         return $query
             ->where([
                 'Orders.status' => 'closed',
-                'DATE(Orders.created) =' => $today,
+                'DATE(Orders.modified) =' => $today,
+            ])
+            ->contain([
+                'Products' => function ($q) {
+                    return $q->select([
+                        'Products.id',
+                        'Products.name',
+                        'Products.price',
+                    ]);
+                }
+            ]);
+    }
+
+    public function findClosedByDate($query, array $options)
+    {
+        $date = $options['date']->format('Y-m-d');
+
+        return $query
+            ->where([
+                'Orders.status' => 'closed',
+                'DATE(Orders.modified)' => $date
             ])
             ->contain([
                 'Products' => function ($q) {

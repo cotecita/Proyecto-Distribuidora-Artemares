@@ -83,16 +83,6 @@
     </div>
 </div>
 
-<!-- Accesos rápidos 
-<h2 class="mb-3">Accesos Rápidos</h2>
-<div class="mb-4">
-    <?php foreach ($quickAccess as $link): ?>
-        <a class="btn btn-outline-primary me-2 mb-2" href="<?= $this->Url->build($link['url']) ?>">
-            <?= h($link['label']) ?>
-        </a>
-    <?php endforeach; ?>
-</div>  -->
-
 <!-- Accesos rápidos -->
 <h2 class="mb-3">Accesos Rápidos</h2>
 <div class="mb-4">
@@ -108,124 +98,247 @@
 </div>
 
 <!-- Pedidos Pendientes -->
-<h2 class="mb-3">Pedidos Pendientes</h2>
+<div class="card shadow-sm border-0 mb-4">
 
-<?php if ($pendingOrders->isEmpty()): ?>
-    <p class="text-muted">No hay pedidos pendientes.</p>
-<?php else: ?>
-    <div class="table-responsive">
-        <table class="table table-hover table-bordered align-middle">
-            <thead class="table-light">
-                <tr>
-                    <th>Pedido</th>
-                    <th>Estado</th>
-                    <th>Fecha de Creación</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($pendingOrders as $order): ?>
-                    <tr>
-                        <td><?= $order->id ?></td>
-                        <td>
-                            <span class="badge bg-info px-3 py-2">En Proceso</span>
-                        </td>
-                        <td><?= $order->created->format('d-m-Y') ?></td>
-                        <td>
-                            <?= $this->Html->link(
-                                '<i class="bi bi-eye"></i>',
-                                ['controller' => 'Orders', 'action' => 'view', $order->id],
-                                ['class' => 'btn btn-outline-primary btn-sm rounded shadow-sm', 'escape' => false, 'title' => 'Ver', 'style' => 'border-width:1.5px;']
-                            ) ?>
-                            <?= $this->Html->link(
-                                '<i class="bi bi-pencil"></i>',
-                                ['controller' => 'Orders', 'action' => 'edit', $order->id],
-                                ['class' => 'btn btn-outline-warning btn-sm rounded shadow-sm', 'escape' => false, 'title' => 'Editar', 'style' => 'border-width:1.5px;']
-                            ) ?>
-                            <?= $this->Form->postLink(
-                                '<i class="bi bi-trash"></i>',
-                                ['controller' => 'Orders', 'action' => 'delete', $order->id],
-                                [
-                                    'confirm' => '¿Seguro que deseas eliminar este pedido?',
-                                    'class' => 'btn btn-outline-danger btn-sm rounded shadow-sm',
-                                    'escape' => false,
-                                    'title' => 'Eliminar',
-                                    'style' => 'border-width:1.5px;'
-                                ]
-                            ) ?>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+        <h5 class="mb-0 fw-semibold text-dark">
+            <i class="bi bi-clock-history me-2 text-info"></i>
+            Pedidos pendientes
+        </h5>
+
+        <span class="badge badge-soft-info">
+            <?= $pendingOrders->count() ?> pendientes
+        </span>
     </div>
-<?php endif; ?>
 
+    <div class="card-body p-0">
 
-<!-- Productos más vendidos -->
-<h2 class="mb-3">Productos 5 más vendidos (histórico)</h2>
-<div class="table-responsive mb-4">
-    <table class="table table-striped table-bordered">
-        <thead class="table-dark">
-            <tr>
-                <th>Producto</th>
-                <th>Cantidad Vendida</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($productsMostSold as $item): ?>
-            <tr>
-                <td><?= h($item->_matchingData['Products']->name) ?></td>
-                <td><?= $item->total_quantity ?></td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+        <?php if ($pendingOrders->isEmpty()): ?>
+            <p class="text-muted text-center py-4 mb-0">
+                No hay pedidos pendientes.
+            </p>
+        <?php else: ?>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0 pending-orders-table">
+
+                    <thead>
+                        <tr class="text-muted small text-center">
+                            <th class="fw-semibold">Pedido</th>
+                            <th class="fw-semibold">Estado</th>
+                            <th class="fw-semibold">Fecha</th>
+                            <th class="fw-semibold">Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <?php foreach ($pendingOrders as $order): ?>
+                            <tr>
+                                <td class="text-center fw-semibold text-dark">
+                                    <?= $order->id ?>
+                                </td>
+
+                                <td class="text-center">
+                                    <span class="badge badge-soft-info">
+                                        En proceso
+                                    </span>
+                                </td>
+
+                                <td class="text-center text-muted">
+                                    <?= $order->created->format('d-m-Y') ?>
+                                </td>
+
+                                <td class="text-center">
+                                    <div class="btn-group btn-group-sm" role="group">
+
+                                        <?= $this->Html->link(
+                                            '<i class="bi bi-eye"></i>',
+                                            ['controller' => 'Orders', 'action' => 'view', $order->id],
+                                            ['class' => 'btn btn-outline-primary', 'escape' => false, 'title' => 'Ver']
+                                        ) ?>
+
+                                        <?= $this->Html->link(
+                                            '<i class="bi bi-pencil"></i>',
+                                            ['controller' => 'Orders', 'action' => 'edit', $order->id],
+                                            ['class' => 'btn btn-outline-warning', 'escape' => false, 'title' => 'Editar']
+                                        ) ?>
+
+                                        <?= $this->Form->postLink(
+                                            '<i class="bi bi-trash"></i>',
+                                            ['controller' => 'Orders', 'action' => 'delete', $order->id],
+                                            [
+                                                'confirm' => '¿Seguro que deseas eliminar este pedido?',
+                                                'class' => 'btn btn-outline-danger',
+                                                'escape' => false,
+                                                'title' => 'Eliminar'
+                                            ]
+                                        ) ?>
+
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+
+                </table>
+            </div>
+
+        <?php endif; ?>
+
+    </div>
 </div>
 
-<!-- Productos por Categoría -->
-<h2 class="mb-3">Productos por Categoría</h2>
-<div class="table-responsive mb-4">
-    <table class="table table-striped table-bordered">
-        <thead class="table-dark">
-            <tr>
-                <th>Categoría</th>
-                <th>Total de Productos</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($productsByCategory as $item): ?>
-            <tr>
-                <td><?= h($item->name) ?></td>
-                <td><?= $item->total_products ?></td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+<div class="row g-4">
+    <!-- Productos más vendidos -->
+    <div class="col-12 col-lg-6">
+        <div class="card shadow-sm border-0 mb-4">
+
+            <div class="card-header bg-white">
+                <h5 class="mb-0 fw-semibold">
+                    <i class="bi bi-bar-chart-fill me-2 text-primary"></i>
+                    4 productos más vendidos (histórico)
+                </h5>
+            </div>
+
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0 top-products-table">
+
+                        <thead>
+                            <tr class="text-muted">
+                                <th class="fw-semibold">Producto</th>
+                                <th class="fw-semibold text-center">Cantidad vendida</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <?php foreach ($productsMostSold as $item): ?>
+                                <tr>
+                                    <td class="fw-semibold">
+                                        <?= h($item->_matchingData['Products']->name) ?>
+                                    </td>
+
+                                    <td class="text-center">
+                                        <span class="badge badge-soft-primary">
+                                            <?= $item->total_quantity ?>
+                                        </span>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!-- Productos por Categoría -->
+    <div class="col-12 col-lg-6">
+        <div class="card shadow-sm border-0 mb-4">
+
+            <div class="card-header bg-white">
+                <h5 class="mb-0 fw-semibold">
+                    <i class="bi bi-tags-fill me-2 text-success"></i>
+                    Productos por categoría
+                </h5>
+            </div>
+
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0 products-category-table">
+
+                        <thead>
+                            <tr class="text-muted ">
+                                <th class="fw-semibold">Categoría</th>
+                                <th class="fw-semibold text-center">Total de productos</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <?php foreach ($productsByCategory as $item): ?>
+                                <tr>
+                                    <td class="fw-semibold">
+                                        <?= h($item->name) ?>
+                                    </td>
+
+                                    <td class="text-end text-center">
+                                        <span class="badge badge-soft-success">
+                                            <?= $item->total_products ?>
+                                        </span>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Pedidos recientes -->
-<h2 class="mb-3">Pedidos Recientes</h2>
-<div class="table-responsive mb-4">
-    <table class="table table-striped table-bordered">
-        <thead class="table-dark">
-            <tr>
-                <th>ID Pedido</th>
-                <th>Estado</th>
-                <th>Fecha</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($recentOrders as $order): ?>
-            <tr>
-                <td><?= $order->id ?></td>
-                <td><?= h($order->status) ?></td>
-                <td><?= $order->created->format('d-m-Y H:i') ?></td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+<div class="card shadow-sm border-0 mb-4">
+
+    <div class="card-header bg-white">
+        <h5 class="mb-0 fw-semibold">
+            <i class="bi bi-clock me-2 text-secondary"></i>
+            Pedidos recientes
+        </h5>
+    </div>
+
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table align-middle mb-0 recent-orders-table">
+
+                <thead>
+                    <tr class="text-muted fs-6">
+                        <th class="fw-semibold">Pedido</th>
+                        <th class="fw-semibold text-center">Estado</th>
+                        <th class="fw-semibold text-center">Fecha</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <?php foreach ($recentOrders as $order): ?>
+
+                        <?php
+                        $statuses = [
+                            'in_process' => ['label' => 'En proceso', 'class' => 'info'],
+                            'closed'     => ['label' => 'Cerrado', 'class' => 'success'],
+                            'cancelled'  => ['label' => 'Cancelado', 'class' => 'danger'],
+                        ];
+                        $status = $statuses[$order->status] ?? [
+                            'label' => ucfirst($order->status),
+                            'class' => 'secondary'
+                        ];
+                        ?>
+
+                        <tr>
+                            <td class="fw-semibold text-dark">
+                                <?= $order->id ?>
+                            </td>
+
+                            <td class="text-center">
+                                <span class="badge badge-soft-<?= $status['class'] ?>">
+                                    <?= $status['label'] ?>
+                                </span>
+                            </td>
+
+                            <td class="text-center text-muted">
+                                <?= $order->created->format('d-m-Y') ?>
+                            </td>
+                        </tr>
+
+                    <?php endforeach; ?>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
 </div>
+
 
 <div class="row mb-4">
     <!-- Ventas Totales por Producto - Últimos 7 Días -->
@@ -531,5 +644,126 @@
 </div>
 
 <style>
+   /* Tabla pedidos pendientes */
+    .pending-orders-table th,
+    .pending-orders-table td {
+        border-bottom: 1px solid #eef1f4;
+    }
+
+    .pending-orders-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .pending-orders-table tbody tr:hover {
+        background-color: rgba(0,0,0,.015);
+    }
+
+    .recent-orders-table th,
+    .recent-orders-table td {
+        padding: .75rem 1.25rem; /* ↑ más aire horizontal */
+    }
+    
+    /* Badge soft */
+    .badge-soft-info {
+        background-color: rgba(13, 202, 240, 0.15);
+        color: #0dcaf0;
+        font-weight: 500;
+        padding: .45em .9em;
+        border-radius: 8px;
+    }
+
+    /* Botones más finos */
+    .pending-orders-table .btn {
+        border-width: 1px;
+        padding: .25rem .45rem;
+    }
+
+    .top-products-table th,
+    .top-products-table td {
+        border-bottom: 1px solid #eef1f4;
+    }
+
+    .top-products-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .top-products-table tbody tr:hover {
+        background-color: rgba(0,0,0,.015);
+    }
+
+    /* Badge cantidad vendida */
+    .badge-soft-primary {
+        background-color: rgba(13, 110, 253, 0.15);
+        color: #0d6efd;
+        font-weight: 600;
+        padding: .4em .75em;
+        border-radius: 8px;
+    }
+    .products-category-table th,
+    .products-category-table td {
+        border-bottom: 1px solid #eef1f4;
+    }
+
+    .products-category-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .products-category-table tbody tr:hover {
+        background-color: rgba(0,0,0,.015);
+    }
+
+    /* Badge total productos */
+    .badge-soft-success {
+        background-color: rgba(25, 135, 84, 0.15);
+        color: #198754;
+        font-weight: 600;
+        padding: .4em .75em;
+        border-radius: 8px;
+    }
+    .recent-orders-table th,
+    .recent-orders-table td {
+        border-bottom: 1px solid #eef1f4;
+    }
+
+    .recent-orders-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .recent-orders-table tbody tr:hover {
+        background-color: rgba(0,0,0,.015);
+    }
+
+    /* Badges soft por estado */
+    .badge-soft-info {
+        background-color: rgba(13, 202, 240, 0.15);
+        color: #0dcaf0;
+        font-weight: 500;
+        padding: .45em .9em;
+        border-radius: 8px;
+    }
+
+    .badge-soft-success {
+        background-color: rgba(25, 135, 84, 0.15);
+        color: #198754;
+        font-weight: 500;
+        padding: .45em .9em;
+        border-radius: 8px;
+    }
+
+    .badge-soft-danger {
+        background-color: rgba(220, 53, 69, 0.15);
+        color: #dc3545;
+        font-weight: 500;
+        padding: .45em .9em;
+        border-radius: 8px;
+    }
+
+    .badge-soft-secondary {
+        background-color: rgba(108, 117, 125, 0.15);
+        color: #6c757d;
+        font-weight: 500;
+        padding: .45em .9em;
+        border-radius: 8px;
+    }
     
 </style>

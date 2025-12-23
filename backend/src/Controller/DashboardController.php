@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 use Cake\I18n\FrozenTime;
+use Cake\I18n\FrozenDate;
 
 /**
  * Dashboard Controller
@@ -38,8 +39,27 @@ class DashboardController extends AppController
             ->matching('Products')
             ->group(['OrdersProducts.product_id', 'Products.name'])
             ->order(['total_quantity' => 'DESC'])
-            ->limit(5)
+            ->limit(4)
             ->all();
+
+        //$startDate = FrozenDate::today()->subDays(90);
+        //$productsMostSold = $ordersProductsTable->find()
+          //  ->select([
+            //    'product_id',
+              //  'total_quantity' => 'SUM(OrdersProducts.quantity)',
+                //'Products__name' => 'Products.name'
+            //])
+            //->matching('Orders', function ($q) use ($startDate) {
+              //  return $q->where([
+                //    'Orders.status' => 'closed',
+                  //  'Orders.created >=' => $startDate
+                //]);
+            //})
+            //->matching('Products')
+            //->group(['OrdersProducts.product_id', 'Products.name'])
+            //->order(['total_quantity' => 'DESC'])
+            //->limit(4)
+            //->all();
         //pedidos marcados como closed del día actual
         $todayStart = FrozenTime::today()->startOfDay();
         $todayEnd = FrozenTime::today()->endOfDay();
@@ -74,10 +94,12 @@ class DashboardController extends AppController
 
         // 8. accesos rápidos
         $quickAccess = [
-            ['label' => 'Agregar Producto', 'url' => ['controller' => 'Products', 'action' => 'add']],
-            ['label' => 'Agregar Pedido', 'url' => ['controller' => 'Orders', 'action' => 'add']],
-            ['label' => 'Ver Pedidos', 'url' => ['controller' => 'Orders', 'action' => 'index']],
-            ['label' => 'Ver Categorías', 'url' => ['controller' => 'Categories', 'action' => 'index']],
+            ['label' => 'Añadir Producto', 'url' => ['controller' => 'Products', 'action' => 'add']],
+            ['label' => 'Añadir Pedido', 'url' => ['controller' => 'Orders', 'action' => 'add']],
+            ['label' => 'Añadir cuadratura', 'url' => ['controller' => 'CashBalances', 'action' => 'add']],
+            ['label' => 'Añadir receta', 'url' => ['controller' => 'Recipes', 'action' => 'add']],
+            ['label' => 'Añadir categoría', 'url' => ['controller' => 'Categories', 'action' => 'add']]
+            //['label' => 'Ver Categorías', 'url' => ['controller' => 'Categories', 'action' => 'index']],
         ];
 
         $sevenDays = (new FrozenTime())->subDays(7);

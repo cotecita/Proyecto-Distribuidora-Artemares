@@ -135,17 +135,21 @@ function sortIcon($field, $currentSort, $direction) {
                 </table>
             </div>
 
-            <div class="d-flex justify-content-between align-items-center mt-4 flex-wrap gap-2">
-                <div>
-                    <?= $this->Paginator->prev('< Anterior', ['class' => 'btn btn-outline-secondary btn-sm']) ?>
-                    <?= $this->Paginator->numbers(['class' => 'pagination pagination-sm d-inline-flex']) ?>
-                    <?= $this->Paginator->next('Siguiente >', ['class' => 'btn btn-outline-secondary btn-sm']) ?>
-                </div>
+            <div class="d-flex justify-content-between align-items-center mt-4">
+
+                <nav>
+                    <ul class="pagination pagination-sm mb-0">
+                        <?= $this->Paginator->prev() ?>
+                        <?= $this->Paginator->numbers() ?>
+                        <?= $this->Paginator->next() ?>
+                    </ul>
+                </nav>
 
                 <p class="text-muted mb-0 small">
                     Página <?= $this->Paginator->counter('{{page}} de {{pages}}') ?>
                 </p>
             </div>
+
         </div>
     </div>
 </div>

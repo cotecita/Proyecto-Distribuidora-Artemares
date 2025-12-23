@@ -113,7 +113,7 @@ function sortIcon($field, $currentSort, $direction) {
                                         ];
                                         $status = $labels[$order->status] ?? ['label' => ucfirst($order->status), 'class' => 'secondary'];
                                     ?>
-                                    <span class="badge bg-<?= $status['class'] ?> px-3 py-2">
+                                    <span class="badge badge-soft-<?= $status['class'] ?>">
                                         <?= h($status['label']) ?>
                                     </span>
                                 </td>
@@ -168,12 +168,15 @@ function sortIcon($field, $currentSort, $direction) {
                 </table>
             </div>
 
-            <div class="d-flex justify-content-between align-items-center mt-4 flex-wrap gap-2">
-                <div>
-                    <?= $this->Paginator->prev('< Anterior', ['class' => 'btn btn-outline-secondary btn-sm']) ?>
-                    <?= $this->Paginator->numbers(['class' => 'pagination pagination-sm d-inline-flex']) ?>
-                    <?= $this->Paginator->next('Siguiente >', ['class' => 'btn btn-outline-secondary btn-sm']) ?>
-                </div>
+            <div class="d-flex justify-content-between align-items-center mt-4">
+
+                <nav>
+                    <ul class="pagination pagination-sm mb-0">
+                        <?= $this->Paginator->prev() ?>
+                        <?= $this->Paginator->numbers() ?>
+                        <?= $this->Paginator->next() ?>
+                    </ul>
+                </nav>
 
                 <p class="text-muted mb-0 small">
                     Página <?= $this->Paginator->counter('{{page}} de {{pages}}') ?>
@@ -214,4 +217,37 @@ function sortIcon($field, $currentSort, $direction) {
     th:hover .sort-neutral {
         opacity: 0.9;
     }
+
+    .badge-soft-info {
+        background-color: rgba(13, 202, 240, 0.15);
+        color: #0dcaf0;
+        font-weight: 500;
+        padding: .45em .9em;
+        border-radius: 8px;
+    }
+
+    .badge-soft-success {
+        background-color: rgba(25, 135, 84, 0.15);
+        color: #198754;
+        font-weight: 500;
+        padding: .45em .9em;
+        border-radius: 8px;
+    }
+
+    .badge-soft-danger {
+        background-color: rgba(220, 53, 69, 0.15);
+        color: #dc3545;
+        font-weight: 500;
+        padding: .45em .9em;
+        border-radius: 8px;
+    }
+
+    .badge-soft-secondary {
+        background-color: rgba(108, 117, 125, 0.15);
+        color: #6c757d;
+        font-weight: 500;
+        padding: .45em .9em;
+        border-radius: 8px;
+    }
+
 </style>

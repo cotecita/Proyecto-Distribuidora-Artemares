@@ -113,7 +113,7 @@ function sortIcon($field, $currentSort, $direction) {
                                         ];
                                         $status = $labels[$order->status] ?? ['label' => ucfirst($order->status), 'class' => 'secondary'];
                                     ?>
-                                    <span class="badge bg-<?= $status['class'] ?> px-3 py-2">
+                                    <span class="badge badge-soft-<?= $status['class'] ?>">
                                         <?= h($status['label']) ?>
                                     </span>
                                 </td>
@@ -216,6 +216,38 @@ function sortIcon($field, $currentSort, $direction) {
 
     th:hover .sort-neutral {
         opacity: 0.9;
+    }
+
+    .badge-soft-info {
+        background-color: rgba(13, 202, 240, 0.15);
+        color: #0dcaf0;
+        font-weight: 500;
+        padding: .45em .9em;
+        border-radius: 8px;
+    }
+
+    .badge-soft-success {
+        background-color: rgba(25, 135, 84, 0.15);
+        color: #198754;
+        font-weight: 500;
+        padding: .45em .9em;
+        border-radius: 8px;
+    }
+
+    .badge-soft-danger {
+        background-color: rgba(220, 53, 69, 0.15);
+        color: #dc3545;
+        font-weight: 500;
+        padding: .45em .9em;
+        border-radius: 8px;
+    }
+
+    .badge-soft-secondary {
+        background-color: rgba(108, 117, 125, 0.15);
+        color: #6c757d;
+        font-weight: 500;
+        padding: .45em .9em;
+        border-radius: 8px;
     }
 
 </style>

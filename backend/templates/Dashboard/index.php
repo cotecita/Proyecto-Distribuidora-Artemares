@@ -84,7 +84,7 @@
 </div>
 
 <!-- Accesos rápidos -->
-<h2 class="mb-3">Accesos Rápidos</h2>
+<h3 class="mb-3">Accesos Rápidos</h3>
 <div class="mb-4">
     <?php foreach ($quickAccess as $link): ?>
         <a

@@ -110,20 +110,6 @@ export default function Products() {
   /* ======================================================
      Carrito
   ====================================================== */
-
-  const handleChangeQuantity = (productId, delta) => {
-    setQuantities((prev) => {
-      const current = prev[productId] ?? 1;
-      return { ...prev, [productId]: Math.max(1, current + delta) };
-    });
-  };
-
-  const handleSetQuantity = (productId, value) => {
-    const parsed = parseInt(value, 10);
-    if (!parsed || parsed <= 0) return;
-    setQuantities((prev) => ({ ...prev, [productId]: parsed }));
-  };
-
   const handleAddToCart = (productId) => {
     setCart((prev) => ({
       ...prev,
@@ -539,35 +525,43 @@ const handleSendWhatsapp = () => {
               <div className="cart-body">
                 {cartItems.length === 0 ? (
                   <div className="cart-empty">
-                    <p>Pedido vacío</p>
+                    <p>Pedido vacío</p> 
                     <span>Agrega productos para comenzar</span>
                   </div>
                 ) : (
                   cartItems.map(({ product, quantity }) => (
                     <div className="cart-item" key={product.id}>
+  
+                      {/* IMAGEN SMALL */}
+                      <div className="cart-item-thumb">
+                        <img
+                          src={
+                            product.images?.small ||
+                            product.images?.medium ||
+                            "/images/placeholder-product.jpg"
+                          }
+                          alt={product.name}
+                          loading="lazy"
+                        />
+                      </div>
+
+                      {/* INFO */}
                       <div className="cart-item-info">
                         <span className="cart-item-name">{product.name}</span>
                         <span className="cart-item-price">
-                          ${product.price.toLocaleString("es-CL")} /{" "} {product.unitQuantity} {product.unit}
+                          ${product.price.toLocaleString("es-CL")} /{" "}
+                          {product.unitQuantity} {product.unit}
                         </span>
                       </div>
 
+                      {/* CANTIDAD */}
                       <div className="qty-control small">
-                        <button
-                          onClick={() => handleUpdateCartItem(product.id, -1)}
-                        >
-                          −
-                        </button>
-
+                        <button onClick={() => handleUpdateCartItem(product.id, -1)}>−</button>
                         <input type="number" value={quantity} readOnly />
-
-                        <button
-                          onClick={() => handleUpdateCartItem(product.id, 1)}
-                        >
-                          +
-                        </button>
+                        <button onClick={() => handleUpdateCartItem(product.id, 1)}>+</button>
                       </div>
                     </div>
+
                   ))
                 )}
               </div>
@@ -596,7 +590,7 @@ const handleSendWhatsapp = () => {
         <button
           className="floating-cart-btn"
           onClick={() => setIsCartOpen(true)}
-        >
+        > 
           🛒 Pedido ({totalItemsInCart})
         </button>
       )}

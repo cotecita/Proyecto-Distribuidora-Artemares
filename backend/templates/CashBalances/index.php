@@ -5,6 +5,23 @@
  */
 ?>
 
+<?php
+$params = $this->Paginator->params();
+$sort = $params['sort'] ?? null;
+$direction = $params['direction'] ?? null;
+
+function sortIcon($field, $currentSort, $direction) {
+    if ($field !== $currentSort) {
+        return ' <i class="bi bi-arrow-down-up sort-neutral"></i>';
+    }
+
+    return $direction === 'asc'
+        ? ' <i class="bi bi-arrow-up"></i>'
+        : ' <i class="bi bi-arrow-down"></i>';
+}
+?>
+
+
 <div class="container-fluid px-4">
 
     <!-- Header -->
@@ -18,7 +35,7 @@
 
             <?= $this->Html->link(
                 '<i class="bi bi-receipt me-1"></i> Ver ventas del día',
-                ['action' => 'today'],
+                ['action' => 'today2'],
                 ['class' => 'btn btn-outline-primary shadow-sm', 'escape' => false]
             ) ?>
         </div>
@@ -45,11 +62,36 @@
                     <!-- Header con gradiente -->
                     <thead style="background: linear-gradient(90deg, #009FE3 0%, #4CC3FF 100%); color: #fff;">
                         <tr>
-                            <th class="text-start">Fecha</th>
+                            <!--<th class="text-start">Fecha</th>
                             <th class="text-start">Monto esperado</th>
                             <th class="text-start">Monto actual</th>
                             <th class="text-start">Diferencia</th>
                             <th class="text-start">Estado</th>
+                            <th class="text-center">Acciones</th> -->
+                            <th>
+                                <?= $this->Paginator->sort('balance_date', 'Fecha') ?>
+                                <?= sortIcon('balance_date', $sort, $direction) ?>
+                            </th>
+
+                            <th>
+                                <?= $this->Paginator->sort('expected_amount', 'Monto esperado') ?>
+                                <?= sortIcon('expected_amount', $sort, $direction) ?>
+                            </th>
+
+                            <th>
+                                <?= $this->Paginator->sort('actual_amount', 'Monto actual') ?>
+                                <?= sortIcon('actual_amount', $sort, $direction) ?>
+                            </th>
+
+                            <th>
+                                <?= $this->Paginator->sort('difference', 'Diferencia') ?>
+                                <?= sortIcon('difference', $sort, $direction) ?>
+                            </th>
+
+                            <th>
+                                <?= $this->Paginator->sort('status', 'Estado') ?>
+                                <?= sortIcon('status', $sort, $direction) ?>
+                            </th>
                             <th class="text-center">Acciones</th>
                         </tr>
                     </thead>
@@ -176,6 +218,25 @@
     td, th {
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+
+    th {
+        white-space: nowrap;
+        cursor: pointer;
+    }
+
+    th i {
+        font-size: 0.82rem;
+        margin-left: 4px;
+    }
+
+    .sort-neutral {
+        opacity: 0.45;
+        transition: opacity .15s ease-in-out;
+    }
+
+    th:hover .sort-neutral {
+        opacity: 0.9;
     }
 </style>
 

@@ -10,16 +10,22 @@ use Cake\I18n\FrozenDate;
 
 <div class="container mt-4">
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-md-8 col-lg-7">
 
             <div class="card shadow">
-                <div class="card-header bg-primary text-white">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">Cuadratura de caja</h5>
+
+                    <?= $this->Html->link(
+                        '<i class="bi bi-arrow-left"></i> Volver',
+                        ['action' => 'index'],
+                        ['escape' => false, 'class' => 'btn btn-outline-light btn-sm']
+                    ) ?>
                 </div>
 
                 <div class="card-body">
 
-                    <!-- 🤖 Monto calculado por el sistema -->
+                    <!-- Monto calculado por el sistema -->
                     <div class="alert alert-info" id="expected-amount-box">
                         <strong>Monto total calculado por el sistema:</strong><br>
                         <span id="expected-amount">
@@ -32,7 +38,7 @@ use Cake\I18n\FrozenDate;
 
                     <?= $this->Form->create($cashBalance) ?>
 
-                    <!-- 📅 Fecha -->
+                    <!--  Fecha -->
                     <div class="mb-3">
                         <?= $this->Form->control('balance_date', [
                             'label' => 'Fecha de la cuadratura',
@@ -43,7 +49,7 @@ use Cake\I18n\FrozenDate;
                         ]) ?>
                     </div>
 
-                    <!-- ✏️ Expected amount editable -->
+                    <!--  Expected amount editable -->
                     <div class="mb-3">
                         <?= $this->Form->control('expected_amount', [
                             'label' => 'Monto esperado (opcional)',
@@ -54,7 +60,7 @@ use Cake\I18n\FrozenDate;
                         ]) ?>
                     </div>
 
-                    <!-- 💰 Monto real -->
+                    <!--  Monto real -->
                     <div class="mb-3">
                         <?= $this->Form->control('actual_amount', [
                             'label' => 'Monto real en caja',
@@ -65,7 +71,7 @@ use Cake\I18n\FrozenDate;
                         ]) ?>
                     </div>
 
-                    <!-- 📝 Observaciones -->
+                    <!--  Observaciones -->
                     <div class="mb-3">
                         <?= $this->Form->control('description', [
                             'label' => 'Observaciones',
@@ -75,7 +81,7 @@ use Cake\I18n\FrozenDate;
                         ]) ?>
                     </div>
 
-                    <!-- 💾 Guardar -->
+                    <!--  Guardar -->
                     <div class="d-grid">
                         <?= $this->Form->button('Guardar cuadratura', [
                             'class' => 'btn btn-success'
@@ -90,7 +96,7 @@ use Cake\I18n\FrozenDate;
     </div>
 </div>
 
-<!-- ⚙️ JS para recalcular monto calculado -->
+<!-- JS para recalcular monto calculado -->
 <script>
 document.addEventListener('DOMContentLoaded', function () {
 

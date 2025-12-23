@@ -97,6 +97,14 @@ class CashBalancesController extends AppController
             'order' => [
                 'balance_date' => 'DESC',
             ],
+            'sortableFields' => [
+                #'Products.id',
+                'balance_date',
+                'expected_amount',
+                'actual_amount',
+                'difference',
+                'status'
+            ]
         ];
 
         $cashBalances = $this->paginate($this->CashBalances);
@@ -179,6 +187,41 @@ class CashBalancesController extends AppController
         //Enviar datos a la vista
         $this->set(compact(
             'cashBalance',
+            'totalesPorPedido',
+            'totalDia',
+            'today'
+        ));
+    }
+
+    public function today2()
+    {
+        $today = FrozenDate::today();
+
+        //  Obtener pedidos cerrados del día (única responsabilidad)
+        $ordersTable = $this->fetchTable('Orders');
+        $orders = $ordersTable
+            ->find('closedByDate', ['date' => $today])
+            ->contain(['Products'])
+            ->all();
+
+        //  Calcular totales
+        $totalDia = 0;
+        $totalesPorPedido = [];
+
+        foreach ($orders as $order) {
+            $totalPedido = 0;
+
+            foreach ($order->products as $product) {
+                $totalPedido +=
+                    $product->price * $product->_joinData->quantity;
+            }
+
+            $totalesPorPedido[$order->id] = $totalPedido;
+            $totalDia += $totalPedido;
+        }
+
+        $this->set(compact(
+            'orders',
             'totalesPorPedido',
             'totalDia',
             'today'

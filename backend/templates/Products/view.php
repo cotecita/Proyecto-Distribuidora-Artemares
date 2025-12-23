@@ -13,8 +13,11 @@
         </h3>
         <?= $this->Html->link(
             '<i class="bi bi-arrow-left"></i> Volver',
-            ['action' => 'index'],
-            ['escape' => false, 'class' => 'btn btn-outline-secondary btn-sm shadow-sm']
+            $this->request->referer(true),
+            [
+                'escape' => false,
+                'class' => 'btn btn-outline-secondary btn-sm shadow-sm'
+            ]
         ) ?>
     </div>
 

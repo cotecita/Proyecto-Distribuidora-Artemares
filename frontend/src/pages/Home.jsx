@@ -146,7 +146,7 @@ export default function Home() {
                 <strong>Cobertura:</strong> Tomé, Penco, Lirquén y Concepción.
               </p>
               <p>
-                <strong>Horario:</strong> Lunes a sábado · 09:00 a 19:00
+                <strong>Horario:</strong> Lunes a domingo · 09:00 a 19:00
               </p>
             </div>
 

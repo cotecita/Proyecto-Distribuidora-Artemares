@@ -16,7 +16,7 @@ export default function Footer() {
           <h4 className="footer-subtitle">Contacto</h4>
           <ul className="footer-list">
             <li><span>📞</span> +56 9 5439 9106</li>
-            <li><span>⏰</span> Lunes a sábado — 09:00 a 19:00</li>
+            <li><span>⏰</span> Lunes a domingo — 09:00 a 19:00</li>
           </ul>
         </div>
 
